@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ru.kelcuprum.kelmenu.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "fix.ConnectScreenMixin",
+    "fix.TabNavigationBarMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

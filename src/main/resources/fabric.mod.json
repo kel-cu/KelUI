@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "name": "KelMenu",
+  "id": "kelmenu",
+  "version": "${version}",
+  "description": "Custom menu for my taste, i.e. how I feel comfortable using components",
+  "authors": [
+    "Im_Kel (Kel Cuprum)"
+  ],
+  "contact": {
+    "repo": "https://github.com/simply-kel/kelmenu",
+    "homepage": "https://github.com/simply-kel/kelmenu",
+    "issues": "https://github.com/simply-kel/kelmenu/issues",
+    "email": "me@kelcuprum.ru"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "ru.kelcuprum.kelmenu.KelMenu"
+    ],
+    "modmenu": [
+      "ru.kelcuprum.kelmenu.gui.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "kelmenu.fix.mixin.json",
+    "kelmenu.mixin.json"
+  ],
+  "icon": "assets/kelmenu/icon.png",
+  "depends": {
+    "fabricloader": ">=0.14.17",
+    "fabric": "*",
+    "modmenu": "*",
+    "minecraft": [">=1.20.2"]
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.kelmenu.github": "https://github.com/simply-kel/KelMenu",
+        "modmenu.kelmenu.donate": "https://kelcuprum.ru/r/don"
+      }
+    }
+  }
+}
