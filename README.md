@@ -14,7 +14,7 @@
 
 Скриншоты
 -
-> ![warning]
+> [!warning]
 > На данный момент скриншоты не совпадают с текущим вариантом
 ### Главное меню
 <img src="https://cdn.kelcuprum.ru/kelmenu/main_menu.png">
