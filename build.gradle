@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.2-SNAPSHOT'
+    id 'fabric-loom' version '1.5-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'maven-publish'
 }
@@ -17,6 +17,7 @@ repositories {
     mavenCentral()
     maven { url = "https://maven.terraformersmc.com/releases" }
     maven { url = "https://maven.meteordev.org/releases" }
+    maven { url = 'https://repo.kelcuprum.ru/snapshots' }
     maven { url = 'https://repo.kelcuprum.ru/releases' }
     maven { url = "https://jitpack.io/" }
 }
@@ -32,7 +33,6 @@ dependencies {
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     //
     shade modImplementation("ru.kelcuprum.alinlib:AlinLib:${project.alinlib}");
-    include(implementation "org.json:json:${project.JSON}")
     include(implementation "meteordevelopment:starscript:0.2.2")
 
     subprojects.each {

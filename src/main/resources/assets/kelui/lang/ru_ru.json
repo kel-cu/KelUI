@@ -1,0 +1,53 @@
+{
+  "kelui.name": "KelUI",
+  "kelui.toast.hello": "Привет!",
+
+  "kelui.config.title.main_menu": "Главное меню",
+  "kelui.config.main_menu": "Ре-дизайн меню",
+  "kelui.config.main_menu.panorama": "Включить панораму",
+  "kelui.config.main_menu.position": "Позиция компонентов",
+  "kelui.config.main_menu.version": "Включить текст версии в меню",
+
+  "kelui.config.title.pause_menu": "Меню паузы",
+  "kelui.config.pause_menu": "Ре-дизайн паузы",
+  "kelui.config.pause_menu.alpha": "Включить прозрачность фона",
+  "kelui.config.pause_menu.version": "Включить текст версии в паузе",
+  "kelui.config.pause_menu.player": "Включить рендер игрока",
+
+  "kelui.config.pause_menu.short_command": "Кнопка команды",
+  "kelui.config.pause_menu.enable_short_command": "Включить кнопку команды",
+  "kelui.config.pause_menu.short_command.name": "Название кнопки",
+  "kelui.config.pause_menu.short_command.command": "Команда",
+
+  "kelui.config.title.other": "Другое",
+  "kelui.config.edgeless_chat_screen": "Безрамочный экран чата",
+
+  "kelui.config.title.loading": "Экран загрузи",
+  "kelui.config.loading": "Редизайн экрана загрузки",
+  "kelui.config.loading.background": "Цвет фона",
+  "kelui.config.loading.bar": "Цвет бара",
+  "kelui.config.loading.bar.border": "Цвет границы бара",
+  "kelui.config.loading.preview": "Предпросмотр",
+
+  "kelui.options.title.main": "Главные настроки",
+  "kelui.options.title.player": "Игрок",
+  "kelui.options.title.interface": "Интерфейс",
+  "kelui.options.title.control": "Управление",
+  "kelui.options.title.sounds": "Звуки",
+  "kelui.options.title.online": "Онлайн",
+
+  "kelui.exit": "Выйти",
+
+  
+  "kelui.player.login": "Вы зашли как:",
+
+  "kelui.menu.singleplayer": "Одиночная игра",
+  "kelui.menu.multiplayer": "Мультиплеер",
+  "kelui.menu.options": "Настройки",
+  "kelui.menu.mods": "Моды",
+  "kelui.menu.language": "Язык",
+  "kelui.menu.quit": "Выйти из игры",
+  
+  
+  "modmenu.descriptionTranslation.kelui": "Кастомное меню на мой вкус, т.е. как мне удобно использовать компоненты"
+}

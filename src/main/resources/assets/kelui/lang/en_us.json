@@ -1,0 +1,54 @@
+{
+  "kelui.name": "KelUI",
+  "kelui.toast.hello": "Hello!",
+
+  "kelui.config.title.main_menu": "Main Menu",
+  "kelui.config.main_menu": "Restyle Main Menu",
+  "kelui.config.main_menu.panorama": "Enable panorama",
+  "kelui.config.main_menu.position": "Position components",
+  "kelui.config.main_menu.version": "Enable version text in main menu",
+
+  "kelui.config.title.pause_menu": "Pause Menu",
+  "kelui.config.pause_menu": "Restyle Pause Menu",
+  "kelui.config.pause_menu.alpha": "Enable alpha background",
+  "kelui.config.pause_menu.version": "Enable version text in pause",
+  "kelui.config.pause_menu.player": "Enable render player",
+
+  "kelui.config.pause_menu.short_command": "Command button",
+  "kelui.config.pause_menu.enable_short_command": "Enable command button",
+  "kelui.config.pause_menu.short_command.name": "Button name",
+  "kelui.config.pause_menu.short_command.command": "Command",
+
+  "kelui.config.title.other": "Other",
+  "kelui.config.edgeless_chat_screen": "Edgeless Chat Screen",
+
+  "kelui.config.title.loading": "Loading screen",
+  "kelui.config.loading": "Re-style Loading Screen",
+  "kelui.config.loading.background": "Background color",
+  "kelui.config.loading.bar": "Color bar",
+  "kelui.config.loading.bar.border": "Color border color",
+  "kelui.config.loading.preview": "Preview",
+
+  "kelui.options.title.main": "Main Options",
+  "kelui.options.title.player": "Player",
+  "kelui.options.title.interface": "Interface",
+  "kelui.options.title.control": "Controls",
+  "kelui.options.title.sounds": "Sounds",
+  "kelui.options.title.online": "Online",
+
+
+  "kelui.exit": "Exit",
+
+  
+  "kelui.player.login": "You are logged in as:",
+
+  "kelui.menu.singleplayer": "Singleplayer",
+  "kelui.menu.multiplayer": "Multiplayer",
+  "kelui.menu.options": "Options",
+  "kelui.menu.mods": "Mods",
+  "kelui.menu.language": "Language",
+  "kelui.menu.quit": "Quit Game",
+  
+  
+  "modmenu.descriptionTranslation.kelui": "Custom menu for my taste, i.e. how I feel comfortable using components"
+}
