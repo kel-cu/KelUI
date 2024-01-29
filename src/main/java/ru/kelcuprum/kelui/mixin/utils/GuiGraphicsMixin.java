@@ -35,6 +35,7 @@ public abstract class GuiGraphicsMixin {
     @Shadow
     public abstract void flush();
 
+    // Map slot
     @Inject(
             method = "renderItemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V",
             at = @At(value = "TAIL")
@@ -58,7 +59,7 @@ public abstract class GuiGraphicsMixin {
         this.flush();
         this.pose().popPose();
     }
-    //////
+    // Dark graph
     @ModifyArgs(
             method = "hLine(Lnet/minecraft/client/renderer/RenderType;IIII)V",
             at = @At(

@@ -17,8 +17,6 @@ public class KelUI implements ClientModInitializer {
     public static void log(String message) { log(message, Level.INFO);}
     public static void log(String message, Level level) { LOG.log(level, "[" + LOG.getName() + "] " + message); }
     public static Config config = new Config("config/KelUI.json");
-    //
-    public static Boolean isLoaded = false;
     @Override
     public void onInitializeClient() {
         config.load();

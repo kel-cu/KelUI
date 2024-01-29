@@ -10,23 +10,27 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import ru.kelcuprum.kelui.KelUI;
 
 import java.util.function.IntSupplier;
 
 @Mixin(LoadingOverlay.class)
 public class LoadingOverlayMixin {
-    @Mutable
-    @Shadow private static @Final IntSupplier BRAND_BACKGROUND;
-    @Shadow private static @Final int LOGO_BACKGROUND_COLOR;
-    @Shadow private static @Final int LOGO_BACKGROUND_COLOR_DARK;
 
     /** Changes the background color */
-    @Inject(method = "<clinit>", at = @At("RETURN"))
-    private static void adjustBg(CallbackInfo ci) {
-        if(KelUI.config.getBoolean("LOADING", true)) BRAND_BACKGROUND = () -> KelUI.config.getNumber("LOADING.BACKGROUND", 0xff1b1b1b).intValue();
-        else BRAND_BACKGROUND = () -> (Boolean) Minecraft.getInstance().options.darkMojangStudiosBackground().get() ? LOGO_BACKGROUND_COLOR_DARK : LOGO_BACKGROUND_COLOR;
+    @ModifyArgs(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/screens/LoadingOverlay;replaceAlpha(II)I"
+            )
+    )
+    private void background(Args args) {
+        if(!KelUI.config.getBoolean("LOADING", true)) return;
+        args.set(0, KelUI.config.getNumber("LOADING.BACKGROUND", 0xff1b1b1b).intValue());
     }
     @Shadow
     private float currentProgress;
