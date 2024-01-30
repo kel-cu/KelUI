@@ -47,14 +47,14 @@ public abstract class PauseScreenMixin extends Screen {
             this.minecraft.mouseHandler.grabMouse();
         }));
         //
-        addRenderableWidget(new ButtonSprite(x, height/2-35, 20, 20, InterfaceUtils.DesignType.VANILLA, InterfaceUtils.Icons.LIST, Component.translatable("gui.stats"), (OnPress) -> {
+        addRenderableWidget(new ButtonSprite(x, height/2-35, 20, 20, InterfaceUtils.DesignType.FLAT, InterfaceUtils.Icons.LIST, Component.translatable("gui.stats"), (OnPress) -> {
             this.minecraft.setScreen(new StatsScreen(this, this.minecraft.player.getStats()));
         }));
         addRenderableWidget(new Button(x+25, height/2-35, 185, 20, InterfaceUtils.DesignType.FLAT, Component.translatable("gui.advancements"), (OnPress) -> {
             this.minecraft.setScreen(new AdvancementsScreen(this.minecraft.getConnection().getAdvancements()));
         }));
         //
-        addRenderableWidget(new ButtonSprite(x, height/2-10, 20, 20, InterfaceUtils.DesignType.VANILLA, InterfaceUtils.Icons.OPTIONS, Component.translatable("kelui.menu.options"), (OnPress) -> {
+        addRenderableWidget(new ButtonSprite(x, height/2-10, 20, 20, InterfaceUtils.DesignType.FLAT, InterfaceUtils.Icons.OPTIONS, Component.translatable("kelui.menu.options"), (OnPress) -> {
             this.minecraft.setScreen(KelUI.getOptionScreen(this));
         }));
         addRenderableWidget(new Button(x+25, height/2-10, 185, 20, InterfaceUtils.DesignType.FLAT, Component.translatable("kelui.menu.mods"), (OnPress) -> {
@@ -63,7 +63,7 @@ public abstract class PauseScreenMixin extends Screen {
         // Line
         boolean isShortCommand = KelUI.config.getBoolean("PAUSE_MENU.ENABLE_SHORT_COMMAND", false);
         boolean isSingle = this.minecraft.hasSingleplayerServer() && !this.minecraft.getSingleplayerServer().isPublished();
-        addRenderableWidget(new ButtonSprite(x, height/2+15, 20, 20, InterfaceUtils.DesignType.VANILLA, LANGUAGE, Component.translatable("kelui.menu.language"), (OnPress) -> {
+        addRenderableWidget(new ButtonSprite(x, height/2+15, 20, 20, InterfaceUtils.DesignType.FLAT, LANGUAGE, Component.translatable("kelui.menu.language"), (OnPress) -> {
             this.minecraft.setScreen(new LanguageSelectScreen(this, this.minecraft.options, this.minecraft.getLanguageManager()));
         }));
         if(isSingle || !isShortCommand) addRenderableWidget(new Button(x+25, height/2+15, 185, 20, InterfaceUtils.DesignType.FLAT, Component.translatable("menu.shareToLan"), (OnPress) -> {
