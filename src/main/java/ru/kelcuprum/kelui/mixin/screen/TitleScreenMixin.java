@@ -31,6 +31,9 @@ import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.PlayerHeadWidget;
 import ru.kelcuprum.kelui.gui.components.PlayerInfoWidget;
 
+import static ru.kelcuprum.kelui.KelUI.ICONS.ACCESSIBILITY;
+import static ru.kelcuprum.kelui.KelUI.ICONS.LANGUAGE;
+
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
     @Final
@@ -70,19 +73,19 @@ public abstract class TitleScreenMixin extends Screen {
         addRenderableWidget(new Button(x+25, height/2+15, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.mods"), (OnPress) -> {
             this.minecraft.setScreen(new ModsScreen(this));
         }));
-        addRenderableWidget(new ButtonSprite(x, height/2+15, 20, 20, InterfaceUtils.DesignType.VANILLA, new ResourceLocation("kelui", "textures/gui/sprites/icon/language.png"), Component.translatable("kelui.menu.language"), (OnPress) -> {
+        addRenderableWidget(new ButtonSprite(x, height/2+15, 20, 20, InterfaceUtils.DesignType.VANILLA, LANGUAGE, Component.translatable("kelui.menu.language"), (OnPress) -> {
             this.minecraft.setScreen(new LanguageSelectScreen(this, this.minecraft.options, this.minecraft.getLanguageManager()));
         }));
         //
         addRenderableWidget(new Button(x+25, height/2+40, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.quit"), (OnPress) -> {
             this.minecraft.stop();
         }));
-        addRenderableWidget(new ButtonSprite(x, height/2+40, 20, 20, InterfaceUtils.DesignType.VANILLA, new ResourceLocation("kelui", "textures/gui/sprites/icon/accessibility.png"), Component.translatable("kelui.menu.accessibility"), (OnPress) -> {
+        addRenderableWidget(new ButtonSprite(x, height/2+40, 20, 20, InterfaceUtils.DesignType.VANILLA, ACCESSIBILITY, Component.translatable("options.accessibility"), (OnPress) -> {
             this.minecraft.setScreen(new AccessibilityOptionsScreen(this, this.minecraft.options));
         }));
         if(KelUI.config.getBoolean("MAIN_MENU.VERSION", true)) {
-            addRenderableWidget(new TextBox(x, height - 30, 210, font.lineHeight, Component.literal(KelUI.getStringCredits()), true));
-            addRenderableWidget(new TextBox(x, height - 20, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), true));
+            addRenderableWidget(new TextBox(x, height - 30, 210, font.lineHeight, Component.literal(KelUI.getStringCredits()), false));
+            addRenderableWidget(new TextBox(x, height - 20, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
         }
         cl.cancel();
     }

@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screens.OptionsScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,5 +49,9 @@ public class KelUI implements ClientModInitializer {
             case 2 -> "";
             default -> Component.translatable("title.credits").getString();
         };
+    }
+    public interface ICONS{
+        ResourceLocation LANGUAGE = new ResourceLocation("kelui", "textures/gui/sprites/icon/language.png");
+        ResourceLocation ACCESSIBILITY = new ResourceLocation("kelui", "textures/gui/sprites/icon/accessibility.png");
     }
 }
