@@ -52,7 +52,7 @@ public abstract class GuiMixin {
                 if (!item.isEmpty()) {
                     items.add(item);
                     if(KelUI.config.getBoolean("HUD.ARMOR_INFO.DAMAGE", true)) {
-                        Component itext = Component.literal(item.getMaxDamage() == (item.getMaxDamage() - item.getDamageValue()) ? String.format("%s", item.getMaxDamage()) : String.format("%s/%s", item.getMaxDamage() - item.getDamageValue(), item.getMaxDamage()));
+                        Component itext = Component.literal(item.getMaxDamage() == 0 ? "" : item.getMaxDamage() == (item.getMaxDamage() - item.getDamageValue()) ? String.format("%s", item.getMaxDamage()) : String.format("%s/%s", item.getMaxDamage() - item.getDamageValue(), item.getMaxDamage()));
                         if (Minecraft.getInstance().font.width(itext) > maxText)
                             maxText = Minecraft.getInstance().font.width(itext);
                         text.add(itext);
