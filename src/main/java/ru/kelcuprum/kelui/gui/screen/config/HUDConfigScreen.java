@@ -7,23 +7,22 @@ import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
 import ru.kelcuprum.alinlib.gui.components.buttons.ButtonConfigBoolean;
 import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
-import ru.kelcuprum.alinlib.gui.components.editbox.EditBoxColor;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.screens.ConfigScreenBuilder;
 import ru.kelcuprum.kelui.KelUI;
-import ru.kelcuprum.kelui.gui.screen.config.demo.PreviewLoadingOverlay;
 
-public class LoadingConfigScreen {
+public class HUDConfigScreen {
     private static final Component MainConfigCategory = Localization.getText("kelui.config.title.main_menu");
     private static final Component PauseConfigCategory = Localization.getText("kelui.config.title.pause_menu");
     private static final Component HUDConfigCategory = Localization.getText("kelui.config.title.hud");
     private static final Component LoadingConfigCategory = Localization.getText("kelui.config.title.loading");
     private static final Component OtherConfigCategory = Localization.getText("kelui.config.title.other");
     private static final InterfaceUtils.DesignType designType = InterfaceUtils.DesignType.FLAT;
+
     public Screen build(Screen parent) {
         return new ConfigScreenBuilder(parent, Component.translatable("kelui.name"), InterfaceUtils.DesignType.FLAT)
                 .addPanelWidget(
-                        new Button(10,40, designType, MainConfigCategory, (s) -> Minecraft.getInstance().setScreen(new MenuConfigScreen().build(parent)))
+                        new Button(10,40, designType, MainConfigCategory, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent)))
                 )
                 .addPanelWidget(
                         new Button(10,65, designType, PauseConfigCategory, (s) -> Minecraft.getInstance().setScreen(new PauseConfigScreen().build(parent)))
@@ -39,13 +38,10 @@ public class LoadingConfigScreen {
                 )
 
                 .addWidget(new TextBox(140, 5, MainConfigCategory, true))
-                .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "LOADING", true, Localization.getText("kelui.config.loading")))
-                .addWidget(new EditBoxColor(140, 55, designType, KelUI.config, "LOADING.BACKGROUND", 0xff1b1b1b, Localization.getText("kelui.config.loading.background")))
-                .addWidget(new EditBoxColor(140, 80, designType, KelUI.config, "LOADING.BAR_COLOR", 0xffff4f4f, Localization.getText("kelui.config.loading.bar")))
-                .addWidget(new EditBoxColor(140, 105, designType, KelUI.config, "LOADING.BAR_COLOR.BORDER", 0xffffffff, Localization.getText("kelui.config.loading.bar.border")))
-                .addWidget(new Button(140, 130, designType, Localization.getText("kelui.config.loading.preview"), (OnPress) ->{
-                    Minecraft.getInstance().setOverlay(new PreviewLoadingOverlay(1000, () -> {}));
-                }))
+                .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "HUD.ARMOR_INFO", true, Localization.getText("kelui.config.hud.armor_info")))
+                .addWidget(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "HUD.ARMOR_INFO.DAMAGE", true, Localization.getText("kelui.config.hud.armor_info.damage")))
+                .addWidget(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "HUD.NEW_HOTBAR", false, Localization.getText("kelui.config.hud.new_hotbar")))
+                .addWidget(new ButtonConfigBoolean(140, 105, designType, KelUI.config, "HUD.NEW_EFFECTS", false, Localization.getText("kelui.config.hud.new_effects")))
                 .build();
     }
 }

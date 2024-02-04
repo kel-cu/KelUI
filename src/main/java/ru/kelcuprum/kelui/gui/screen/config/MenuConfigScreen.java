@@ -14,6 +14,7 @@ import ru.kelcuprum.kelui.KelUI;
 public class MenuConfigScreen {
     private static final Component MainConfigCategory = Localization.getText("kelui.config.title.main_menu");
     private static final Component PauseConfigCategory = Localization.getText("kelui.config.title.pause_menu");
+    private static final Component HUDConfigCategory = Localization.getText("kelui.config.title.hud");
     private static final Component LoadingConfigCategory = Localization.getText("kelui.config.title.loading");
     private static final Component OtherConfigCategory = Localization.getText("kelui.config.title.other");
     private static final InterfaceUtils.DesignType designType = InterfaceUtils.DesignType.FLAT;
@@ -27,10 +28,13 @@ public class MenuConfigScreen {
                         new Button(10,65, designType, PauseConfigCategory, (s) -> Minecraft.getInstance().setScreen(new PauseConfigScreen().build(parent)))
                 )
                 .addPanelWidget(
-                        new Button(10,90, designType, LoadingConfigCategory, (s) -> Minecraft.getInstance().setScreen(new LoadingConfigScreen().build(parent)))
+                        new Button(10,90, designType, HUDConfigCategory, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent)))
                 )
                 .addPanelWidget(
-                        new Button(10,115, designType, OtherConfigCategory, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent)))
+                        new Button(10,115, designType, LoadingConfigCategory, (s) -> Minecraft.getInstance().setScreen(new LoadingConfigScreen().build(parent)))
+                )
+                .addPanelWidget(
+                        new Button(10,140, designType, OtherConfigCategory, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent)))
                 )
 
                 .addWidget(new TextBox(140, 5, MainConfigCategory, true))
