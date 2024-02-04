@@ -39,13 +39,10 @@ public abstract class GuiMixin {
 
     @Shadow private int screenHeight;
 
-    @Shadow public abstract SpectatorGui getSpectatorGui();
-
     @Shadow @Final private Minecraft minecraft;
 
     @Shadow protected abstract void renderSlot(GuiGraphics guiGraphics, int i, int j, float f, Player player, ItemStack itemStack, int k);
 
-    @Shadow public abstract int getGuiTicks();
 
     @Shadow private int screenWidth;
 
@@ -54,8 +51,6 @@ public abstract class GuiMixin {
     @Shadow public abstract Font getFont();
 
     @Shadow private ItemStack lastToolHighlight;
-
-    @Shadow @Nullable private Component title;
 
     @Inject(method = "render", at = @At("HEAD"))
     void render(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
@@ -120,7 +115,7 @@ public abstract class GuiMixin {
             guiGraphics.fill(this.screenWidth - (24*i), 24*j, this.screenWidth - (24+(24*i)), 24+(24*j), 0x7f000000);
             guiGraphics.fill(this.screenWidth - (24*i), 22+(24*j), this.screenWidth - (24+(24*i)), 24+(24*j), effect.isAmbient() ? 0xff598392 : SEADRIVE);
             guiGraphics.blit(this.screenWidth - (4+(24*i)) - 16, 4+(24*j),0, 16, 16, mobEffectTextureManager.get(effect.getEffect()));
-            if(!effect.isInfiniteDuration()){
+            if(!effect.isInfiniteDuration() && KelUI.config.getBoolean("HUD.NEW_EFFECTS.TIME", true)){
                 Component time = Component.literal(Util.getDurationAsString(effect.getDuration()));
                 guiGraphics.drawString(this.getFont(), time, this.screenWidth - (4+(24*i)) - 16, 20-getFont().lineHeight+(24*j), -1);
             }

@@ -14,13 +14,17 @@
 
 Скриншоты
 -
-> [!warning]
-> На данный момент скриншоты не совпадают с текущим вариантом
 ### Главное меню
-<img src="https://cdn.kelcuprum.ru/kelmenu/main_menu.png">
+<img src="https://cdn.kelcuprum.ru/screenshots/kelui/menu.png">
 
 ### Меню паузы
-<img src="https://cdn.kelcuprum.ru/kelmenu/pause_menu.png">
+<img src="https://cdn.kelcuprum.ru/screenshots/kelui/pause.png">
+
+### В игре
+<img src="https://kelcuprum.ru/cdn/screenshots/kelui/ingame.png">
+
+### Оверлей загрузки
+<img src="https://kelcuprum.ru/cdn/screenshots/kelui/reloading.png">
 
 ### Безрамочный чат
-<img src="https://cdn.kelcuprum.ru/kelmenu/chat_edge.png">
+<img src="https://cdn.kelcuprum.ru/screenshots/kelui/chat.png">

@@ -29,7 +29,6 @@ import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.PlayerHeadWidget;
-import ru.kelcuprum.kelui.gui.components.PlayerInfoWidget;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.ACCESSIBILITY;
 import static ru.kelcuprum.kelui.KelUI.ICONS.LANGUAGE;

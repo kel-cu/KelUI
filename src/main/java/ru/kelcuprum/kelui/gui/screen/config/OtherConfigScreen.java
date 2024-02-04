@@ -66,9 +66,6 @@ public class OtherConfigScreen {
                          .addValue(new TextBox(140, 330, Component.translatable("kelui.fix.selection_list"), false))
                          .addValue(new TextBox(140, 355, Component.translatable("kelui.fix.tab_navigation_bar"), false))
                  )
-                 // "DEBUG.DARK_GRAPH", true
-                 // "HUD.MAP_SLOT", true
-                 // "TAB.FOREVER_RENDER_HEADS"
 
                  .build();
     }

@@ -42,6 +42,7 @@ public class HUDConfigScreen {
                 .addWidget(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "HUD.ARMOR_INFO.DAMAGE", true, Localization.getText("kelui.config.hud.armor_info.damage")))
                 .addWidget(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "HUD.NEW_HOTBAR", false, Localization.getText("kelui.config.hud.new_hotbar")))
                 .addWidget(new ButtonConfigBoolean(140, 105, designType, KelUI.config, "HUD.NEW_EFFECTS", false, Localization.getText("kelui.config.hud.new_effects")))
+                .addWidget(new ButtonConfigBoolean(140, 130, designType, KelUI.config, "HUD.NEW_EFFECTS.TIME", true, Localization.getText("kelui.config.hud.new_effects.time")))
                 .build();
     }
 }

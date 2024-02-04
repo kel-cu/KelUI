@@ -24,6 +24,7 @@
   "kelui.config.hud.armor_info.damage": "Armor damage information",
   "kelui.config.hud.new_hotbar": "New Design Hotbar",
   "kelui.config.hud.new_effects": "New Design Effects",
+  "kelui.config.hud.new_effects.time": "Enable effect time",
 
   "kelui.config.title.other": "Other",
   "kelui.config.title.other.render": "Render",
