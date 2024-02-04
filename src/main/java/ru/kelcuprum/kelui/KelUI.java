@@ -8,10 +8,12 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.kelcuprum.alinlib.config.Config;
+import ru.kelcuprum.alinlib.config.Localization;
 
 public class KelUI implements ClientModInitializer {
     public static final Logger LOG = LogManager.getLogger("KelUI");
@@ -48,6 +50,13 @@ public class KelUI implements ClientModInitializer {
             case 1 -> KelUI.config.getString("CREDITS.CUSTOM", "Made with ❤ by Kel");
             case 2 -> "";
             default -> Component.translatable("title.credits").getString();
+        };
+    }
+    public static String getArmorDamage(ItemStack item){
+        return switch (config.getNumber("HUD.ARMOR_INFO.DAMAGE.TYPE", 0).intValue()){
+            case 1 -> (item.getMaxDamage() == 0 ? "" : String.valueOf(item.getMaxDamage()-item.getDamageValue()));// Full damage
+            case 2 -> (item.getMaxDamage() == 0 ? "" : Localization.getRounding(((double) (item.getMaxDamage()-item.getDamageValue()) /item.getMaxDamage())*100, config.getBoolean("HUD.ARMOR_INFO.DAMAGE.TYPE.CUT", false))+"%");
+            default -> (item.getMaxDamage() == 0 ? "" : item.getMaxDamage() == (item.getMaxDamage() - item.getDamageValue()) ? String.format("%s", item.getMaxDamage()) : String.format("%s/%s", item.getMaxDamage() - item.getDamageValue(), item.getMaxDamage()));
         };
     }
     public interface ICONS{

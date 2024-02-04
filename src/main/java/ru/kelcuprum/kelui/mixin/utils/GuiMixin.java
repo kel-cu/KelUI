@@ -9,6 +9,8 @@ import net.minecraft.client.resources.MobEffectTextureManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -29,8 +31,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.GROUPIE;
-import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.SEADRIVE;
+import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.*;
 
 @Mixin(Gui.class)
 public abstract class GuiMixin {
@@ -52,6 +53,8 @@ public abstract class GuiMixin {
 
     @Shadow private ItemStack lastToolHighlight;
 
+    @Shadow protected abstract LivingEntity getPlayerVehicleWithHealth();
+
     @Inject(method = "render", at = @At("HEAD"))
     void render(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
         int y = screenHeight/2;
@@ -64,7 +67,7 @@ public abstract class GuiMixin {
                 if (!item.isEmpty()) {
                     items.add(item);
                     if(KelUI.config.getBoolean("HUD.ARMOR_INFO.DAMAGE", true)) {
-                        Component itext = Component.literal(item.getMaxDamage() == 0 ? "" : item.getMaxDamage() == (item.getMaxDamage() - item.getDamageValue()) ? String.format("%s", item.getMaxDamage()) : String.format("%s/%s", item.getMaxDamage() - item.getDamageValue(), item.getMaxDamage()));
+                        Component itext = Component.literal(KelUI.getArmorDamage(item));
                         if (Minecraft.getInstance().font.width(itext) > maxText)
                             maxText = Minecraft.getInstance().font.width(itext);
                         text.add(itext);
@@ -198,11 +201,46 @@ public abstract class GuiMixin {
         if(!itemStack.isEmpty()){
             x=22;
         }
+        LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
+        if (livingEntity != null) {
+            x+=4;
+        }
         guiGraphics.fill(194+x, i, 196+x, i+20, SEADRIVE-0x75000000);
         guiGraphics.fill(194+x, i, 196+x, (int) (i+(20*exp)), SEADRIVE);
         guiGraphics.drawString(Minecraft.getInstance().font, "" + this.minecraft.player.experienceLevel, 198+x, i + (20 / 2) - (minecraft.font.lineHeight / 2), SEADRIVE);
         ci.cancel();
     }
+    @Inject(method = "renderVehicleHealth", at=@At("HEAD"), cancellable = true)
+    void renderVehicleHealth(GuiGraphics guiGraphics, CallbackInfo ci) {
+        if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        int i = this.screenHeight-22;
+        int x = 0;
+        ItemStack itemStack = getCameraPlayer().getOffhandItem();
+        if(!itemStack.isEmpty()){
+            x=22;
+        }
+        if (!this.minecraft.gameMode.canHurtPlayer()) {
+            x-=12;
+        }
+        LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
+        if (livingEntity != null) {
+            double health = livingEntity.getHealth()/livingEntity.getMaxHealth();
+            guiGraphics.fill(194+x, i, 196+x, i+20, CLOWNFISH-0x75000000);
+            guiGraphics.fill(194+x, i, 196+x, (int) (i+(20*health)), CLOWNFISH);
+        }
+        ci.cancel();
+    }
+    @Inject(method = "renderJumpMeter", at=@At("HEAD"), cancellable = true)
+    void renderJumpMeter(PlayerRideableJumping playerRideableJumping, GuiGraphics guiGraphics, int j, CallbackInfo ci) {
+        if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        float f = this.minecraft.player.getJumpRidingScale();
+        guiGraphics.fill(0, screenHeight-26, (int) (180*f), screenHeight-24, 0x7fffffff);
+        int k = 180/18;
+        guiGraphics.fill(0, screenHeight-26, k*16, screenHeight-24, 0x7F598392);
+        guiGraphics.fill(k*16, screenHeight-26, 180, screenHeight-24, CONVICT-0x7F000000);
+        ci.cancel();
+    }
+
 
     @Inject(method = "renderSelectedItemName", at=@At("HEAD"), cancellable = true)
     void renderSelectedItemName(GuiGraphics guiGraphics, CallbackInfo ci){

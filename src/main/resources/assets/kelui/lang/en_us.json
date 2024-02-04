@@ -22,6 +22,8 @@
   "kelui.config.title.hud": "HUD",
   "kelui.config.hud.armor_info": "Armor information",
   "kelui.config.hud.armor_info.damage": "Armor damage information",
+  "kelui.config.hud.armor_info.damage.type": "Type damage info",
+  "kelui.config.hud.armor_info.damage.type.cut": "Cut percent",
   "kelui.config.hud.new_hotbar": "New Design Hotbar",
   "kelui.config.hud.new_effects": "New Design Effects",
   "kelui.config.hud.new_effects.time": "Enable effect time",
