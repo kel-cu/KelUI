@@ -8,6 +8,7 @@ import ru.kelcuprum.alinlib.gui.InterfaceUtils;
 import ru.kelcuprum.alinlib.gui.components.buttons.ButtonConfigBoolean;
 import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
 import ru.kelcuprum.alinlib.gui.components.selector.SelectorIntegerButton;
+import ru.kelcuprum.alinlib.gui.components.text.CategoryBox;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.screens.ConfigScreenBuilder;
 import ru.kelcuprum.kelui.KelUI;
@@ -44,15 +45,20 @@ public class HUDConfigScreen {
                 )
 
                 .addWidget(new TextBox(140, 5, HUDConfigCategory, true))
-                .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "HUD.ARMOR_INFO", true, Localization.getText("kelui.config.hud.armor_info")))
-                .addWidget(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "HUD.ARMOR_INFO.DAMAGE", true, Localization.getText("kelui.config.hud.armor_info.damage")))
-                .addWidget(new SelectorIntegerButton(140, 80, designType, type, KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE", 0, Localization.getText("kelui.config.hud.armor_info.damage.type")))
-                .addWidget(new ButtonConfigBoolean(140, 105, designType, KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE.CUT", false, Localization.getText("kelui.config.hud.armor_info.damage.type.cut")))
-                .addWidget(new ButtonConfigBoolean(140, 130, designType, KelUI.config, "HUD.DEBUG_OVERLAY", false, Localization.getText("kelui.config.hud.debug_overlay")))
-                .addWidget(new ButtonConfigBoolean(140, 155, designType, KelUI.config, "HUD.DARK_DEBUG_OVERLAY", true, Localization.getText("kelui.config.hud.dark_debug_overlay")))
-                .addWidget(new ButtonConfigBoolean(140, 180, designType, KelUI.config, "HUD.NEW_HOTBAR", false, Localization.getText("kelui.config.hud.new_hotbar")))
-                .addWidget(new ButtonConfigBoolean(140, 205, designType, KelUI.config, "HUD.NEW_EFFECTS", false, Localization.getText("kelui.config.hud.new_effects")))
-                .addWidget(new ButtonConfigBoolean(140, 230, designType, KelUI.config, "HUD.NEW_EFFECTS.TIME", true, Localization.getText("kelui.config.hud.new_effects.time")))
+                .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "HUD.DEBUG_OVERLAY", false, Localization.getText("kelui.config.hud.debug_overlay")))
+                .addWidget(new CategoryBox(140, 55, Localization.getText("kelui.config.hud.armor_info.title"))
+                    .addValue(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "HUD.ARMOR_INFO", true, Localization.getText("kelui.config.hud.armor_info")))
+                    .addValue(new ButtonConfigBoolean(140, 105, designType, KelUI.config, "HUD.ARMOR_INFO.DAMAGE", true, Localization.getText("kelui.config.hud.armor_info.damage")))
+                    .addValue(new SelectorIntegerButton(140, 130, designType, type, KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE", 0, Localization.getText("kelui.config.hud.armor_info.damage.type")))
+                    .addValue(new ButtonConfigBoolean(140, 155, designType, KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE.CUT", true, Localization.getText("kelui.config.hud.armor_info.damage.type.cut"))))
+                .addWidget(new CategoryBox(140, 180, Localization.getText("kelui.config.new_interface"))
+                    .addValue(new ButtonConfigBoolean(140, 205, designType, KelUI.config, "HUD.NEW_HOTBAR", false, Localization.getText("kelui.config.hud.new_hotbar")))
+                    .addValue(new ButtonConfigBoolean(140, 230, designType, KelUI.config, "HUD.NEW_EFFECTS", false, Localization.getText("kelui.config.hud.new_effects")))
+                    .addValue(new ButtonConfigBoolean(140, 255, designType, KelUI.config, "HUD.NEW_EFFECTS.TIME", true, Localization.getText("kelui.config.hud.new_effects.time"))))
+                .addWidget(new CategoryBox(140, 280, Localization.getText("kelui.config.debug_overlay"))
+                        .addValue(new ButtonConfigBoolean(140, 305, designType, KelUI.config, "HUD.DARK_DEBUG_OVERLAY", false, Localization.getText("kelui.config.hud.dark_debug_overlay")))
+                        .addValue(new ButtonConfigBoolean(140, 330, designType, KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_GAME_INFO", false, Localization.getText("kelui.config.hud.debug_overlay.remove_game_info")))
+                        .addValue(new ButtonConfigBoolean(140, 355, designType, KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_SYSTEM_INFO", false, Localization.getText("kelui.config.hud.debug_overlay.remove_system_info"))))
                 .build();
     }
 }

@@ -11,6 +11,7 @@
     "utils.GuiGraphicsMixin",
     "utils.PlayerListMixin",
     "utils.DebugScreenOverlayMixin",
+    "utils.ChatOverlayMixin",
     "utils.GuiMixin"
   ],
   "injectors": {

@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screens.OptionsScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.Level;
@@ -14,6 +15,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.kelcuprum.alinlib.config.Config;
 import ru.kelcuprum.alinlib.config.Localization;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.SEADRIVE;
 
 public class KelUI implements ClientModInitializer {
     public static final Logger LOG = LogManager.getLogger("KelUI");
@@ -55,9 +61,14 @@ public class KelUI implements ClientModInitializer {
     public static String getArmorDamage(ItemStack item){
         return switch (config.getNumber("HUD.ARMOR_INFO.DAMAGE.TYPE", 0).intValue()){
             case 1 -> (item.getMaxDamage() == 0 ? "" : String.valueOf(item.getMaxDamage()-item.getDamageValue()));// Full damage
-            case 2 -> (item.getMaxDamage() == 0 ? "" : Localization.getRounding(((double) (item.getMaxDamage()-item.getDamageValue()) /item.getMaxDamage())*100, config.getBoolean("HUD.ARMOR_INFO.DAMAGE.TYPE.CUT", false))+"%");
+            case 2 -> (item.getMaxDamage() == 0 ? "" : Localization.getRounding(((double) (item.getMaxDamage()-item.getDamageValue()) /item.getMaxDamage())*100, config.getBoolean("HUD.ARMOR_INFO.DAMAGE.TYPE.CUT", true))+"%");
             default -> (item.getMaxDamage() == 0 ? "" : item.getMaxDamage() == (item.getMaxDamage() - item.getDamageValue()) ? String.format("%s", item.getMaxDamage()) : String.format("%s/%s", item.getMaxDamage() - item.getDamageValue(), item.getMaxDamage()));
         };
+    }
+    public static Component createTimestamp() {
+        return Component.literal(
+                new SimpleDateFormat(config.getString("CHAT.TIMESTAMP.PATTERN", "HH:mm")).format(new Date())
+        ).setStyle(Style.EMPTY.withColor(config.getNumber("CHAT.TIMESTAMP.COLOR", SEADRIVE).intValue()));
     }
     public interface ICONS{
         ResourceLocation LANGUAGE = new ResourceLocation("kelui", "textures/gui/sprites/icon/language.png");
