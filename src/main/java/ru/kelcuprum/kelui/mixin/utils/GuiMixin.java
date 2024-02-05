@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.DebugScreenOverlay;
 import net.minecraft.client.gui.components.spectator.SpectatorGui;
 import net.minecraft.client.resources.MobEffectTextureManager;
 import net.minecraft.network.chat.Component;
@@ -55,12 +56,15 @@ public abstract class GuiMixin {
 
     @Shadow protected abstract LivingEntity getPlayerVehicleWithHealth();
 
+    @Shadow @Final private DebugScreenOverlay debugOverlay;
+
     @Inject(method = "render", at = @At("HEAD"))
     void render(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
         int y = screenHeight/2;
         List<ItemStack> items = new ArrayList<>();
         List<Component> text = new ArrayList<>();
         int maxText = 0;
+        if(this.debugOverlay.showDebugScreen()) return;
         if(KelUI.config.getBoolean("HUD.ARMOR_INFO", true)) {
             for (int i = 0; i < 4; i++) {
                 ItemStack item = getCameraPlayer().getInventory().getArmor(3 - i);
@@ -88,6 +92,13 @@ public abstract class GuiMixin {
                 }
             }
         }
+        if(KelUI.config.getBoolean("HUD.DEBUG_OVERLAY", false)) {
+            int x = 2;
+            int y1 = 2;
+            Component fps = Component.literal(String.format("%s FPS", this.minecraft.getFps()));
+            guiGraphics.fill(x, y1,x+4+getFont().width(fps)+4 , y1+2+getFont().lineHeight+4, 0x7f000000);
+            guiGraphics.drawString(getFont(), fps, x+4, y1+4, -1);
+        }
     }
     // -=-=-=-=-=-=-=-=-=-
     @ModifyArgs(
@@ -107,22 +118,27 @@ public abstract class GuiMixin {
     @Inject(method = "renderEffects", at = @At("HEAD"), cancellable = true)
     void renderEffects(GuiGraphics guiGraphics, CallbackInfo ci){
         if(!KelUI.config.getBoolean("HUD.NEW_EFFECTS", false)) return;
-        assert this.minecraft.player != null;
-        Collection<MobEffectInstance> collection = this.minecraft.player.getActiveEffects();
-        MobEffectTextureManager mobEffectTextureManager = this.minecraft.getMobEffectTextures();
-        if(collection.isEmpty()) return;
-        int i = 0;
-        int j = 0;
-        for(MobEffectInstance effect : collection){
-            if(i>5) {i = 0;j++;}
-            guiGraphics.fill(this.screenWidth - (24*i), 24*j, this.screenWidth - (24+(24*i)), 24+(24*j), 0x7f000000);
-            guiGraphics.fill(this.screenWidth - (24*i), 22+(24*j), this.screenWidth - (24+(24*i)), 24+(24*j), effect.isAmbient() ? 0xff598392 : SEADRIVE);
-            guiGraphics.blit(this.screenWidth - (4+(24*i)) - 16, 4+(24*j),0, 16, 16, mobEffectTextureManager.get(effect.getEffect()));
-            if(!effect.isInfiniteDuration() && KelUI.config.getBoolean("HUD.NEW_EFFECTS.TIME", true)){
-                Component time = Component.literal(Util.getDurationAsString(effect.getDuration()));
-                guiGraphics.drawString(this.getFont(), time, this.screenWidth - (4+(24*i)) - 16, 20-getFont().lineHeight+(24*j), -1);
+        if(!this.debugOverlay.showDebugScreen()) {
+            assert this.minecraft.player != null;
+            Collection<MobEffectInstance> collection = this.minecraft.player.getActiveEffects();
+            MobEffectTextureManager mobEffectTextureManager = this.minecraft.getMobEffectTextures();
+            if (collection.isEmpty()) return;
+            int i = 0;
+            int j = 0;
+            for (MobEffectInstance effect : collection) {
+                if (i > 5) {
+                    i = 0;
+                    j++;
+                }
+                guiGraphics.fill(this.screenWidth - (24 * i), 24 * j, this.screenWidth - (24 + (24 * i)), 24 + (24 * j), 0x7f000000);
+                guiGraphics.fill(this.screenWidth - (24 * i), 22 + (24 * j), this.screenWidth - (24 + (24 * i)), 24 + (24 * j), effect.isAmbient() ? 0xff598392 : SEADRIVE);
+                guiGraphics.blit(this.screenWidth - (4 + (24 * i)) - 16, 4 + (24 * j), 0, 16, 16, mobEffectTextureManager.get(effect.getEffect()));
+                if (!effect.isInfiniteDuration() && KelUI.config.getBoolean("HUD.NEW_EFFECTS.TIME", true)) {
+                    Component time = Component.literal(Util.getDurationAsString(effect.getDuration()));
+                    guiGraphics.drawString(this.getFont(), time, this.screenWidth - (4 + (24 * i)) - 16, 20 - getFont().lineHeight + (24 * j), -1);
+                }
+                i++;
             }
-            i++;
         }
         ci.cancel();
     }

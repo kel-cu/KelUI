@@ -6,8 +6,7 @@
   "client": [
     "fix.AbstractSelectionListMixin",
     "fix.ConnectScreenMixin",
-    "fix.TabNavigationBarMixin",
-    "utils.GuiMixin"
+    "fix.TabNavigationBarMixin"
   ],
   "injectors": {
     "defaultRequire": 1

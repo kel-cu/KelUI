@@ -9,7 +9,9 @@
     "screen.PauseScreenMixin",
     "screen.TitleScreenMixin",
     "utils.GuiGraphicsMixin",
-    "utils.PlayerListMixin"
+    "utils.PlayerListMixin",
+    "utils.DebugScreenOverlayMixin",
+    "utils.GuiMixin"
   ],
   "injectors": {
     "defaultRequire": 1

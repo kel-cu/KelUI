@@ -43,14 +43,16 @@ public class HUDConfigScreen {
                         new Button(10,140, designType, OtherConfigCategory, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent)))
                 )
 
-                .addWidget(new TextBox(140, 5, MainConfigCategory, true))
+                .addWidget(new TextBox(140, 5, HUDConfigCategory, true))
                 .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "HUD.ARMOR_INFO", true, Localization.getText("kelui.config.hud.armor_info")))
                 .addWidget(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "HUD.ARMOR_INFO.DAMAGE", true, Localization.getText("kelui.config.hud.armor_info.damage")))
                 .addWidget(new SelectorIntegerButton(140, 80, designType, type, KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE", 0, Localization.getText("kelui.config.hud.armor_info.damage.type")))
                 .addWidget(new ButtonConfigBoolean(140, 105, designType, KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE.CUT", false, Localization.getText("kelui.config.hud.armor_info.damage.type.cut")))
-                .addWidget(new ButtonConfigBoolean(140, 130, designType, KelUI.config, "HUD.NEW_HOTBAR", false, Localization.getText("kelui.config.hud.new_hotbar")))
-                .addWidget(new ButtonConfigBoolean(140, 155, designType, KelUI.config, "HUD.NEW_EFFECTS", false, Localization.getText("kelui.config.hud.new_effects")))
-                .addWidget(new ButtonConfigBoolean(140, 180, designType, KelUI.config, "HUD.NEW_EFFECTS.TIME", true, Localization.getText("kelui.config.hud.new_effects.time")))
+                .addWidget(new ButtonConfigBoolean(140, 130, designType, KelUI.config, "HUD.DEBUG_OVERLAY", false, Localization.getText("kelui.config.hud.debug_overlay")))
+                .addWidget(new ButtonConfigBoolean(140, 155, designType, KelUI.config, "HUD.DARK_DEBUG_OVERLAY", true, Localization.getText("kelui.config.hud.dark_debug_overlay")))
+                .addWidget(new ButtonConfigBoolean(140, 180, designType, KelUI.config, "HUD.NEW_HOTBAR", false, Localization.getText("kelui.config.hud.new_hotbar")))
+                .addWidget(new ButtonConfigBoolean(140, 205, designType, KelUI.config, "HUD.NEW_EFFECTS", false, Localization.getText("kelui.config.hud.new_effects")))
+                .addWidget(new ButtonConfigBoolean(140, 230, designType, KelUI.config, "HUD.NEW_EFFECTS.TIME", true, Localization.getText("kelui.config.hud.new_effects.time")))
                 .build();
     }
 }
