@@ -8,10 +8,11 @@
     "screen.LoadingOverlayMixin",
     "screen.PauseScreenMixin",
     "screen.TitleScreenMixin",
-    "utils.GuiGraphicsMixin",
-    "utils.PlayerListMixin",
     "utils.DebugScreenOverlayMixin",
     "utils.ChatOverlayMixin",
+    "utils.GuiGraphicsMixin",
+    "utils.PlayerListMixin",
+    "utils.MinecraftMixin",
     "utils.GuiMixin"
   ],
   "injectors": {
