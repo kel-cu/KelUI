@@ -60,10 +60,20 @@
   "kelui.fix.tab_navigation_bar": "Fix color in navigation tab",
 
   "kelui.config.title.loading": "Loading screen",
+
+  "kelui.config.title.loading.vanilla": "Vanilla",
   "kelui.config.loading": "Re-style Loading Screen",
   "kelui.config.loading.background": "Background color",
   "kelui.config.loading.bar": "Color bar",
   "kelui.config.loading.bar.border": "Color border color",
+
+  "kelui.config.title.loading.new": "Vanilla",
+  "kelui.config.loading.new": "Enable new loading screen",
+  "kelui.config.loading.new.background": "Background color",
+  "kelui.config.loading.new.bar": "Color bar",
+  "kelui.config.loading.new.bar.background": "Background bar color",
+  "kelui.config.loading.new.icon": "Enable icon",
+
   "kelui.config.loading.preview": "Preview",
 
   "kelui.options.title.main": "Main Options",
