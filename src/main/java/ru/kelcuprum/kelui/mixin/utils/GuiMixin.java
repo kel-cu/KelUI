@@ -5,7 +5,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.DebugScreenOverlay;
-import net.minecraft.client.gui.components.spectator.SpectatorGui;
 import net.minecraft.client.resources.MobEffectTextureManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -15,7 +14,6 @@ import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -151,13 +149,13 @@ public abstract class GuiMixin {
         int o = this.screenHeight - 22;
         for(m = 0; m < 9; ++m) {
             n = m * 20;
-            this.renderSlot(guiGraphics, n, o, f, getCameraPlayer(), (ItemStack)getCameraPlayer().getInventory().items.get(m), l++);
+            this.renderSlot(guiGraphics, n, o, f, getCameraPlayer(), getCameraPlayer().getInventory().items.get(m), l++);
         }
         int selected = getCameraPlayer().getInventory().selected * 20;
         guiGraphics.fill(selected, this.screenHeight-3, selected+20, this.screenHeight-1, InterfaceUtils.Colors.SEADRIVE);
         ItemStack itemStack = getCameraPlayer().getOffhandItem();
         if(!itemStack.isEmpty()){
-            this.renderSlot(guiGraphics, 182, o, f, getCameraPlayer(), itemStack, l++);
+            this.renderSlot(guiGraphics, 182, o, f, getCameraPlayer(), itemStack, l);
         }
         ci.cancel();
     }
@@ -210,6 +208,7 @@ public abstract class GuiMixin {
     @Inject(method = "renderExperienceBar", at=@At("HEAD"), cancellable = true)
     void renderExperienceBar(GuiGraphics guiGraphics, int j, CallbackInfo ci){
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        assert this.minecraft.player != null;
         double exp = this.minecraft.player.experienceProgress;
         int i = this.screenHeight-22;
         int x = 0;
@@ -235,6 +234,7 @@ public abstract class GuiMixin {
         if(!itemStack.isEmpty()){
             x=22;
         }
+        assert this.minecraft.gameMode != null;
         if (!this.minecraft.gameMode.canHurtPlayer()) {
             x-=12;
         }
@@ -249,6 +249,7 @@ public abstract class GuiMixin {
     @Inject(method = "renderJumpMeter", at=@At("HEAD"), cancellable = true)
     void renderJumpMeter(PlayerRideableJumping playerRideableJumping, GuiGraphics guiGraphics, int j, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        assert this.minecraft.player != null;
         float f = this.minecraft.player.getJumpRidingScale();
         guiGraphics.fill(0, screenHeight-26, (int) (180*f), screenHeight-24, 0x7fffffff);
         int k = 180/18;
