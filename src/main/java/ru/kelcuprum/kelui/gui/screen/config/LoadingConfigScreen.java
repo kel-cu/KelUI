@@ -3,7 +3,6 @@ package ru.kelcuprum.kelui.gui.screen.config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
 import ru.kelcuprum.alinlib.gui.components.buttons.ButtonConfigBoolean;
 import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
@@ -14,11 +13,11 @@ import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.screen.config.demo.PreviewLoadingOverlay;
 
 public class LoadingConfigScreen {
-    private static final Component MainConfigCategory = Localization.getText("kelui.config.title.main_menu");
-    private static final Component PauseConfigCategory = Localization.getText("kelui.config.title.pause_menu");
-    private static final Component HUDConfigCategory = Localization.getText("kelui.config.title.hud");
-    private static final Component LoadingConfigCategory = Localization.getText("kelui.config.title.loading");
-    private static final Component OtherConfigCategory = Localization.getText("kelui.config.title.other");
+    private static final Component MainConfigCategory = Component.translatable("kelui.config.title.main_menu");
+    private static final Component PauseConfigCategory = Component.translatable("kelui.config.title.pause_menu");
+    private static final Component HUDConfigCategory = Component.translatable("kelui.config.title.hud");
+    private static final Component LoadingConfigCategory = Component.translatable("kelui.config.title.loading");
+    private static final Component OtherConfigCategory = Component.translatable("kelui.config.title.other");
     private static final InterfaceUtils.DesignType designType = InterfaceUtils.DesignType.FLAT;
     public Screen build(Screen parent) {
         return new ConfigScreenBuilder(parent, Component.translatable("kelui.name"), InterfaceUtils.DesignType.FLAT)
@@ -39,11 +38,11 @@ public class LoadingConfigScreen {
                 )
 
                 .addWidget(new TextBox(140, 5, MainConfigCategory, true))
-                .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "LOADING", true, Localization.getText("kelui.config.loading")))
-                .addWidget(new EditBoxColor(140, 55, designType, KelUI.config, "LOADING.BACKGROUND", 0xff1b1b1b, Localization.getText("kelui.config.loading.background")))
-                .addWidget(new EditBoxColor(140, 80, designType, KelUI.config, "LOADING.BAR_COLOR", 0xffff4f4f, Localization.getText("kelui.config.loading.bar")))
-                .addWidget(new EditBoxColor(140, 105, designType, KelUI.config, "LOADING.BAR_COLOR.BORDER", 0xffffffff, Localization.getText("kelui.config.loading.bar.border")))
-                .addWidget(new Button(140, 130, designType, Localization.getText("kelui.config.loading.preview"), (OnPress) ->{
+                .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "LOADING", true, Component.translatable("kelui.config.loading")))
+                .addWidget(new EditBoxColor(140, 55, designType, KelUI.config, "LOADING.BACKGROUND", 0xff1b1b1b, Component.translatable("kelui.config.loading.background")))
+                .addWidget(new EditBoxColor(140, 80, designType, KelUI.config, "LOADING.BAR_COLOR", 0xffff4f4f, Component.translatable("kelui.config.loading.bar")))
+                .addWidget(new EditBoxColor(140, 105, designType, KelUI.config, "LOADING.BAR_COLOR.BORDER", 0xffffffff, Component.translatable("kelui.config.loading.bar.border")))
+                .addWidget(new Button(140, 130, designType, Component.translatable("kelui.config.loading.preview"), (OnPress) ->{
                     Minecraft.getInstance().setOverlay(new PreviewLoadingOverlay(1000, () -> {}));
                 }))
                 .build();

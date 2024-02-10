@@ -3,7 +3,6 @@ package ru.kelcuprum.kelui.gui.screen.config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
 import ru.kelcuprum.alinlib.gui.components.buttons.ButtonConfigBoolean;
 import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
@@ -13,11 +12,11 @@ import ru.kelcuprum.alinlib.gui.screens.ConfigScreenBuilder;
 import ru.kelcuprum.kelui.KelUI;
 
 public class PauseConfigScreen {
-    private static final Component MainConfigCategory = Localization.getText("kelui.config.title.main_menu");
-    private static final Component PauseConfigCategory = Localization.getText("kelui.config.title.pause_menu");
-    private static final Component HUDConfigCategory = Localization.getText("kelui.config.title.hud");
-    private static final Component LoadingConfigCategory = Localization.getText("kelui.config.title.loading");
-    private static final Component OtherConfigCategory = Localization.getText("kelui.config.title.other");
+    private static final Component MainConfigCategory = Component.translatable("kelui.config.title.main_menu");
+    private static final Component PauseConfigCategory = Component.translatable("kelui.config.title.pause_menu");
+    private static final Component HUDConfigCategory = Component.translatable("kelui.config.title.hud");
+    private static final Component LoadingConfigCategory = Component.translatable("kelui.config.title.loading");
+    private static final Component OtherConfigCategory = Component.translatable("kelui.config.title.other");
     private static final InterfaceUtils.DesignType designType = InterfaceUtils.DesignType.FLAT;
     
     public Screen build(Screen parent) {
@@ -39,14 +38,14 @@ public class PauseConfigScreen {
                 )
 
                 .addWidget(new TextBox(140, 5, PauseConfigCategory, true))
-                .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "PAUSE_MENU", true, Localization.getText("kelui.config.pause_menu")))
-                .addWidget(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "PAUSE_MENU.ALPHA", true, Localization.getText("kelui.config.pause_menu.alpha")))
-                .addWidget(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "PAUSE_MENU.VERSION", true, Localization.getText("kelui.config.pause_menu.version")))
-                .addWidget(new ButtonConfigBoolean(140, 105, designType, KelUI.config, "PAUSE_MENU.PLAYER", true, Localization.getText("kelui.config.pause_menu.player")))
-                .addWidget(new TextBox(140, 130, Localization.getText("kelui.config.pause_menu.short_command"), false))
-                .addWidget(new ButtonConfigBoolean(140, 155, designType, KelUI.config, "PAUSE_MENU.ENABLE_SHORT_COMMAND", false, Localization.getText("kelui.config.pause_menu.enable_short_command")))
-                .addWidget(new EditBoxConfigString(140, 180, false, designType, KelUI.config, "PAUSE_MENU.SHORT_COMMAND.NAME", "Lobby", Localization.getText("kelui.config.pause_menu.short_command.name")))
-                .addWidget(new EditBoxConfigString(140, 205, false, designType, KelUI.config, "PAUSE_MENU.SHORT_COMMAND.COMMAND" ,"/lobby", Localization.getText("kelui.config.pause_menu.short_command.command")))
+                .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "PAUSE_MENU", true, Component.translatable("kelui.config.pause_menu")))
+                .addWidget(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "PAUSE_MENU.ALPHA", true, Component.translatable("kelui.config.pause_menu.alpha")))
+                .addWidget(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "PAUSE_MENU.VERSION", true, Component.translatable("kelui.config.pause_menu.version")))
+                .addWidget(new ButtonConfigBoolean(140, 105, designType, KelUI.config, "PAUSE_MENU.PLAYER", true, Component.translatable("kelui.config.pause_menu.player")))
+                .addWidget(new TextBox(140, 130, Component.translatable("kelui.config.pause_menu.short_command"), false))
+                .addWidget(new ButtonConfigBoolean(140, 155, designType, KelUI.config, "PAUSE_MENU.ENABLE_SHORT_COMMAND", false, Component.translatable("kelui.config.pause_menu.enable_short_command")))
+                .addWidget(new EditBoxConfigString(140, 180, false, designType, KelUI.config, "PAUSE_MENU.SHORT_COMMAND.NAME", "Lobby", Component.translatable("kelui.config.pause_menu.short_command.name")))
+                .addWidget(new EditBoxConfigString(140, 205, false, designType, KelUI.config, "PAUSE_MENU.SHORT_COMMAND.COMMAND" ,"/lobby", Component.translatable("kelui.config.pause_menu.short_command.command")))
                 .build();
     }
 }

@@ -3,7 +3,6 @@ package ru.kelcuprum.kelui.gui.screen.config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
 import ru.kelcuprum.alinlib.gui.components.buttons.ButtonConfigBoolean;
 import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
@@ -18,11 +17,11 @@ import ru.kelcuprum.kelui.KelUI;
 import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.SEADRIVE;
 
 public class OtherConfigScreen {
-    private static final Component MainConfigCategory = Localization.getText("kelui.config.title.main_menu");
-    private static final Component PauseConfigCategory = Localization.getText("kelui.config.title.pause_menu");
-    private static final Component HUDConfigCategory = Localization.getText("kelui.config.title.hud");
-    private static final Component LoadingConfigCategory = Localization.getText("kelui.config.title.loading");
-    private static final Component OtherConfigCategory = Localization.getText("kelui.config.title.other");
+    private static final Component MainConfigCategory = Component.translatable("kelui.config.title.main_menu");
+    private static final Component PauseConfigCategory = Component.translatable("kelui.config.title.pause_menu");
+    private static final Component HUDConfigCategory = Component.translatable("kelui.config.title.hud");
+    private static final Component LoadingConfigCategory = Component.translatable("kelui.config.title.loading");
+    private static final Component OtherConfigCategory = Component.translatable("kelui.config.title.other");
     private static final InterfaceUtils.DesignType designType = InterfaceUtils.DesignType.FLAT;
     public Screen build(Screen parent){
         String[] versionTypes = {
@@ -55,22 +54,22 @@ public class OtherConfigScreen {
 
                  .addWidget(new TextBox(140, 5, OtherConfigCategory, true))
                  .addWidget(new CategoryBox(140, 30, Component.translatable("kelui.config.title.other.render"))
-                         .addValue(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "TAB.FOREVER_RENDER_HEADS", true, Localization.getText("kelui.config.tab.forever_render_heads")))
-                         .addValue(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "HUD.MAP_SLOT", true, Localization.getText("kelui.config.hud.map_slot")))
-                         .addValue(new ButtonConfigBoolean(140, 130, designType, KelUI.config,  "DEBUG.DARK_GRAPH", true, Localization.getText("kelui.config.debug.dark_graph")))
-                         .addValue(new ButtonConfigBoolean(140, 155, designType, KelUI.config,  "UI.SMOOTH_MENU", false, Localization.getText("kelui.config.ui.smooth_menu"))))
+                         .addValue(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "TAB.FOREVER_RENDER_HEADS", true, Component.translatable("kelui.config.tab.forever_render_heads")))
+                         .addValue(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "HUD.MAP_SLOT", true, Component.translatable("kelui.config.hud.map_slot")))
+                         .addValue(new ButtonConfigBoolean(140, 130, designType, KelUI.config,  "DEBUG.DARK_GRAPH", true, Component.translatable("kelui.config.debug.dark_graph")))
+                         .addValue(new ButtonConfigBoolean(140, 155, designType, KelUI.config,  "UI.SMOOTH_MENU", false, Component.translatable("kelui.config.ui.smooth_menu"))))
 
                  .addWidget(new CategoryBox(140, 180, Component.translatable("kelui.config.title.other.chat"))
-                         .addValue(new ButtonConfigBoolean(140, 205, designType, KelUI.config, "CHAT.EDGELESS_SCREEN", true, Localization.getText("kelui.config.edgeless_chat_screen")))
-                         .addValue(new ButtonConfigBoolean(140, 230, designType, KelUI.config, "CHAT.TIMESTAMP", true, Localization.getText("kelui.config.chat.timestamp")))
-                         .addValue(new EditBoxConfigString(140, 255, false, designType, KelUI.config, "CHAT.TIMESTAMP.PATTERN", "HH:mm", Localization.getText("kelui.config.chat.timestamp.pattern")))
-                         .addValue(new EditBoxColor(140, 280, designType, KelUI.config, "CHAT.TIMESTAMP.COLOR", SEADRIVE, Localization.getText("kelui.config.chat.timestamp.color")))
+                         .addValue(new ButtonConfigBoolean(140, 205, designType, KelUI.config, "CHAT.EDGELESS_SCREEN", true, Component.translatable("kelui.config.edgeless_chat_screen")))
+                         .addValue(new ButtonConfigBoolean(140, 230, designType, KelUI.config, "CHAT.TIMESTAMP", true, Component.translatable("kelui.config.chat.timestamp")))
+                         .addValue(new EditBoxConfigString(140, 255, false, designType, KelUI.config, "CHAT.TIMESTAMP.PATTERN", "HH:mm", Component.translatable("kelui.config.chat.timestamp.pattern")))
+                         .addValue(new EditBoxColor(140, 280, designType, KelUI.config, "CHAT.TIMESTAMP.COLOR", SEADRIVE, Component.translatable("kelui.config.chat.timestamp.color")))
                  )
                  .addWidget(new CategoryBox(140, 305, Component.translatable("kelui.config.title.other.info"))
-                         .addValue(new SelectorIntegerButton(140, 330, designType, versionTypes, KelUI.config, "VERSION_TYPE", 0, Localization.getText("kelui.config.version")))
-                         .addValue(new EditBoxConfigString(140, 355, false , designType, KelUI.config, "VERSION_TYPE.CUSTOM", "Modpack v1.0.0", Localization.getText("kelui.config.version.custom")))
-                         .addValue(new SelectorIntegerButton(140, 380, designType, creditsTypes, KelUI.config, "CREDITS", 0, Localization.getText("kelui.config.credits")))
-                         .addValue(new EditBoxConfigString(140, 405, false, designType, KelUI.config, "CREDITS.CUSTOM", "Made with ❤ by Kel", Localization.getText("kelui.config.credits.custom"))))
+                         .addValue(new SelectorIntegerButton(140, 330, designType, versionTypes, KelUI.config, "VERSION_TYPE", 0, Component.translatable("kelui.config.version")))
+                         .addValue(new EditBoxConfigString(140, 355, false , designType, KelUI.config, "VERSION_TYPE.CUSTOM", "Modpack v1.0.0", Component.translatable("kelui.config.version.custom")))
+                         .addValue(new SelectorIntegerButton(140, 380, designType, creditsTypes, KelUI.config, "CREDITS", 0, Component.translatable("kelui.config.credits")))
+                         .addValue(new EditBoxConfigString(140, 405, false, designType, KelUI.config, "CREDITS.CUSTOM", "Made with ❤ by Kel", Component.translatable("kelui.config.credits.custom"))))
                  .addWidget(new CategoryBox(140, 430, Component.translatable("kelui.config.title.other.fix"))
                          .addValue(new TextBox(140, 455, Component.translatable("kelui.fix.connect_screen"), false))
                          .addValue(new TextBox(140, 480, Component.translatable("kelui.fix.selection_list"), false))

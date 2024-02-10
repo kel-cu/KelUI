@@ -56,6 +56,7 @@ public abstract class TitleScreenMixin extends Screen {
         if(!KelUI.config.getBoolean("MAIN_MENU", true)) return;
         int x = 10;
         //
+        assert this.minecraft != null;
 
         addRenderableWidget(new Button(x+25, height/2-35, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.singleplayer"), (OnPress) -> {
             this.minecraft.setScreen(new SelectWorldScreen(this));
