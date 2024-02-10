@@ -67,12 +67,13 @@
   "kelui.config.loading.bar": "Color bar",
   "kelui.config.loading.bar.border": "Color border color",
 
-  "kelui.config.title.loading.new": "Vanilla",
+  "kelui.config.title.loading.new": "KelUI",
   "kelui.config.loading.new": "Enable new loading screen",
   "kelui.config.loading.new.background": "Background color",
   "kelui.config.loading.new.bar": "Color bar",
   "kelui.config.loading.new.bar.background": "Background bar color",
   "kelui.config.loading.new.icon": "Enable icon",
+  "kelui.config.loading.new.icon_kelui": "Use icon from KelUI",
 
   "kelui.config.loading.preview": "Preview",
 

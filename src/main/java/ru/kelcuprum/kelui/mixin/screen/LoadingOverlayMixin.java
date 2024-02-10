@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LoadingOverlay;
 import net.minecraft.client.gui.screens.Overlay;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Final;
@@ -88,7 +89,19 @@ public abstract class LoadingOverlayMixin {
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(770, 1);
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, o);
-            guiGraphics.blit(LOADING_ICON, guiGraphics.guiWidth()/2-50, guiGraphics.guiHeight()/2-50, 0, 0, 100, 100, 100, 100);
+            if(KelUI.config.getBoolean("LOADING.NEW.ICON_KELUI", true)){
+                guiGraphics.blit(LOADING_ICON, guiGraphics.guiWidth()/2-50, guiGraphics.guiHeight()/2-50, 0, 0, 100, 100, 100, 100);
+            } else {
+
+                int k = (int)((double)guiGraphics.guiWidth() * 0.5);
+                int p = (int)((double)guiGraphics.guiHeight() * 0.5);
+                double d = Math.min((double)guiGraphics.guiWidth() * 0.75, (double)guiGraphics.guiHeight()) * 0.25;
+                int q = (int)(d * 0.5);
+                double e = d * 4.0;
+                int r = (int)(e * 0.5);
+                guiGraphics.blit(MOJANG_STUDIOS_LOGO_LOCATION, k - r, p - q, r, (int)d, -0.0625F, 0.0F, 120, 60, 120, 120);
+                guiGraphics.blit(MOJANG_STUDIOS_LOGO_LOCATION, k, p - q, r, (int)d, 0.0625F, 60.0F, 120, 60, 120, 120);
+            }
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.defaultBlendFunc();
             RenderSystem.disableBlend();
@@ -134,6 +147,8 @@ public abstract class LoadingOverlayMixin {
     private static int replaceAlpha(int i, int j) {
         return i & 16777215 | j << 24;
     }
+
+    @Shadow @Final private static ResourceLocation MOJANG_STUDIOS_LOGO_LOCATION;
 
     @Inject(method = "drawProgressBar", at = @At("HEAD"), cancellable = true)
     private void drawProgressBar(GuiGraphics guiGraphics, int i, int j, int k, int l, float f, CallbackInfo ci) {

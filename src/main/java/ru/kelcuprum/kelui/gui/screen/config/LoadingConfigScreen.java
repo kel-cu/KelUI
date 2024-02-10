@@ -51,9 +51,10 @@ public class LoadingConfigScreen {
                         .addValue(new EditBoxColor(140, 230, designType, KelUI.config, "LOADING.NEW.BAR_BACKGROUND", 0x7f05241E, Component.translatable("kelui.config.loading.new.bar")))
                         .addValue(new EditBoxColor(140, 255, designType, KelUI.config, "LOADING.NEW.BAR", 0xff1FA48C, Component.translatable("kelui.config.loading.new.bar.background")))
                         .addValue(new ButtonConfigBoolean(140, 280, designType, KelUI.config, "LOADING.NEW.ENABLE_ICON", true, Component.translatable("kelui.config.loading.new.icon")))
+                        .addValue(new ButtonConfigBoolean(140, 305, designType, KelUI.config, "LOADING.NEW.ICON_KELUI", true, Component.translatable("kelui.config.loading.new.icon_kelui")))
                 )
 
-                .addWidget(new Button(140, 130, designType, Component.translatable("kelui.config.loading.preview"), (OnPress) ->{
+                .addWidget(new Button(140, 330, designType, Component.translatable("kelui.config.loading.preview"), (OnPress) ->{
                     Minecraft.getInstance().setOverlay(new PreviewLoadingOverlay(1000, () -> {}));
                 }))
                 .build();

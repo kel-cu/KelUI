@@ -7,6 +7,7 @@ import ru.kelcuprum.alinlib.gui.InterfaceUtils;
 import ru.kelcuprum.alinlib.gui.components.buttons.ButtonConfigBoolean;
 import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
 import ru.kelcuprum.alinlib.gui.components.editbox.EditBoxConfigString;
+import ru.kelcuprum.alinlib.gui.components.text.CategoryBox;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.screens.ConfigScreenBuilder;
 import ru.kelcuprum.kelui.KelUI;
@@ -42,10 +43,11 @@ public class PauseConfigScreen {
                 .addWidget(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "PAUSE_MENU.ALPHA", true, Component.translatable("kelui.config.pause_menu.alpha")))
                 .addWidget(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "PAUSE_MENU.VERSION", true, Component.translatable("kelui.config.pause_menu.version")))
                 .addWidget(new ButtonConfigBoolean(140, 105, designType, KelUI.config, "PAUSE_MENU.PLAYER", true, Component.translatable("kelui.config.pause_menu.player")))
-                .addWidget(new TextBox(140, 130, Component.translatable("kelui.config.pause_menu.short_command"), false))
-                .addWidget(new ButtonConfigBoolean(140, 155, designType, KelUI.config, "PAUSE_MENU.ENABLE_SHORT_COMMAND", false, Component.translatable("kelui.config.pause_menu.enable_short_command")))
-                .addWidget(new EditBoxConfigString(140, 180, false, designType, KelUI.config, "PAUSE_MENU.SHORT_COMMAND.NAME", "Lobby", Component.translatable("kelui.config.pause_menu.short_command.name")))
-                .addWidget(new EditBoxConfigString(140, 205, false, designType, KelUI.config, "PAUSE_MENU.SHORT_COMMAND.COMMAND" ,"/lobby", Component.translatable("kelui.config.pause_menu.short_command.command")))
+                .addWidget(new CategoryBox(140, 130, Component.translatable("kelui.config.pause_menu.short_command"))
+                    .addValue(new ButtonConfigBoolean(140, 155, designType, KelUI.config, "PAUSE_MENU.ENABLE_SHORT_COMMAND", false, Component.translatable("kelui.config.pause_menu.enable_short_command")))
+                    .addValue(new EditBoxConfigString(140, 180, false, designType, KelUI.config, "PAUSE_MENU.SHORT_COMMAND.NAME", "Lobby", Component.translatable("kelui.config.pause_menu.short_command.name")))
+                    .addValue(new EditBoxConfigString(140, 205, false, designType, KelUI.config, "PAUSE_MENU.SHORT_COMMAND.COMMAND" ,"/lobby", Component.translatable("kelui.config.pause_menu.short_command.command")))
+                )
                 .build();
     }
 }
