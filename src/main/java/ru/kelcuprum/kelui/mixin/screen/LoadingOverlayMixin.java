@@ -6,7 +6,6 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LoadingOverlay;
-import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraft.util.Mth;
@@ -67,7 +66,7 @@ public abstract class LoadingOverlayMixin {
             if (this.minecraft.screen != null && h < 1.0F) {
                 this.minecraft.screen.render(guiGraphics, i, j, f);
             }
-            n = Mth.ceil(Mth.clamp((double)h, 0.15, 1.0) * 255.0);
+            n = Mth.ceil(Mth.clamp(h, 0.15, 1.0) * 255.0);
             o = Mth.clamp(h, 0.0F, 1.0F);
         } else {
             n = KelUI.config.getNumber("LOADING.NEW.BACKGROUND", 0xff030C03).intValue();
@@ -95,7 +94,7 @@ public abstract class LoadingOverlayMixin {
 
                 int k = (int)((double)guiGraphics.guiWidth() * 0.5);
                 int p = (int)((double)guiGraphics.guiHeight() * 0.5);
-                double d = Math.min((double)guiGraphics.guiWidth() * 0.75, (double)guiGraphics.guiHeight()) * 0.25;
+                double d = Math.min((double)guiGraphics.guiWidth() * 0.75, guiGraphics.guiHeight()) * 0.25;
                 int q = (int)(d * 0.5);
                 double e = d * 4.0;
                 int r = (int)(e * 0.5);
@@ -109,7 +108,7 @@ public abstract class LoadingOverlayMixin {
             RenderSystem.enableDepthTest();
         }
         if (g >= 2.0F) {
-            this.minecraft.setOverlay((Overlay)null);
+            this.minecraft.setOverlay(null);
         }
 
         if (this.fadeOutStart == -1L && this.reload.isDone() && (!this.fadeIn || h >= 2.0F)) {
@@ -148,7 +147,8 @@ public abstract class LoadingOverlayMixin {
         return i & 16777215 | j << 24;
     }
 
-    @Shadow @Final private static ResourceLocation MOJANG_STUDIOS_LOGO_LOCATION;
+    @Shadow @Final
+    static ResourceLocation MOJANG_STUDIOS_LOGO_LOCATION;
 
     @Inject(method = "drawProgressBar", at = @At("HEAD"), cancellable = true)
     private void drawProgressBar(GuiGraphics guiGraphics, int i, int j, int k, int l, float f, CallbackInfo ci) {
