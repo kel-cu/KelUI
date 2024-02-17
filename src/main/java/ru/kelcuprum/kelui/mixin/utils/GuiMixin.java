@@ -203,6 +203,11 @@ public abstract class GuiMixin {
         double hunger = (double) getCameraPlayer().getFoodData().getFoodLevel() / 20;
         guiGraphics.fill(190+x, i, 192+x, i+20, 0x75ff9b54);
         guiGraphics.fill(190+x, i, 192+x, (int) (i+(20*hunger)), 0xFFff9b54);
+        if(getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()){
+            double air = (double) Math.max(0, getCameraPlayer().getAirSupply()) /getCameraPlayer().getMaxAirSupply();
+            guiGraphics.fill(194+x, i, 196+x, i+20, 0x7fcae9ff);
+            guiGraphics.fill(194+x, i, 196+x, (int) (i+(20*air)), 0xffcae9ff);
+        }
         ci.cancel();
     }
     @Inject(method = "renderExperienceBar", at=@At("HEAD"), cancellable = true)
@@ -220,6 +225,9 @@ public abstract class GuiMixin {
         if (livingEntity != null) {
             x+=4;
         }
+        if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
+            x+=4;
+        }
         guiGraphics.fill(194+x, i, 196+x, i+20, SEADRIVE-0x75000000);
         guiGraphics.fill(194+x, i, 196+x, (int) (i+(20*exp)), SEADRIVE);
         guiGraphics.drawString(Minecraft.getInstance().font, "" + this.minecraft.player.experienceLevel, 198+x, i + (20 / 2) - (minecraft.font.lineHeight / 2), SEADRIVE);
@@ -233,6 +241,9 @@ public abstract class GuiMixin {
         ItemStack itemStack = getCameraPlayer().getOffhandItem();
         if(!itemStack.isEmpty()){
             x=22;
+        }
+        if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
+            x+=4;
         }
         assert this.minecraft.gameMode != null;
         if (!this.minecraft.gameMode.canHurtPlayer()) {
