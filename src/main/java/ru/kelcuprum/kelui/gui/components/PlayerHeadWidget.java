@@ -1,11 +1,11 @@
 package ru.kelcuprum.kelui.gui.components;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.PlayerFaceRenderer;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import ru.kelcuprum.kelui.KelUI;
 
 public class PlayerHeadWidget extends AbstractWidget {
     public PlayerHeadWidget(int x, int y, int width, int height) {
@@ -15,9 +15,9 @@ public class PlayerHeadWidget extends AbstractWidget {
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int i, int j, float f) {
-        PlayerFaceRenderer.draw(guiGraphics, Minecraft.getInstance().getSkinManager().getInsecureSkin(Minecraft.getInstance().getGameProfile()), getX(), getY(), getHeight());
+        PlayerFaceRenderer.draw(guiGraphics, KelUI.MIENCRAFT.getSkinManager().getInsecureSkin(KelUI.MIENCRAFT.getGameProfile()), getX(), getY(), getHeight());
         if(isHovered()){
-            guiGraphics.renderTooltip(Minecraft.getInstance().font, Component.literal(Minecraft.getInstance().getUser().getName()), i, j);
+            guiGraphics.renderTooltip(KelUI.MIENCRAFT.font, Component.literal(KelUI.MIENCRAFT.getUser().getName()), i, j);
         }
     }
 

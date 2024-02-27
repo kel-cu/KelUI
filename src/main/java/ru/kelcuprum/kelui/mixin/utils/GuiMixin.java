@@ -70,8 +70,8 @@ public abstract class GuiMixin {
                     items.add(item);
                     if(KelUI.config.getBoolean("HUD.ARMOR_INFO.DAMAGE", true)) {
                         Component itext = Component.literal(KelUI.getArmorDamage(item));
-                        if (Minecraft.getInstance().font.width(itext) > maxText)
-                            maxText = Minecraft.getInstance().font.width(itext);
+                        if (KelUI.MIENCRAFT.font.width(itext) > maxText)
+                            maxText = KelUI.MIENCRAFT.font.width(itext);
                         text.add(itext);
                     }
                 }
@@ -85,7 +85,7 @@ public abstract class GuiMixin {
                 }
                 for (ItemStack item : items) {
                     guiGraphics.renderFakeItem(item, 2, y + (j * 18) + 2);
-                    if(!text.isEmpty()) guiGraphics.drawString(Minecraft.getInstance().font, text.get(j), 22, y + (j * 18) + (20 / 2) - (minecraft.font.lineHeight / 2), 0xFFFFFFFF);
+                    if(!text.isEmpty()) guiGraphics.drawString(minecraft.font, text.get(j), 22, y + (j * 18) + (20 / 2) - (minecraft.font.lineHeight / 2), 0xFFFFFFFF);
                     j++;
                 }
             }
@@ -230,7 +230,7 @@ public abstract class GuiMixin {
         }
         guiGraphics.fill(194+x, i, 196+x, i+20, SEADRIVE-0x75000000);
         guiGraphics.fill(194+x, i, 196+x, (int) (i+(20*exp)), SEADRIVE);
-        guiGraphics.drawString(Minecraft.getInstance().font, "" + this.minecraft.player.experienceLevel, 198+x, i + (20 / 2) - (minecraft.font.lineHeight / 2), SEADRIVE);
+        guiGraphics.drawString(minecraft.font, "" + this.minecraft.player.experienceLevel, 198+x, i + (20 / 2) - (minecraft.font.lineHeight / 2), SEADRIVE);
         ci.cancel();
     }
     @Inject(method = "renderVehicleHealth", at=@At("HEAD"), cancellable = true)

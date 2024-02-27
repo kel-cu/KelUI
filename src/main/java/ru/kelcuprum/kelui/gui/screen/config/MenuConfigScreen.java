@@ -39,7 +39,8 @@ public class MenuConfigScreen {
                 .addWidget(new TextBox(140, 5, MainConfigCategory, true))
                 .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "MAIN_MENU", true, Component.translatable("kelui.config.main_menu")))
                 .addWidget(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "MAIN_MENU.PANORAMA", true, Component.translatable("kelui.config.main_menu.panorama")))
-                .addWidget(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "MAIN_MENU.VERSION", true, Component.translatable("kelui.config.main_menu.version")))
+                .addWidget(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "MAIN_MENU.TEXTURE_BACKGROUND", false, Component.translatable("kelui.config.main_menu.texture_background")))
+                .addWidget(new ButtonConfigBoolean(140, 105, designType, KelUI.config, "MAIN_MENU.VERSION", true, Component.translatable("kelui.config.main_menu.version")))
                 .build();
     }
 }

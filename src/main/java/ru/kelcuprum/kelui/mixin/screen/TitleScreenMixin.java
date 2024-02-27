@@ -1,5 +1,6 @@
 package ru.kelcuprum.kelui.mixin.screen;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.terraformersmc.modmenu.gui.ModsScreen;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -10,6 +11,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -80,7 +82,13 @@ public abstract class TitleScreenMixin extends Screen {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo cl) {
         if(!KelUI.config.getBoolean("MAIN_MENU", true)) return;
-        if(KelUI.config.getBoolean("MAIN_MENU.PANORAMA", true)){
+        if(KelUI.config.getBoolean("MAIN_MENU.TEXTURE_BACKGROUND", false)){
+            ResourceLocation texture = new ResourceLocation("kelui", "textures/gui/sprites/main_menu/background.png");
+            RenderSystem.setShader(GameRenderer::getPositionTexShader); // getPositionTexProgram
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderTexture(0, texture);
+            guiGraphics.blit(texture, 0, 0, width, height, 0f, 0f, 1920, 1080, 1920, 1080);
+        } else if(KelUI.config.getBoolean("MAIN_MENU.PANORAMA", true)){
             if (this.fadeInStart == 0L && this.fading) {
                 this.fadeInStart = Util.getMillis();
             }
