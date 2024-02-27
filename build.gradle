@@ -7,6 +7,7 @@ plugins {
 apply plugin: 'com.github.johnrengelman.shadow'
 version = project.mod_version
 group = project.maven_group
+archivesBaseName = project.archives_base_name
 
 repositories {
     // Add repositories to retrieve artifacts from in here.
@@ -37,7 +38,7 @@ dependencies {
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     //
     shade modImplementation("ru.kelcuprum.alinlib:AlinLib:${project.alinlib}");
-    include(implementation "meteordevelopment:starscript:0.2.2")
+    include(implementation ("meteordevelopment:starscript:0.2.2"))
 
     subprojects.each {
         implementation project(path: ":${it.name}", configuration: 'namedElements')
