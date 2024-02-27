@@ -5,7 +5,7 @@
   "kelui.config.title.main_menu": "Main Menu",
   "kelui.config.main_menu": "Restyle Main Menu",
   "kelui.config.main_menu.panorama": "Enable panorama",
-  "kelui.config.main_menu.position": "Position components",
+  "kelui.config.main_menu.texture_background": "Textured background",
   "kelui.config.main_menu.version": "Enable version text in main menu",
 
   "kelui.config.title.pause_menu": "Pause Menu",
