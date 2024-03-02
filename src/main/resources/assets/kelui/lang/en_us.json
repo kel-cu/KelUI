@@ -30,6 +30,8 @@
 
   "kelui.config.new_interface": "Redesign interface",
   "kelui.config.hud.new_hotbar": "New Design Hotbar",
+  "kelui.config.hud.new_hotbar.position": "Re-design Hotbar position",
+  "kelui.config.hud.new_hotbar.state_type": "Player stats type",
   "kelui.config.hud.new_effects": "New Design Effects",
   "kelui.config.hud.new_effects.time": "Enable effect time",
 

@@ -107,7 +107,8 @@ public abstract class GuiMixin {
             )
     )
     private void message(Args args) {
-        if(!KelUI.config.getBoolean("HUD.NEW_HOTBAR", true)) return;
+        if(!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        if(KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 1) return;
         if((float) args.get(1) == (float) (this.screenHeight - 68)) {
             args.set(0, (float) (((this.screenWidth-200)/2)+200));
             args.set(1, (float) (this.screenHeight-18+ (20 / 2) - (minecraft.font.lineHeight / 2)));
@@ -143,19 +144,20 @@ public abstract class GuiMixin {
     @Inject(method = "renderHotbar", at = @At("HEAD"), cancellable = true)
     void renderHotbar(float f, GuiGraphics guiGraphics, CallbackInfo ci){
         if(!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 0 : (this.screenWidth-180) / 2;
         int l = 1;
         int m;
         int n;
         int o = this.screenHeight - 22;
         for(m = 0; m < 9; ++m) {
             n = m * 20;
-            this.renderSlot(guiGraphics, n, o, f, getCameraPlayer(), getCameraPlayer().getInventory().items.get(m), l++);
+            this.renderSlot(guiGraphics, pos+n, o, f, getCameraPlayer(), getCameraPlayer().getInventory().items.get(m), l++);
         }
         int selected = getCameraPlayer().getInventory().selected * 20;
-        guiGraphics.fill(selected, this.screenHeight-3, selected+20, this.screenHeight-1, InterfaceUtils.Colors.SEADRIVE);
+        guiGraphics.fill(pos+selected, this.screenHeight-3, pos+selected+20, this.screenHeight-1, InterfaceUtils.Colors.SEADRIVE);
         ItemStack itemStack = getCameraPlayer().getOffhandItem();
         if(!itemStack.isEmpty()){
-            this.renderSlot(guiGraphics, 182, o, f, getCameraPlayer(), itemStack, l);
+            this.renderSlot(guiGraphics, pos+182, o, f, getCameraPlayer(), itemStack, l);
         }
         ci.cancel();
     }
@@ -185,87 +187,126 @@ public abstract class GuiMixin {
     @Inject(method = "renderPlayerHealth", at = @At("HEAD"), cancellable = true)
     void renderPlayrerHealth(GuiGraphics guiGraphics, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
-        int i = this.screenHeight-22;
-        int x = 0;
-        ItemStack itemStack = getCameraPlayer().getOffhandItem();
-        if(!itemStack.isEmpty()){
-            x=22;
-        }
-        // health
+        int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 0 : (this.screenWidth-180) / 2;
+        // -=-=-=-
+
         double health = getCameraPlayer().getHealth() / getCameraPlayer().getAttributeValue(Attributes.MAX_HEALTH);
-        guiGraphics.fill(182+x, i, 184+x, i+20, GROUPIE-0x75000000);
-        guiGraphics.fill(182+x, i, 184+x, (int) (i+(20*health)), GROUPIE);
-
         double armor = (double) getCameraPlayer().getArmorValue() / 20;
-        guiGraphics.fill(186+x, i, 188+x, i+20, 0x75598392);
-        guiGraphics.fill(186+x, i, 188+x, (int) (i+(20*armor)), 0xff598392);
-
         double hunger = (double) getCameraPlayer().getFoodData().getFoodLevel() / 20;
-        guiGraphics.fill(190+x, i, 192+x, i+20, 0x75ff9b54);
-        guiGraphics.fill(190+x, i, 192+x, (int) (i+(20*hunger)), 0xFFff9b54);
-        if(getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()){
-            double air = (double) Math.max(0, getCameraPlayer().getAirSupply()) /getCameraPlayer().getMaxAirSupply();
-            guiGraphics.fill(194+x, i, 196+x, i+20, 0x7fcae9ff);
-            guiGraphics.fill(194+x, i, 196+x, (int) (i+(20*air)), 0xffcae9ff);
+        double air = (double) Math.max(0, getCameraPlayer().getAirSupply()) /getCameraPlayer().getMaxAirSupply();
+        // -=-=-=-
+        if(KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 0){
+            int i = this.screenHeight-22;
+            int x = 0;
+            ItemStack itemStack = getCameraPlayer().getOffhandItem();
+            if(!itemStack.isEmpty()){
+                x=22;
+            }
+            // health
+            guiGraphics.fill(pos+182+x, i, pos+184+x, i+20, GROUPIE-0x75000000);
+            guiGraphics.fill(pos+182+x, i, pos+184+x, (int) (i+(20*health)), GROUPIE);
+
+            guiGraphics.fill(pos+186+x, i, pos+188+x, i+20, 0x75598392);
+            guiGraphics.fill(pos+186+x, i, pos+188+x, (int) (i+(20*armor)), 0xff598392);
+
+            guiGraphics.fill(pos+190+x, i, pos+192+x, i+20, 0x75ff9b54);
+            guiGraphics.fill(pos+190+x, i, pos+192+x, (int) (i+(20*hunger)), 0xFFff9b54);
+            if(getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()){
+                guiGraphics.fill(pos+194+x, i, pos+196+x, i+20, 0x7fcae9ff);
+                guiGraphics.fill(pos+194+x, i, pos+196+x, (int) (i+(20*air)), 0xffcae9ff);
+            }
+        } else {
+            int i = this.screenHeight-28;
+            PlayerRideableJumping playerRideableJumping = this.minecraft.player.jumpableVehicle();
+            guiGraphics.fill(pos, i-2, pos+80, i, GROUPIE-0x75000000);
+            guiGraphics.fill(pos, i-2, (int) (pos+(80*health)), i, GROUPIE);
+            //
+            if(armor != 0) {
+                guiGraphics.fill(pos, i - 4, pos + 80, i - 6, 0x75598392);
+                guiGraphics.fill(pos, i - 4, (int) (pos + (80 * armor)), i - 6, 0xff598392);
+            }
+
+            guiGraphics.fill(pos+100, i-2, pos+180, i, 0x75ff9b54);
+            guiGraphics.fill(pos+100, i-2, (int) (pos+100+(80*hunger)), i, 0xFFff9b54);
+
+            if(getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
+                guiGraphics.fill(pos+100, i-4, pos+180, i-6, 0x7fcae9ff);
+                guiGraphics.fill(pos+100, i-4, (int) (pos+100+(80*air)), i-6, 0xffcae9ff);
+            }
         }
         ci.cancel();
     }
     @Inject(method = "renderExperienceBar", at=@At("HEAD"), cancellable = true)
     void renderExperienceBar(GuiGraphics guiGraphics, int j, CallbackInfo ci){
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 0 : (this.screenWidth-180) / 2;
         assert this.minecraft.player != null;
         double exp = this.minecraft.player.experienceProgress;
-        int i = this.screenHeight-22;
-        int x = 0;
-        ItemStack itemStack = getCameraPlayer().getOffhandItem();
-        if(!itemStack.isEmpty()){
-            x=22;
+
+        if(KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 0) {
+            int i = this.screenHeight - 22;
+            int x = 0;
+            ItemStack itemStack = getCameraPlayer().getOffhandItem();
+            if (!itemStack.isEmpty()) {
+                x = 22;
+            }
+            LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
+            if (livingEntity != null) {
+                x += 4;
+            }
+            if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
+                x += 4;
+            }
+            guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, SEADRIVE - 0x75000000);
+            guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, (int) (i + (20 * exp)), SEADRIVE);
+            guiGraphics.drawString(minecraft.font, "" + this.minecraft.player.experienceLevel, pos + 198 + x, i + (20 / 2) - (minecraft.font.lineHeight / 2), SEADRIVE);
+        } else {
+            int i = this.screenHeight-24;
+            guiGraphics.fill(pos, i, pos+180, i-2, SEADRIVE-0x75000000);
+            guiGraphics.fill(pos, i, (int) (pos+(180* exp)), i-2, SEADRIVE);
+            guiGraphics.drawCenteredString(minecraft.font, "" + this.minecraft.player.experienceLevel, (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 90 : this.screenWidth/2, i-2-minecraft.font.lineHeight, SEADRIVE);
         }
-        LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
-        if (livingEntity != null) {
-            x+=4;
-        }
-        if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
-            x+=4;
-        }
-        guiGraphics.fill(194+x, i, 196+x, i+20, SEADRIVE-0x75000000);
-        guiGraphics.fill(194+x, i, 196+x, (int) (i+(20*exp)), SEADRIVE);
-        guiGraphics.drawString(minecraft.font, "" + this.minecraft.player.experienceLevel, 198+x, i + (20 / 2) - (minecraft.font.lineHeight / 2), SEADRIVE);
         ci.cancel();
     }
     @Inject(method = "renderVehicleHealth", at=@At("HEAD"), cancellable = true)
     void renderVehicleHealth(GuiGraphics guiGraphics, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 0 : (this.screenWidth-180) / 2;
         int i = this.screenHeight-22;
         int x = 0;
         ItemStack itemStack = getCameraPlayer().getOffhandItem();
         if(!itemStack.isEmpty()){
             x=22;
         }
-        if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
-            x+=4;
+        if(KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 0) {
+            if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
+                x += 4;
+            }
+            assert this.minecraft.gameMode != null;
+            if (!this.minecraft.gameMode.canHurtPlayer()) {
+                x -= 12;
+            }
+            x+=12;
         }
-        assert this.minecraft.gameMode != null;
-        if (!this.minecraft.gameMode.canHurtPlayer()) {
-            x-=12;
-        }
+
         LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
         if (livingEntity != null) {
             double health = livingEntity.getHealth()/livingEntity.getMaxHealth();
-            guiGraphics.fill(194+x, i, 196+x, i+20, CLOWNFISH-0x75000000);
-            guiGraphics.fill(194+x, i, 196+x, (int) (i+(20*health)), CLOWNFISH);
+            guiGraphics.fill(pos+182+x, i, pos+184+x, i+20, CLOWNFISH-0x75000000);
+            guiGraphics.fill(pos+182+x, i, pos+184+x, (int) (i+(20*health)), CLOWNFISH);
         }
         ci.cancel();
     }
     @Inject(method = "renderJumpMeter", at=@At("HEAD"), cancellable = true)
     void renderJumpMeter(PlayerRideableJumping playerRideableJumping, GuiGraphics guiGraphics, int j, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 0 : (this.screenWidth-180) / 2;
         assert this.minecraft.player != null;
         float f = this.minecraft.player.getJumpRidingScale();
-        guiGraphics.fill(0, screenHeight-26, (int) (180*f), screenHeight-24, 0x7fffffff);
+        guiGraphics.fill(pos, screenHeight-26, (int) (pos+(180*f)), screenHeight-24, 0x7fffffff);
         int k = 180/18;
-        guiGraphics.fill(0, screenHeight-26, k*16, screenHeight-24, 0x7F598392);
-        guiGraphics.fill(k*16, screenHeight-26, 180, screenHeight-24, CONVICT-0x7F000000);
+        guiGraphics.fill(pos, screenHeight-26, pos+(k*16), screenHeight-24, 0x7F598392);
+        guiGraphics.fill(pos+(k*16), screenHeight-26, pos+180, screenHeight-24, CONVICT-0x7F000000);
         ci.cancel();
     }
 
@@ -279,8 +320,10 @@ public abstract class GuiMixin {
             if (l > 255) {
                 l = 255;
             }
-
-            guiGraphics.drawString(getFont(), mutableComponent, 6, screenHeight - 22 - 4 - minecraft.font.lineHeight, 16777215 + (l << 24));
+            int y = screenHeight-22-(KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 0 ? 4 : 18)-minecraft.font.lineHeight;
+            if(KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 1 && this.minecraft.gameMode.canHurtPlayer()) y -= 12;
+            if(KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 1) guiGraphics.drawCenteredString(getFont(), mutableComponent, this.screenWidth/2, y, 16777215 + (l << 24));
+            else guiGraphics.drawString(getFont(), mutableComponent, KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0 ? 6 : this.screenWidth-6-getFont().width(mutableComponent), y, 16777215 + (l << 24));
         }
         ci.cancel();
     }
