@@ -26,7 +26,7 @@ public class KelUI implements ClientModInitializer {
     public static void log(String message) { log(message, Level.INFO);}
     public static void log(String message, Level level) { LOG.log(level, "[" + LOG.getName() + "] " + message); }
     public static Config config = new Config("config/KelUI.json");
-    public static Minecraft MIENCRAFT = Minecraft.getInstance();
+    public static Minecraft MINECRAFT = Minecraft.getInstance();
     @Override
     public void onInitializeClient() {
         config.load();
@@ -42,14 +42,14 @@ public class KelUI implements ClientModInitializer {
         }
     }
     public static Screen getOptionScreen(Screen parent){
-        return new OptionsScreen(parent, MIENCRAFT.options);
+        return new OptionsScreen(parent, MINECRAFT.options);
     }
     public static String getStringVersion(){
         return switch (KelUI.config.getNumber("VERSION_TYPE", 0).intValue()){
-            case 1 -> String.format("Minecraft %s (Mods: %s)", MIENCRAFT.getLaunchedVersion(), FabricLoader.getInstance().getAllMods().size());
-            case 2 -> String.format("Minecraft %s (%s)", MIENCRAFT.getLaunchedVersion(), MIENCRAFT.getVersionType());
+            case 1 -> String.format("Minecraft %s (Mods: %s)", MINECRAFT.getLaunchedVersion(), FabricLoader.getInstance().getAllMods().size());
+            case 2 -> String.format("Minecraft %s (%s)", MINECRAFT.getLaunchedVersion(), MINECRAFT.getVersionType());
             case 3 -> KelUI.config.getString("VERSION_TYPE.CUSTOM", "Modpack v1.0.0");
-            default -> String.format("Minecraft %s", MIENCRAFT.getLaunchedVersion());
+            default -> String.format("Minecraft %s", MINECRAFT.getLaunchedVersion());
         };
     }
     public static String getStringCredits(){

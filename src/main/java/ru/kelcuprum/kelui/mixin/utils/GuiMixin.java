@@ -70,8 +70,8 @@ public abstract class GuiMixin {
                     items.add(item);
                     if(KelUI.config.getBoolean("HUD.ARMOR_INFO.DAMAGE", true)) {
                         Component itext = Component.literal(KelUI.getArmorDamage(item));
-                        if (KelUI.MIENCRAFT.font.width(itext) > maxText)
-                            maxText = KelUI.MIENCRAFT.font.width(itext);
+                        if (KelUI.MINECRAFT.font.width(itext) > maxText)
+                            maxText = KelUI.MINECRAFT.font.width(itext);
                         text.add(itext);
                     }
                 }
