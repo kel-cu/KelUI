@@ -6,12 +6,16 @@
   "kelui.config.main_menu": "Restyle Main Menu",
   "kelui.config.main_menu.panorama": "Enable panorama",
   "kelui.config.main_menu.texture_background": "Textured background",
-  "kelui.config.main_menu.version": "Enable version text in main menu",
+  "kelui.config.main_menu.info": "Enable info text in main menu",
+  "kelui.config.main_menu.version": "Enable version",
+  "kelui.config.main_menu.credits": "Enable credits",
 
   "kelui.config.title.pause_menu": "Pause Menu",
   "kelui.config.pause_menu": "Restyle Pause Menu",
   "kelui.config.pause_menu.alpha": "Enable alpha background",
-  "kelui.config.pause_menu.version": "Enable version text in pause",
+  "kelui.config.pause_menu.info": "Enable info text in pause",
+  "kelui.config.pause_menu.version": "Enable version",
+  "kelui.config.pause_menu.credits": "Enable credits",
   "kelui.config.pause_menu.player": "Enable render player",
 
   "kelui.config.pause_menu.short_command": "Command button",

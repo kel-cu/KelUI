@@ -64,9 +64,15 @@ public abstract class PauseScreenMixin extends Screen {
             OnPress.setActive(false);
             this.minecraft.getReportingContext().draftReportHandled(this.minecraft, this, this::onDisconnect, true);
         }));
-        if(KelUI.config.getBoolean("PAUSE_MENU.VERSION", true)) {
-            addRenderableWidget(new TextBox(x, height - 30, 210, font.lineHeight, Component.literal(KelUI.getStringCredits()), false));
-            addRenderableWidget(new TextBox(x, height - 20, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
+        if(KelUI.config.getBoolean("PAUSE_MENU.INFO", true)) {
+            int yT = height-20;
+            if(KelUI.config.getBoolean("PAUSE_MENU.VERSION", true)){
+                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
+                yT-=10;
+            }
+            if(KelUI.config.getBoolean("PAUSE_MENU.CREDITS", false)) {
+                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringCredits()), false));
+            }
         }
         cl.cancel();
     }
