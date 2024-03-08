@@ -5,6 +5,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.DebugScreenOverlay;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.resources.MobEffectTextureManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -96,6 +97,9 @@ public abstract class GuiMixin {
             Component fps = Component.literal(String.format("%s FPS", this.minecraft.getFps()));
             guiGraphics.fill(x, y1,x+4+getFont().width(fps)+4 , y1+2+getFont().lineHeight+4, 0x7f000000);
             guiGraphics.drawString(getFont(), fps, x+4, y1+4, -1);
+        }
+        if(KelUI.config.getBoolean("HUD.PAPER_DOLL", false)) {
+            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, screenWidth-130, 0, screenWidth, 150, 45, 0.0625F, (float) screenWidth /2, 75, this.minecraft.player);
         }
     }
     // -=-=-=-=-=-=-=-=-=-

@@ -4,6 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
+import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBooleanBuilder;
+import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
+import ru.kelcuprum.alinlib.gui.components.builder.editbox.EditBoxBuilder;
 import ru.kelcuprum.alinlib.gui.components.buttons.ButtonConfigBoolean;
 import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
 import ru.kelcuprum.alinlib.gui.components.editbox.EditBoxColor;
@@ -38,21 +41,21 @@ public class LoadingConfigScreen {
                         new Button(10,140, designType, OtherConfigCategory, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent)))
                 )
 
-                .addWidget(new TextBox(140, 5, LoadingConfigCategory, true))
-                .addWidget(new Button(140, 330, designType, Component.translatable("kelui.config.loading.preview"), (OnPress) -> Minecraft.getInstance().setOverlay(new PreviewLoadingOverlay(1000, () -> {}))))
-                .addWidget(new CategoryBox(140 , 30, Component.translatable("kelui.config.title.loading.vanilla"))
-                        .addValue(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "LOADING", true, Component.translatable("kelui.config.loading")))
-                        .addValue(new EditBoxColor(140, 80, designType, KelUI.config, "LOADING.BACKGROUND", 0xff1b1b1b, Component.translatable("kelui.config.loading.background")))
-                        .addValue(new EditBoxColor(140, 105, designType, KelUI.config, "LOADING.BAR_COLOR", 0xffff4f4f, Component.translatable("kelui.config.loading.bar")))
-                        .addValue(new EditBoxColor(140, 130, designType, KelUI.config, "LOADING.BAR_COLOR.BORDER", 0xffffffff, Component.translatable("kelui.config.loading.bar.border")))
+                .addWidget(new TextBox(LoadingConfigCategory, true))
+                .addWidget(new ButtonBuilder(Component.translatable("kelui.config.loading.preview"), (OnPress) -> Minecraft.getInstance().setOverlay(new PreviewLoadingOverlay(1000, () -> {}))).build())
+                .addWidget(new CategoryBox(Component.translatable("kelui.config.title.loading.vanilla"))
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading"), true).setConfig(KelUI.config, "LOADING").build())
+                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.background")).setColor(0xff1b1b1b).setConfig(KelUI.config, "LOADING.BACKGROUND").build())
+                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.bar")).setColor(0xffff4f4f).setConfig(KelUI.config, "LOADING.BAR_COLOR").build())
+                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.bar.border")).setColor(0xffffffff).setConfig(KelUI.config, "LOADING.BAR_COLOR.BORDER").build())
                 )
-                .addWidget(new CategoryBox(140 , 155, Component.translatable("kelui.config.title.loading.new"))
-                        .addValue(new ButtonConfigBoolean(140, 180, designType, KelUI.config, "LOADING.NEW", true, Component.translatable("kelui.config.loading.new")))
-                        .addValue(new EditBoxColor(140, 205, designType, KelUI.config, "LOADING.NEW.BACKGROUND", 0xff030C03, Component.translatable("kelui.config.loading.new.background")))
-                        .addValue(new EditBoxColor(140, 230, designType, KelUI.config, "LOADING.NEW.BAR_BACKGROUND", 0x7f05241E, Component.translatable("kelui.config.loading.new.bar")))
-                        .addValue(new EditBoxColor(140, 255, designType, KelUI.config, "LOADING.NEW.BAR", 0xff1FA48C, Component.translatable("kelui.config.loading.new.bar.background")))
-                        .addValue(new ButtonConfigBoolean(140, 280, designType, KelUI.config, "LOADING.NEW.ENABLE_ICON", true, Component.translatable("kelui.config.loading.new.icon")))
-                        .addValue(new ButtonConfigBoolean(140, 305, designType, KelUI.config, "LOADING.NEW.ICON_KELUI", true, Component.translatable("kelui.config.loading.new.icon_kelui")))
+                .addWidget(new CategoryBox(Component.translatable("kelui.config.title.loading.new"))
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading.new"), true).setConfig(KelUI.config, "LOADING.NEW").build())
+                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.background")).setColor(0xff030C03).setConfig(KelUI.config, "LOADING.NEW.BACKGROUND").build())
+                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.bar.background")).setColor(0xff1FA48C).setConfig(KelUI.config, "LOADING.NEW.BAR_BACKGROUND").build())
+                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.bar")).setColor(0x7f05241E).setConfig(KelUI.config, "LOADING.NEW.BAR_COLOR").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading.new.icon"), true).setConfig(KelUI.config, "LOADING.NEW.ENABLE_ICON").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading.new.icon_kelui"), true).setConfig(KelUI.config, "LOADING.NEW.ICON_KELUI").build())
                 )
                 .build();
     }

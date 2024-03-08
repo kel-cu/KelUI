@@ -38,7 +38,9 @@
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.donate": "https://kelcuprum.ru/r/don"
+        "modmenu.modrinth": "https://modrinth.com/mod/kelui",
+        "modmenu.donate": "https://kelcuprum.ru/r/don",
+        "modmenu.discord": "https://kelcuprum.ru/r/ds"
       }
     }
   }

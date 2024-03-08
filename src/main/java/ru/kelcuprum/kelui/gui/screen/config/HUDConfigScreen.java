@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
+import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBooleanBuilder;
+import ru.kelcuprum.alinlib.gui.components.builder.selector.SelectorBuilder;
 import ru.kelcuprum.alinlib.gui.components.buttons.ButtonConfigBoolean;
 import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
 import ru.kelcuprum.alinlib.gui.components.selector.SelectorIntegerButton;
@@ -52,23 +54,24 @@ public class HUDConfigScreen {
                         new Button(10, 140, designType, OtherConfigCategory, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent)))
                 )
 
-                .addWidget(new TextBox(140, 5, HUDConfigCategory, true))
-                .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "HUD.DEBUG_OVERLAY", false, Component.translatable("kelui.config.hud.debug_overlay")))
-                .addWidget(new CategoryBox(140, 55, Component.translatable("kelui.config.hud.armor_info.title"))
-                        .addValue(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "HUD.ARMOR_INFO", true, Component.translatable("kelui.config.hud.armor_info")))
-                        .addValue(new ButtonConfigBoolean(140, 105, designType, KelUI.config, "HUD.ARMOR_INFO.DAMAGE", true, Component.translatable("kelui.config.hud.armor_info.damage")))
-                        .addValue(new SelectorIntegerButton(140, 130, designType, type, KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE", 0, Component.translatable("kelui.config.hud.armor_info.damage.type")))
-                        .addValue(new ButtonConfigBoolean(140, 155, designType, KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE.CUT", true, Component.translatable("kelui.config.hud.armor_info.damage.type.cut"))))
-                .addWidget(new CategoryBox(140, 180, Component.translatable("kelui.config.new_interface"))
-                        .addValue(new ButtonConfigBoolean(140, 205, designType, KelUI.config, "HUD.NEW_HOTBAR", false, Component.translatable("kelui.config.hud.new_hotbar")))
-                        .addValue(new SelectorIntegerButton(140, 230, designType, hudPosition, KelUI.config, "HUD.NEW_HOTBAR.POSITION", 0, Component.translatable("kelui.config.hud.new_hotbar.position")))
-                        .addValue(new SelectorIntegerButton(140, 255, designType, stateType, KelUI.config, "HUD.NEW_HOTBAR.STATE_TYPE", 0, Component.translatable("kelui.config.hud.new_hotbar.state_type")))
-                        .addValue(new ButtonConfigBoolean(140, 280, designType, KelUI.config, "HUD.NEW_EFFECTS", false, Component.translatable("kelui.config.hud.new_effects")))
-                        .addValue(new ButtonConfigBoolean(140, 305, designType, KelUI.config, "HUD.NEW_EFFECTS.TIME", true, Component.translatable("kelui.config.hud.new_effects.time"))))
-                .addWidget(new CategoryBox(140, 330, Component.translatable("kelui.config.debug_overlay"))
-                        .addValue(new ButtonConfigBoolean(140, 355, designType, KelUI.config, "HUD.DARK_DEBUG_OVERLAY", false, Component.translatable("kelui.config.hud.dark_debug_overlay")))
-                        .addValue(new ButtonConfigBoolean(140, 380, designType, KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_GAME_INFO", false, Component.translatable("kelui.config.hud.debug_overlay.remove_game_info")))
-                        .addValue(new ButtonConfigBoolean(140, 405, designType, KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_SYSTEM_INFO", false, Component.translatable("kelui.config.hud.debug_overlay.remove_system_info"))))
+                .addWidget(new TextBox(HUDConfigCategory, true))
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.paper_doll"), false).setConfig(KelUI.config, "HUD.PAPER_DOLL").build())
+                .addWidget(new CategoryBox(Component.translatable("kelui.config.hud.armor_info.title"))
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info"), true).setConfig(KelUI.config, "HUD.ARMOR_INFO").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info.damage"), true).setConfig(KelUI.config, "HUD.ARMOR_INFO.DAMAGE").build())
+                        .addValue(new SelectorBuilder(Component.translatable("kelui.config.hud.armor_info.damage.type")).setValue(0).setList(type).setConfig(KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info.damage.type.cut"), true).setConfig(KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE.CUT").build()))
+                .addWidget(new CategoryBox(Component.translatable("kelui.config.new_interface"))
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.new_hotbar"), false).setConfig(KelUI.config, "HUD.NEW_HOTBAR").build())
+                        .addValue(new SelectorBuilder(Component.translatable("kelui.config.hud.new_hotbar.position")).setValue(0).setList(hudPosition).setConfig(KelUI.config, "HUD.NEW_HOTBAR.POSITION").build())
+                        .addValue(new SelectorBuilder(Component.translatable("kelui.config.hud.new_hotbar.state_type")).setValue(0).setList(stateType).setConfig(KelUI.config, "HUD.NEW_HOTBAR.STATE_TYPE").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.new_effects"), false).setConfig(KelUI.config, "HUD.NEW_EFFECTS").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.new_effects.time"), true).setConfig(KelUI.config, "HUD.NEW_EFFECTS.TIME").build()))
+                .addWidget(new CategoryBox(Component.translatable("kelui.config.debug_overlay"))
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.dark_debug_overlay"), false).setConfig(KelUI.config, "HUD.DARK_DEBUG_OVERLAY").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay.remove_game_info"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_GAME_INFO").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay.remove_system_info"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_SYSTEM_INFO").build()))
                 .build();
     }
 }

@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
+import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBooleanBuilder;
 import ru.kelcuprum.alinlib.gui.components.buttons.ButtonConfigBoolean;
 import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
@@ -36,13 +37,13 @@ public class MenuConfigScreen {
                         new Button(10,140, designType, OtherConfigCategory, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent)))
                 )
 
-                .addWidget(new TextBox(140, 5, MainConfigCategory, true))
-                .addWidget(new ButtonConfigBoolean(140, 30, designType, KelUI.config, "MAIN_MENU", true, Component.translatable("kelui.config.main_menu")))
-                .addWidget(new ButtonConfigBoolean(140, 55, designType, KelUI.config, "MAIN_MENU.PANORAMA", true, Component.translatable("kelui.config.main_menu.panorama")))
-                .addWidget(new ButtonConfigBoolean(140, 80, designType, KelUI.config, "MAIN_MENU.TEXTURE_BACKGROUND", false, Component.translatable("kelui.config.main_menu.texture_background")))
-                .addWidget(new ButtonConfigBoolean(140, 105, designType, KelUI.config, "MAIN_MENU.INFO", true, Component.translatable("kelui.config.main_menu.info")))
-                .addWidget(new ButtonConfigBoolean(140, 130, designType, KelUI.config, "MAIN_MENU.VERSION", true, Component.translatable("kelui.config.main_menu.version")))
-                .addWidget(new ButtonConfigBoolean(140, 155, designType, KelUI.config, "MAIN_MENU.CREDITS", true, Component.translatable("kelui.config.main_menu.credits")))
+                .addWidget(new TextBox(MainConfigCategory, true))
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu"), true).setConfig(KelUI.config, "MAIN_MENU").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.panorama"), true).setConfig(KelUI.config, "MAIN_MENU.PANORAMA").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.texture_background"), false).setConfig(KelUI.config, "MAIN_MENU.TEXTURE_BACKGROUND").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.info"), true).setConfig(KelUI.config, "MAIN_MENU.INFO").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.version"), true).setConfig(KelUI.config, "MAIN_MENU.VERSION").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.credits"), true).setConfig(KelUI.config, "MAIN_MENU.CREDITS").build())
                 .build();
     }
 }
