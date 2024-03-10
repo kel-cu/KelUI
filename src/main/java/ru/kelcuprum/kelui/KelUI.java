@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.kelcuprum.alinlib.config.Config;
 import ru.kelcuprum.alinlib.config.Localization;
+import ru.kelcuprum.alinlib.gui.InterfaceUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,17 +24,26 @@ import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.SEADRIVE;
 
 public class KelUI implements ClientModInitializer {
     public static final Logger LOG = LogManager.getLogger("KelUI");
-    public static void log(String message) { log(message, Level.INFO);}
-    public static void log(String message, Level level) { LOG.log(level, "[" + LOG.getName() + "] " + message); }
+    public static final InterfaceUtils.DesignType configDesignType = InterfaceUtils.DesignType.FLAT;
+
+    public static void log(String message) {
+        log(message, Level.INFO);
+    }
+
+    public static void log(String message, Level level) {
+        LOG.log(level, "[" + LOG.getName() + "] " + message);
+    }
+
     public static Config config = new Config("config/KelUI.json");
     public static Minecraft MINECRAFT = Minecraft.getInstance();
+
     @Override
     public void onInitializeClient() {
         config.load();
         log("Hello, world!");
     }
 
-    public static void executeCommand(LocalPlayer player, String command){
+    public static void executeCommand(LocalPlayer player, String command) {
         if (command.startsWith("/")) {
             command = command.substring(1);
             player.connection.sendCommand(command);
@@ -41,40 +51,60 @@ public class KelUI implements ClientModInitializer {
             player.connection.sendChat(command);
         }
     }
-    public static Screen getOptionScreen(Screen parent){
+
+    public static Screen getOptionScreen(Screen parent) {
         return new OptionsScreen(parent, MINECRAFT.options);
     }
-    public static String getStringVersion(){
-        return switch (KelUI.config.getNumber("VERSION_TYPE", 0).intValue()){
-            case 1 -> String.format("Minecraft %s (Mods: %s)", MINECRAFT.getLaunchedVersion(), FabricLoader.getInstance().getAllMods().size());
+
+    public static String getStringVersion() {
+        return switch (KelUI.config.getNumber("VERSION_TYPE", 0).intValue()) {
+            case 1 ->
+                    String.format("Minecraft %s (Mods: %s)", MINECRAFT.getLaunchedVersion(), FabricLoader.getInstance().getAllMods().size());
             case 2 -> String.format("Minecraft %s (%s)", MINECRAFT.getLaunchedVersion(), MINECRAFT.getVersionType());
             case 3 -> KelUI.config.getString("VERSION_TYPE.CUSTOM", "Modpack v1.0.0");
             default -> String.format("Minecraft %s", MINECRAFT.getLaunchedVersion());
         };
     }
-    public static String getStringCredits(){
-        return switch (KelUI.config.getNumber("CREDITS", 0).intValue()){
+
+    public static String getStringCredits() {
+        return switch (KelUI.config.getNumber("CREDITS", 0).intValue()) {
             case 1 -> KelUI.config.getString("CREDITS.CUSTOM", "Made with ❤ by Kel");
             case 2 -> "";
             default -> Component.translatable("title.credits").getString();
         };
     }
-    public static String getArmorDamage(ItemStack item){
-        return switch (config.getNumber("HUD.ARMOR_INFO.DAMAGE.TYPE", 0).intValue()){
-            case 1 -> (item.getMaxDamage() == 0 ? "" : String.valueOf(item.getMaxDamage()-item.getDamageValue()));// Full damage
-            case 2 -> (item.getMaxDamage() == 0 ? "" : Localization.getRounding(((double) (item.getMaxDamage()-item.getDamageValue()) /item.getMaxDamage())*100, config.getBoolean("HUD.ARMOR_INFO.DAMAGE.TYPE.CUT", true))+"%");
-            default -> (item.getMaxDamage() == 0 ? "" : item.getMaxDamage() == (item.getMaxDamage() - item.getDamageValue()) ? String.format("%s", item.getMaxDamage()) : String.format("%s/%s", item.getMaxDamage() - item.getDamageValue(), item.getMaxDamage()));
+
+    public static String getArmorDamage(ItemStack item) {
+        return switch (config.getNumber("HUD.ARMOR_INFO.DAMAGE.TYPE", 0).intValue()) {
+            case 1 ->
+                    (item.getMaxDamage() == 0 ? "" : String.valueOf(item.getMaxDamage() - item.getDamageValue()));// Full damage
+            case 2 ->
+                    (item.getMaxDamage() == 0 ? "" : Localization.getRounding(((double) (item.getMaxDamage() - item.getDamageValue()) / item.getMaxDamage()) * 100, config.getBoolean("HUD.ARMOR_INFO.DAMAGE.TYPE.CUT", true)) + "%");
+            default ->
+                    (item.getMaxDamage() == 0 ? "" : item.getMaxDamage() == (item.getMaxDamage() - item.getDamageValue()) ? String.format("%s", item.getMaxDamage()) : String.format("%s/%s", item.getMaxDamage() - item.getDamageValue(), item.getMaxDamage()));
         };
     }
+
     public static Component createTimestamp() {
         return Component.literal(
                 new SimpleDateFormat(config.getString("CHAT.TIMESTAMP.PATTERN", "HH:mm")).format(new Date())
         ).setStyle(Style.EMPTY.withColor(config.getNumber("CHAT.TIMESTAMP.COLOR", SEADRIVE).intValue()));
     }
 
-    public interface ICONS{
+    public interface ICONS {
         ResourceLocation LOADING_ICON = new ResourceLocation("kelui", "textures/gui/loading/icon.png");
         ResourceLocation LANGUAGE = new ResourceLocation("kelui", "textures/gui/sprites/icon/language.png");
         ResourceLocation ACCESSIBILITY = new ResourceLocation("kelui", "textures/gui/sprites/icon/accessibility.png");
+    }
+
+    public interface TEXTS {
+        Component NAME = Component.translatable("kelui.name");
+        interface TITLE {
+            Component MENU_CONFIG    = Component.translatable("kelui.config.title.main_menu");
+            Component PAUSE_CONFIG   = Component.translatable("kelui.config.title.pause_menu");
+            Component HUD_CONFIG     = Component.translatable("kelui.config.title.hud");
+            Component LOADING_CONFIG = Component.translatable("kelui.config.title.loading");
+            Component OTHER_CONFIG   = Component.translatable("kelui.config.title.other");
+        }
     }
 }
