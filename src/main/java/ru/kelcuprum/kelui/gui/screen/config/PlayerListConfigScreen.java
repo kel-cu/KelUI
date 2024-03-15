@@ -9,7 +9,7 @@ import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.screens.ConfigScreenBuilder;
 import ru.kelcuprum.kelui.KelUI;
 
-public class MenuConfigScreen {
+public class PlayerListConfigScreen {
 
     public Screen build(Screen parent) {
         return new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME, KelUI.configDesignType)
@@ -20,13 +20,12 @@ public class MenuConfigScreen {
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.LOADING_CONFIG, (s) -> Minecraft.getInstance().setScreen(new LoadingConfigScreen().build(parent))).build())
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent))).build())
 
-                .addWidget(new TextBox(KelUI.TEXTS.TITLE.MENU_CONFIG, true))
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu"), true).setConfig(KelUI.config, "MAIN_MENU").build())
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.panorama"), true).setConfig(KelUI.config, "MAIN_MENU.PANORAMA").build())
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.texture_background"), false).setConfig(KelUI.config, "MAIN_MENU.TEXTURE_BACKGROUND").build())
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.info"), true).setConfig(KelUI.config, "MAIN_MENU.INFO").build())
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.version"), true).setConfig(KelUI.config, "MAIN_MENU.VERSION").build())
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.credits"), true).setConfig(KelUI.config, "MAIN_MENU.CREDITS").build())
+                .addWidget(new TextBox(KelUI.TEXTS.TITLE.PLAYER_LIST_CONFIG, true))
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.forever_render_hat"), true).setConfig(KelUI.config, "TAB.FOREVER_RENDER_HAT").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.forever_render_heads"), true).setConfig(KelUI.config, "TAB.FOREVER_RENDER_HEADS").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.ping_to_text"), true).setConfig(KelUI.config, "TAB.PING_TO_TEXT").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.ping_to_text.color_enable"), true).setConfig(KelUI.config, "TAB.PING_TO_TEXT.COLOR_ENABLE").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.ping_to_text.render_icon"), false).setConfig(KelUI.config, "TAB.PING_TO_TEXT.RENDER_ICON").build())
                 .build();
     }
 }

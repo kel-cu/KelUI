@@ -4,6 +4,7 @@ import net.minecraft.Util;
 import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Unit;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -17,7 +18,7 @@ public class FakeResourceLoading implements ReloadInstance {
     }
     @Override
 
-    public CompletableFuture<Unit> done() {
+    public @NotNull CompletableFuture<Unit> done() {
         throw new UnsupportedOperationException();
     }
     @Override

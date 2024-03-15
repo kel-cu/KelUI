@@ -20,7 +20,7 @@ import ru.kelcuprum.alinlib.gui.InterfaceUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.SEADRIVE;
+import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.*;
 
 public class KelUI implements ClientModInitializer {
     public static final Logger LOG = LogManager.getLogger("KelUI");
@@ -84,6 +84,11 @@ public class KelUI implements ClientModInitializer {
                     (item.getMaxDamage() == 0 ? "" : item.getMaxDamage() == (item.getMaxDamage() - item.getDamageValue()) ? String.format("%s", item.getMaxDamage()) : String.format("%s/%s", item.getMaxDamage() - item.getDamageValue(), item.getMaxDamage()));
         };
     }
+    public static int getPingColor(int ping){
+        int color = 0xFFFFFFFF;
+        if(config.getBoolean("TAB.PING_TO_TEXT.COLOR_ENABLE", true)) color = ping < 150 ? SEADRIVE : ping < 300 ? CLOWNFISH : GROUPIE;
+        return color;
+    }
 
     public static Component createTimestamp() {
         return Component.literal(
@@ -103,6 +108,7 @@ public class KelUI implements ClientModInitializer {
             Component MENU_CONFIG    = Component.translatable("kelui.config.title.main_menu");
             Component PAUSE_CONFIG   = Component.translatable("kelui.config.title.pause_menu");
             Component HUD_CONFIG     = Component.translatable("kelui.config.title.hud");
+            Component PLAYER_LIST_CONFIG   = Component.translatable("kelui.config.title.player_list");
             Component LOADING_CONFIG = Component.translatable("kelui.config.title.loading");
             Component OTHER_CONFIG   = Component.translatable("kelui.config.title.other");
         }
