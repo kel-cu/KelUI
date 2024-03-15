@@ -36,7 +36,7 @@ public abstract class PlayerListMixin {
     @Inject(method = "renderPingIcon", at = @At(value = "HEAD"), cancellable = true)
     protected void renderPingIcon(GuiGraphics guiGraphics, int width, int x, int y, PlayerInfo playerInfo, CallbackInfo ci){
         if(!KelUI.config.getBoolean("TAB.PING_TO_TEXT", true)) return;
-        Component ping = Component.literal(String.format("%sms", playerInfo.getLatency()));
+        Component ping = Component.literal(String.format(KelUI.config.getString("TAB.PING_TO_TEXT.FORMAT", "%sms"), playerInfo.getLatency()));
         int xT = width + x - KelUI.MINECRAFT.font.width(ping) - 2;
         if(KelUI.config.getBoolean("TAB.PING_TO_TEXT.RENDER_ICON", false)) xT -= 11;
         guiGraphics.drawString(KelUI.MINECRAFT.font, ping, xT, y, KelUI.getPingColor(playerInfo.getLatency()), true);

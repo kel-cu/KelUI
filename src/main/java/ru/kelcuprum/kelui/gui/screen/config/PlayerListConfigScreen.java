@@ -1,10 +1,12 @@
 package ru.kelcuprum.kelui.gui.screen.config;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBooleanBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
+import ru.kelcuprum.alinlib.gui.components.builder.editbox.EditBoxBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.screens.ConfigScreenBuilder;
 import ru.kelcuprum.kelui.KelUI;
@@ -24,6 +26,7 @@ public class PlayerListConfigScreen {
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.forever_render_hat"), true).setConfig(KelUI.config, "TAB.FOREVER_RENDER_HAT").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.forever_render_heads"), true).setConfig(KelUI.config, "TAB.FOREVER_RENDER_HEADS").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.ping_to_text"), true).setConfig(KelUI.config, "TAB.PING_TO_TEXT").build())
+                .addWidget(new EditBoxBuilder(Component.translatable("kelui.config.tab.ping_to_text.format")).setValue("%sms").setConfig(KelUI.config, "TAB.PING_TO_TEXT.FORMAT").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.ping_to_text.color_enable"), true).setConfig(KelUI.config, "TAB.PING_TO_TEXT.COLOR_ENABLE").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.ping_to_text.render_icon"), false).setConfig(KelUI.config, "TAB.PING_TO_TEXT.RENDER_ICON").build())
                 .build();

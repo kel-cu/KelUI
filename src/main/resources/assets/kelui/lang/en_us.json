@@ -49,6 +49,7 @@
   "kelui.config.tab.forever_render_heads": "Always render players' heads in the tab",
   "kelui.config.tab.forever_render_hat": "Always render players' hats in the tab",
   "kelui.config.tab.ping_to_text": "Display ping as text",
+  "kelui.config.tab.ping_to_text.format": "Ping format",
   "kelui.config.tab.ping_to_text.color_enable": "Enable ping color",
   "kelui.config.tab.ping_to_text.render_icon": "Enable ping icon",
 
