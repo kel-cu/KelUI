@@ -73,12 +73,12 @@ public abstract class TitleScreenMixin extends Screen {
         addRenderableWidget(new ButtonSprite(x, height/2+40, 20, 20, InterfaceUtils.DesignType.VANILLA, ACCESSIBILITY, Component.translatable("options.accessibility"), (OnPress) -> this.minecraft.setScreen(new AccessibilityOptionsScreen(this, this.minecraft.options))));
         if(KelUI.config.getBoolean("MAIN_MENU.INFO", true)) {
             int yT = height-20;
-            if(KelUI.config.getBoolean("MAIN_MENU.VERSION", true)){
-                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
-                yT-=10;
-            }
             if(KelUI.config.getBoolean("MAIN_MENU.CREDITS", true)) {
                 addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringCredits()), false));
+                yT-=10;
+            }
+            if(KelUI.config.getBoolean("MAIN_MENU.VERSION", true)){
+                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
             }
         }
         cl.cancel();

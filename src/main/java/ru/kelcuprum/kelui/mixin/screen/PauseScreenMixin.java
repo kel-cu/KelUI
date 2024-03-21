@@ -66,12 +66,12 @@ public abstract class PauseScreenMixin extends Screen {
         }));
         if(KelUI.config.getBoolean("PAUSE_MENU.INFO", true)) {
             int yT = height-20;
-            if(KelUI.config.getBoolean("PAUSE_MENU.VERSION", true)){
-                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
-                yT-=10;
-            }
             if(KelUI.config.getBoolean("PAUSE_MENU.CREDITS", false)) {
                 addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringCredits()), false));
+                yT-=10;
+            }
+            if(KelUI.config.getBoolean("PAUSE_MENU.VERSION", true)){
+                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
             }
         }
         cl.cancel();

@@ -10,6 +10,7 @@ import net.minecraft.client.resources.MobEffectTextureManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -207,8 +208,11 @@ public abstract class GuiMixin {
                 x=22;
             }
             // health
-            guiGraphics.fill(pos+182+x, i, pos+184+x, i+20, GROUPIE-0x75000000);
-            guiGraphics.fill(pos+182+x, i, pos+184+x, (int) (i+(20*health)), GROUPIE);
+            int healthColor = KelUI.MINECRAFT.player.hasEffect(MobEffects.POISON) ? 0xFFa3b18a :
+                    KelUI.MINECRAFT.player.hasEffect(MobEffects.WITHER) ? 0xff4a4e69 :
+                    KelUI.MINECRAFT.player.isFullyFrozen() ? 0x90e0ef : GROUPIE;
+            guiGraphics.fill(pos+182+x, i, pos+184+x, i+20, healthColor-0x75000000);
+            guiGraphics.fill(pos+182+x, i, pos+184+x, (int) (i+(20*health)), healthColor);
 
             guiGraphics.fill(pos+186+x, i, pos+188+x, i+20, 0x75598392);
             guiGraphics.fill(pos+186+x, i, pos+188+x, (int) (i+(20*armor)), 0xff598392);
@@ -221,9 +225,11 @@ public abstract class GuiMixin {
             }
         } else {
             int i = this.screenHeight-28;
-            PlayerRideableJumping playerRideableJumping = this.minecraft.player.jumpableVehicle();
-            guiGraphics.fill(pos, i-2, pos+80, i, GROUPIE-0x75000000);
-            guiGraphics.fill(pos, i-2, (int) (pos+(80*health)), i, GROUPIE);
+            int healthColor = KelUI.MINECRAFT.player.hasEffect(MobEffects.POISON) ? 0xFFa3b18a :
+                    KelUI.MINECRAFT.player.hasEffect(MobEffects.WITHER) ? 0xff4a4e69 :
+                            KelUI.MINECRAFT.player.isFullyFrozen() ? 0x90e0ef : GROUPIE;
+            guiGraphics.fill(pos, i-2, pos+80, i, healthColor-0x75000000);
+            guiGraphics.fill(pos, i-2, (int) (pos+(80*health)), i, healthColor);
             //
             if(armor != 0) {
                 guiGraphics.fill(pos, i - 4, pos + 80, i - 6, 0x75598392);

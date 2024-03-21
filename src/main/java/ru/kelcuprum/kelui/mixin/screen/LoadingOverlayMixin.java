@@ -36,7 +36,7 @@ public abstract class LoadingOverlayMixin {
             )
     )
     private void background(Args args) {
-        if(!KelUI.config.getBoolean("LOADING", true) || KelUI.config.getBoolean("LOADING.NEW", true)) return;
+        if(!KelUI.config.getBoolean("LOADING", true) || KelUI.config.getBoolean("LOADING.NEW", false)) return;
         args.set(0, KelUI.config.getNumber("LOADING.BACKGROUND", 0xff1b1b1b).intValue());
     }
 

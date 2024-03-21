@@ -12,6 +12,7 @@ import ru.kelcuprum.kelui.KelUI;
 
 @Mixin(DebugScreenOverlay.class)
 public abstract class DebugScreenOverlayMixin {
+
     @ModifyArgs(
             method = "renderLines",
             at = @At(
@@ -25,12 +26,10 @@ public abstract class DebugScreenOverlayMixin {
     }
     @Inject(method = "drawGameInformation", at = @At("HEAD"), cancellable = true)
     private void drawGameInformation(GuiGraphics guiGraphics, CallbackInfo ci) {
-        if(!KelUI.config.getBoolean("HUD.DEBUG_OVERLAY.REMOVE_GAME_INFO", false)) return;
-        ci.cancel();
+        if(KelUI.config.getBoolean("HUD.DEBUG_OVERLAY.REMOVE_GAME_INFO", false)) ci.cancel();
     }
     @Inject(method = "drawSystemInformation", at = @At("HEAD"), cancellable = true)
     private void drawSystemInformation(GuiGraphics guiGraphics, CallbackInfo ci) {
-        if(!KelUI.config.getBoolean("HUD.DEBUG_OVERLAY.REMOVE_SYSTEM_INFO", false)) return;
-        ci.cancel();
+        if(KelUI.config.getBoolean("HUD.DEBUG_OVERLAY.REMOVE_SYSTEM_INFO", false)) ci.cancel();
     }
 }

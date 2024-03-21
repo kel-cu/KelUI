@@ -8,12 +8,13 @@
     "screen.LoadingOverlayMixin",
     "screen.PauseScreenMixin",
     "screen.TitleScreenMixin",
-    "utils.DebugScreenOverlayMixin",
     "utils.ChatOverlayMixin",
+    "utils.DebugScreenOverlayMixin",
     "utils.GuiGraphicsMixin",
-    "utils.PlayerListMixin",
+    "utils.GuiMixin",
+    "utils.IconsMixin",
     "utils.MinecraftMixin",
-    "utils.GuiMixin"
+    "utils.PlayerListMixin"
   ],
   "injectors": {
     "defaultRequire": 1

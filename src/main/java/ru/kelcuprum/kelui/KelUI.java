@@ -36,10 +36,13 @@ public class KelUI implements ClientModInitializer {
 
     public static Config config = new Config("config/KelUI.json");
     public static Minecraft MINECRAFT = Minecraft.getInstance();
+    public static final String MINECRAFT_LAUNCHED_VERSION = MINECRAFT.getLaunchedVersion();
+    public static IconStorageHelper iconStorageHelper = new IconStorageHelper();
 
     @Override
     public void onInitializeClient() {
         config.load();
+        iconStorageHelper.init();
         log("Hello, world!");
     }
 

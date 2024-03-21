@@ -31,7 +31,7 @@ public class LoadingConfigScreen {
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.bar.border")).setColor(0xffffffff).setConfig(KelUI.config, "LOADING.BAR_COLOR.BORDER").build())
                 )
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.loading.new"))
-                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading.new"), true).setConfig(KelUI.config, "LOADING.NEW").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading.new"), false).setConfig(KelUI.config, "LOADING.NEW").build())
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.background")).setColor(0xff030C03).setConfig(KelUI.config, "LOADING.NEW.BACKGROUND").build())
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.bar.background")).setColor(0xff1FA48C).setConfig(KelUI.config, "LOADING.NEW.BAR_BACKGROUND").build())
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.bar")).setColor(0x7f05241E).setConfig(KelUI.config, "LOADING.NEW.BAR_COLOR").build())
