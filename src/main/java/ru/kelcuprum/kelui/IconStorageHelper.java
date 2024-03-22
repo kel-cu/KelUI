@@ -49,7 +49,7 @@ public class IconStorageHelper {
                 PNG_PATHS.add(path);
             }
         } catch (IOException e) {
-            throw new RuntimeException(String.format("Failed to load resource %s: %s", fullPath, e));
+            KelUI.log(String.format("Failed to load resource %s: %s", fullPath, e));
         }
     }
 
