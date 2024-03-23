@@ -32,11 +32,9 @@ public class LoadingConfigScreen {
                 )
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.loading.new"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading.new"), false).setConfig(KelUI.config, "LOADING.NEW").build())
-                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.background")).setColor(0xff030C03).setConfig(KelUI.config, "LOADING.NEW.BACKGROUND").build())
-                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.bar.background")).setColor(0xff1FA48C).setConfig(KelUI.config, "LOADING.NEW.BAR_BACKGROUND").build())
-                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.bar")).setColor(0x7f05241E).setConfig(KelUI.config, "LOADING.NEW.BAR_COLOR").build())
-                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading.new.icon"), true).setConfig(KelUI.config, "LOADING.NEW.ENABLE_ICON").build())
-                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading.new.icon_kelui"), true).setConfig(KelUI.config, "LOADING.NEW.ICON_KELUI").build())
+                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.background_color")).setColor(0xFFB4B4B4).setConfig(KelUI.config, "LOADING.NEW.BACKGROUND_C0LOR").build())
+                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.border_color")).setColor(0xFF000000).setConfig(KelUI.config, "LOADING.NEW.BORDER_C0LOR").build())
+                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.border_background_color")).setColor(0xFFD9D9D9).setConfig(KelUI.config, "LOADING.NEW.BORDER_BACKGROUND_C0LOR").build())
                 )
                 .build();
     }

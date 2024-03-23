@@ -6,6 +6,7 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LoadingOverlay;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraft.util.Mth;
@@ -27,7 +28,9 @@ import static ru.kelcuprum.kelui.KelUI.ICONS.LOADING_ICON;
 @Mixin(LoadingOverlay.class)
 public abstract class LoadingOverlayMixin {
 
-    /** Changes the background color */
+    /**
+     * Changes the background color
+     */
     @ModifyArgs(
             method = "render",
             at = @At(
@@ -36,82 +39,69 @@ public abstract class LoadingOverlayMixin {
             )
     )
     private void background(Args args) {
-        if(!KelUI.config.getBoolean("LOADING", true) || KelUI.config.getBoolean("LOADING.NEW", false)) return;
+        if (!KelUI.config.getBoolean("LOADING", true) || KelUI.config.getBoolean("LOADING.NEW", false)) return;
         args.set(0, KelUI.config.getNumber("LOADING.BACKGROUND", 0xff1b1b1b).intValue());
     }
 
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    private void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci) {
-        if(!KelUI.config.getBoolean("LOADING.NEW", true)) return;
-        long m = Util.getMillis();
+    private void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
+        if (!KelUI.config.getBoolean("LOADING.NEW", false)) return;
+        long l = Util.getMillis();
         if (this.fadeIn && this.fadeInStart == -1L) {
-            this.fadeInStart = m;
+            this.fadeInStart = l;
         }
-
-        float g = this.fadeOutStart > -1L ? (float)(m - this.fadeOutStart) / 1000.0F : -1.0F;
-        float h = this.fadeInStart > -1L ? (float)(m - this.fadeInStart) / 500.0F : -1.0F;
 
         float w = this.reload.getActualProgress();
         this.currentProgress = Mth.clamp(this.currentProgress * 0.95F + w * 0.050000012F, 0.0F, 1.0F);
-        int n;
-        float o;
-        if (g >= 1.0F) {
+        // Alpha
+        float f = this.fadeOutStart > -1L ? (float) (l - this.fadeOutStart) / 1000.0F : -1.0F;
+        float g = this.fadeInStart > -1L ? (float) (l - this.fadeInStart) / 500.0F : -1.0F;
+        float h;
+        int k;
+        int kB;
+        if (f >= 1.0F) {
             if (this.minecraft.screen != null) {
-                this.minecraft.screen.render(guiGraphics, 0, 0, f);
+                this.minecraft.screen.render(guiGraphics, 0, 0, partialTick);
             }
-            n = Mth.ceil((1.0F - Mth.clamp(g - 1.0F, 0.0F, 1.0F)) * 255.0F);
-            o = 1.0F - Mth.clamp(g - 1.0F, 0.0F, 1.0F);
+            k = kB = Mth.ceil((1.0F - Mth.clamp(f - 1.0F, 0.0F, 1.0F)) * 255.0F);
+            h = 1.0F - Mth.clamp(f - 1.0F, 0.0F, 1.0F);
         } else if (this.fadeIn) {
-            if (this.minecraft.screen != null && h < 1.0F) {
-                this.minecraft.screen.render(guiGraphics, i, j, f);
+            if (this.minecraft.screen != null && g < 1.0F) {
+                this.minecraft.screen.render(guiGraphics, mouseX, mouseY, partialTick);
             }
-            n = Mth.ceil(Mth.clamp(h, 0.15, 1.0) * 255.0);
-            o = Mth.clamp(h, 0.0F, 1.0F);
+            k = kB = Mth.ceil(Mth.clamp((double) g, 0.15, 1.0) * 255.0);
+            h = Mth.clamp(g, 0.0F, 1.0F);
         } else {
-            n = KelUI.config.getNumber("LOADING.NEW.BACKGROUND", 0xff030C03).intValue();
-            float p = (float)(n >> 16 & 255) / 255.0F;
-            float q = (float)(n >> 8 & 255) / 255.0F;
-            float r = (float)(n & 255) / 255.0F;
-            GlStateManager._clearColor(p, q, r, 1.0F);
-            GlStateManager._clear(16384, Minecraft.ON_OSX);
-            o = 1.0F;
+            k = KelUI.config.getNumber("LOADING.NEW.BACKGROUND_C0LOR", 0xFFB4B4B4).intValue();
+            kB = 255;
+            h = 1.0F;
         }
-        if(this.minecraft == null || this.minecraft.level == null){
-            guiGraphics.fill(0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BACKGROUND", 0xff030C03).intValue(), n));
+        // Render
+        guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BACKGROUND_C0LOR", 0xFFB4B4B4).intValue(), k));
+        guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), 30, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
+        guiGraphics.fill(RenderType.guiOverlay(), 0, guiGraphics.guiHeight(), guiGraphics.guiWidth(), guiGraphics.guiHeight() - 30, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
+        // Shit
+        guiGraphics.setColor(1.0F, 1.0F, 1.0F, h);
+        guiGraphics.blit(LOADING_ICON, guiGraphics.guiWidth() / 2 - 50, guiGraphics.guiHeight() / 2 - 50, 0, 0, 100, 100, 100, 100);
+        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        // Progress bar
+        // 61
+        if (f < 1.0F) {
+            int px = guiGraphics.guiWidth() / 2;
+            int py = guiGraphics.guiHeight() - 57;
+            int width = 100;
+            int height = 15;
+            guiGraphics.fill(px - width, py, px + width, py + height, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
+            guiGraphics.fill(px - (width - 2), py + 2, px + (width - 2), py + height - 2, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_BACKGROUND_C0LOR", 0xFFD9D9D9).intValue(), kB));
+            guiGraphics.fill(px - (width - 3), py + 3, (int) (px + ((width - 3) * f)), py + height - 3, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
         }
-        guiGraphics.fill(0, guiGraphics.guiHeight() - 10, guiGraphics.guiWidth(), guiGraphics.guiHeight(),  KelUI.config.getNumber("LOADING.NEW.BAR_BACKGROUND", 0x7f05241E).intValue());
-        guiGraphics.fill(0, guiGraphics.guiHeight() - 10, (int) (guiGraphics.guiWidth()*currentProgress), guiGraphics.guiHeight(), KelUI.config.getNumber("LOADING.NEW.BAR", 0xff1FA48C).intValue());
-        if(KelUI.config.getBoolean("LOADING.NEW.ENABLE_ICON", true)){
-            RenderSystem.disableDepthTest();
-            RenderSystem.depthMask(false);
-            RenderSystem.enableBlend();
-            RenderSystem.blendFunc(770, 1);
-            guiGraphics.setColor(1.0F, 1.0F, 1.0F, o);
-            if(KelUI.config.getBoolean("LOADING.NEW.ICON_KELUI", true)){
-                guiGraphics.blit(LOADING_ICON, guiGraphics.guiWidth()/2-50, guiGraphics.guiHeight()/2-50, 0, 0, 100, 100, 100, 100);
-            } else {
-
-                int k = (int)((double)guiGraphics.guiWidth() * 0.5);
-                int p = (int)((double)guiGraphics.guiHeight() * 0.5);
-                double d = Math.min((double)guiGraphics.guiWidth() * 0.75, guiGraphics.guiHeight()) * 0.25;
-                int q = (int)(d * 0.5);
-                double e = d * 4.0;
-                int r = (int)(e * 0.5);
-                guiGraphics.blit(MOJANG_STUDIOS_LOGO_LOCATION, k - r, p - q, r, (int)d, -0.0625F, 0.0F, 120, 60, 120, 120);
-                guiGraphics.blit(MOJANG_STUDIOS_LOGO_LOCATION, k, p - q, r, (int)d, 0.0625F, 60.0F, 120, 60, 120, 120);
-            }
-            guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.defaultBlendFunc();
-            RenderSystem.disableBlend();
-            RenderSystem.depthMask(true);
-            RenderSystem.enableDepthTest();
-        }
-        if (g >= 2.0F) {
+        // End
+        if (f >= 2.0F) {
             this.minecraft.setOverlay(null);
         }
 
-        if (this.fadeOutStart == -1L && this.reload.isDone() && (!this.fadeIn || h >= 2.0F)) {
+        if (this.fadeOutStart == -1L && this.reload.isDone() && (!this.fadeIn || g >= 2.0F)) {
             try {
                 this.reload.checkExceptions();
                 this.onFinish.accept(Optional.empty());
@@ -126,20 +116,31 @@ public abstract class LoadingOverlayMixin {
         }
         ci.cancel();
     }
+
     @Shadow
     private float currentProgress;
 
-    @Shadow @Final private Minecraft minecraft;
+    @Shadow
+    @Final
+    private Minecraft minecraft;
 
-    @Shadow private long fadeOutStart;
+    @Shadow
+    private long fadeOutStart;
 
-    @Shadow @Final private ReloadInstance reload;
+    @Shadow
+    @Final
+    private ReloadInstance reload;
 
-    @Shadow @Final private boolean fadeIn;
+    @Shadow
+    @Final
+    private boolean fadeIn;
 
-    @Shadow private long fadeInStart;
+    @Shadow
+    private long fadeInStart;
 
-    @Shadow @Final private Consumer<Optional<Throwable>> onFinish;
+    @Shadow
+    @Final
+    private Consumer<Optional<Throwable>> onFinish;
 
 
     @Shadow
@@ -147,13 +148,14 @@ public abstract class LoadingOverlayMixin {
         return i & 16777215 | j << 24;
     }
 
-    @Shadow @Final
+    @Shadow
+    @Final
     static ResourceLocation MOJANG_STUDIOS_LOGO_LOCATION;
 
     @Inject(method = "drawProgressBar", at = @At("HEAD"), cancellable = true)
     private void drawProgressBar(GuiGraphics guiGraphics, int i, int j, int k, int l, float f, CallbackInfo ci) {
-        if(!KelUI.config.getBoolean("LOADING", true)) return;
-        int m = Mth.ceil((float)(k - i - 2) * this.currentProgress);
+        if (!KelUI.config.getBoolean("LOADING", true)) return;
+        int m = Mth.ceil((float) (k - i - 2) * this.currentProgress);
         int o = KelUI.config.getNumber("LOADING.BAR_COLOR", 0xffff4f4f).intValue();
         int a = KelUI.config.getNumber("LOADING.BAR_COLOR.BORDER", 0xffffffff).intValue();
         guiGraphics.fill(i + 2, j + 2, i + m, l - 2, o);
