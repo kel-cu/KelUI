@@ -52,8 +52,8 @@ public abstract class LoadingOverlayMixin {
             this.fadeInStart = l;
         }
 
-        float w = this.reload.getActualProgress();
-        this.currentProgress = Mth.clamp(this.currentProgress * 0.95F + w * 0.050000012F, 0.0F, 1.0F);
+        float t = this.reload.getActualProgress();
+        this.currentProgress = Mth.clamp(this.currentProgress * 0.95F + t * 0.050000012F, 0.0F, 1.0F);
         // Alpha
         float f = this.fadeOutStart > -1L ? (float) (l - this.fadeOutStart) / 1000.0F : -1.0F;
         float g = this.fadeInStart > -1L ? (float) (l - this.fadeInStart) / 500.0F : -1.0F;
@@ -94,7 +94,7 @@ public abstract class LoadingOverlayMixin {
             int height = 15;
             guiGraphics.fill(px - width, py, px + width, py + height, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
             guiGraphics.fill(px - (width - 2), py + 2, px + (width - 2), py + height - 2, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_BACKGROUND_C0LOR", 0xFFD9D9D9).intValue(), kB));
-            guiGraphics.fill(px - (width - 3), py + 3, (int) (px + ((width - 3) * f)), py + height - 3, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
+            guiGraphics.fill(px - (width - 3), py + 3, (int) (px + ((width - 3) * this.currentProgress)), py + height - 3, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
         }
         // End
         if (f >= 2.0F) {
