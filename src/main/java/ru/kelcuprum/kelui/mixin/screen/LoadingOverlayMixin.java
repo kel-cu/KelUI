@@ -78,13 +78,15 @@ public abstract class LoadingOverlayMixin {
             h = 1.0F;
         }
         // Render
-        guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BACKGROUND_C0LOR", 0xFFB4B4B4).intValue(), k));
+        if(minecraft.level == null) guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BACKGROUND_C0LOR", 0xFFB4B4B4).intValue(), k));
         guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), 30, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
         guiGraphics.fill(RenderType.guiOverlay(), 0, guiGraphics.guiHeight(), guiGraphics.guiWidth(), guiGraphics.guiHeight() - 30, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
         // Shit
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, h);
-        guiGraphics.blit(LOADING_ICON, guiGraphics.guiWidth() / 2 - 50, guiGraphics.guiHeight() / 2 - 50, 0, 0, 100, 100, 100, 100);
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        if(minecraft.level == null) {
+            guiGraphics.setColor(1.0F, 1.0F, 1.0F, h);
+            guiGraphics.blit(LOADING_ICON, guiGraphics.guiWidth() / 2 - 50, guiGraphics.guiHeight() / 2 - 50, 0, 0, 100, 100, 100, 100);
+            guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        }
         // Progress bar
         // 61
         if (f < 1.0F) {

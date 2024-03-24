@@ -23,7 +23,7 @@ public class LoadingConfigScreen {
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent))).build())
 
                 .addWidget(new TextBox(KelUI.TEXTS.TITLE.LOADING_CONFIG, true))
-                .addWidget(new ButtonBuilder(Component.translatable("kelui.config.loading.preview"), (OnPress) -> Minecraft.getInstance().setOverlay(new PreviewLoadingOverlay(1000, () -> {}))).build())
+                .addWidget(new ButtonBuilder(Component.translatable("kelui.config.loading.preview"), (OnPress) -> Minecraft.getInstance().setOverlay(new PreviewLoadingOverlay(2000, () -> {}))).build())
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.loading.vanilla"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading"), true).setConfig(KelUI.config, "LOADING").build())
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.background")).setColor(0xff1b1b1b).setConfig(KelUI.config, "LOADING.BACKGROUND").build())
