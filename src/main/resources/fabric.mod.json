@@ -24,8 +24,8 @@
     ]
   },
   "mixins": [
-    "kelui.fix.mixin.json",
-    "kelui.mixin.json"
+    "kelui.mixin.json",
+    "kelui.fix.mixin.json"
   ],
   "icon": "assets/kelui/icon.png",
   "depends": {

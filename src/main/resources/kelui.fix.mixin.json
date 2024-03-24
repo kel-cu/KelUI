@@ -2,6 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "ru.kelcuprum.kelui.mixin",
+  "plugin": "ru.kelcuprum.kelui.mixin.KelUIMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "client": [
     "fix.AbstractSelectionListMixin",
