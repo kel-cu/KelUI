@@ -94,6 +94,9 @@
 
   "kelui.config.title.loading.new": "KelUI",
   "kelui.config.loading.new": "Enable new loading screen",
+  "kelui.config.loading.new.background_color": "Background color",
+  "kelui.config.loading.new.border_color": "Border color",
+  "kelui.config.loading.new.border_background_color": "Background border color",
 
   "kelui.config.loading.preview": "Preview",
 
