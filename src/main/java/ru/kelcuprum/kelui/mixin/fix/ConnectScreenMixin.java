@@ -23,7 +23,6 @@ public class ConnectScreenMixin extends Screen {
             )
     )
     private void changeTitleY(Args args) {
-//        args.set(3, 128);
         args.set(3, (this.height/2)-(KelUI.MINECRAFT.font.lineHeight/2)-40);
 
     }
@@ -35,7 +34,6 @@ public class ConnectScreenMixin extends Screen {
             )
     )
     private void changeButtonY(Args args) {
-//        args.set(1, 158);
         args.set(1, ((this.height/2)-(KelUI.MINECRAFT.font.lineHeight/2)));
     }
 }
