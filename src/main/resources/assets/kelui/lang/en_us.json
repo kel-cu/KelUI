@@ -4,6 +4,8 @@
 
   "kelui.config.title.main_menu": "Main Menu",
   "kelui.config.main_menu": "Restyle Main Menu",
+  "kelui.config.main_menu.enable_realms": "Enable Realms button",
+  "kelui.config.main_menu.realms_small_button": "Settings button next to Realms",
   "kelui.config.main_menu.panorama": "Enable panorama",
   "kelui.config.main_menu.texture_background": "Textured background",
   "kelui.config.main_menu.info": "Enable info text in main menu",
@@ -104,6 +106,10 @@
   "kelui.menu.multiplayer": "Multiplayer",
   "kelui.menu.options": "Options",
   "kelui.menu.mods": "Mods",
+  "kelui.menu.realms": "Realms",
+  "kelui.menu.skins": "Skin Customize",
+  "kelui.menu.music": "Sounds",
+  "kelui.menu.video": "Video settings",
   "kelui.menu.language": "Language",
   "kelui.menu.quit": "Quit Game",
   

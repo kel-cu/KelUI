@@ -104,6 +104,9 @@ public class KelUI implements ClientModInitializer {
     public interface ICONS {
         ResourceLocation LOADING_ICON = new ResourceLocation("kelui", "textures/gui/loading/icon.png");
         ResourceLocation LANGUAGE = new ResourceLocation("kelui", "textures/gui/sprites/icon/language.png");
+        ResourceLocation HAT_SMALL = new ResourceLocation("kelui", "textures/gui/sprites/icon/hat_small.png");
+        ResourceLocation MONITOR = new ResourceLocation("kelui", "textures/gui/sprites/icon/monitor.png");
+        ResourceLocation MUSIC = new ResourceLocation("kelui", "textures/gui/sprites/icon/music.png");
         ResourceLocation ACCESSIBILITY = new ResourceLocation("kelui", "textures/gui/sprites/icon/accessibility.png");
     }
 

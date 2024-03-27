@@ -1,19 +1,18 @@
 package ru.kelcuprum.kelui.mixin.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.realmsclient.RealmsMainScreen;
 import com.terraformersmc.modmenu.gui.ModsScreen;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.AccessibilityOptionsScreen;
-import net.minecraft.client.gui.screens.LanguageSelectScreen;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.realms.RealmsScreen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Items;
@@ -32,8 +31,7 @@ import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.PlayerHeadWidget;
 
-import static ru.kelcuprum.kelui.KelUI.ICONS.ACCESSIBILITY;
-import static ru.kelcuprum.kelui.KelUI.ICONS.LANGUAGE;
+import static ru.kelcuprum.kelui.KelUI.ICONS.*;
 
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
@@ -59,18 +57,30 @@ public abstract class TitleScreenMixin extends Screen {
         int x = 10;
         //
         assert this.minecraft != null;
-
-        addRenderableWidget(new Button(x+25, height/2-35, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.singleplayer"), (OnPress) -> this.minecraft.setScreen(new SelectWorldScreen(this))));
-        addRenderableWidget(new PlayerHeadWidget(x, height/2-35, 20, 20));
+        int y = height/2-35;
+        addRenderableWidget(new Button(x+25, y, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.singleplayer"), (OnPress) -> this.minecraft.setScreen(new SelectWorldScreen(this))));
+        addRenderableWidget(new PlayerHeadWidget(x, y, 20, 20));
+        y+=25;
         //
-        addRenderableWidget(new Button(x+25, height/2-10, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.multiplayer"), (OnPress) -> this.minecraft.setScreen(new JoinMultiplayerScreen(this))));
-        addRenderableWidget(new ButtonSprite(x, height/2-10, 20, 20, InterfaceUtils.DesignType.VANILLA, InterfaceUtils.Icons.OPTIONS, Component.translatable("kelui.menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this))));
+        addRenderableWidget(new Button(x+25, y, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.multiplayer"), (OnPress) -> this.minecraft.setScreen(new JoinMultiplayerScreen(this))));
+        addRenderableWidget(new ButtonSprite(x, y, 20, 20, InterfaceUtils.DesignType.VANILLA, InterfaceUtils.Icons.OPTIONS, Component.translatable("kelui.menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this))));
+        y+=25;
         //
-        addRenderableWidget(new Button(x+25, height/2+15, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.mods"), (OnPress) -> this.minecraft.setScreen(new ModsScreen(this))));
-        addRenderableWidget(new ButtonSprite(x, height/2+15, 20, 20, InterfaceUtils.DesignType.VANILLA, LANGUAGE, Component.translatable("kelui.menu.language"), (OnPress) -> this.minecraft.setScreen(new LanguageSelectScreen(this, this.minecraft.options, this.minecraft.getLanguageManager()))));
+        if(KelUI.config.getBoolean("MAIN_MENU.ENABLE_REALMS", false)){
+            switch (KelUI.config.getNumber("MAIN_MENU.REALMS_SMALL_BUTTON", 0).intValue()){
+                case 1 -> addRenderableWidget(new ButtonSprite(x, y, 20, 20, InterfaceUtils.DesignType.VANILLA, MUSIC, Component.translatable("kelui.menu.music"), (OnPress) -> this.minecraft.setScreen(new SoundOptionsScreen(this, this.minecraft.options))));
+                default -> addRenderableWidget(new ButtonSprite(x, y, 20, 20, InterfaceUtils.DesignType.VANILLA, HAT_SMALL, Component.translatable("kelui.menu.skins"), (OnPress) -> this.minecraft.setScreen(new SkinCustomizationScreen(this, this.minecraft.options))));
+            }
+            addRenderableWidget(new Button(x+25, y, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.realms"), (OnPress) -> this.minecraft.setScreen(new RealmsMainScreen(this))));
+            y+=25;
+        }
         //
-        addRenderableWidget(new Button(x+25, height/2+40, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.quit"), (OnPress) -> this.minecraft.stop()));
-        addRenderableWidget(new ButtonSprite(x, height/2+40, 20, 20, InterfaceUtils.DesignType.VANILLA, ACCESSIBILITY, Component.translatable("options.accessibility"), (OnPress) -> this.minecraft.setScreen(new AccessibilityOptionsScreen(this, this.minecraft.options))));
+        addRenderableWidget(new Button(x+25, y, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.mods"), (OnPress) -> this.minecraft.setScreen(new ModsScreen(this))));
+        addRenderableWidget(new ButtonSprite(x, y, 20, 20, InterfaceUtils.DesignType.VANILLA, LANGUAGE, Component.translatable("kelui.menu.language"), (OnPress) -> this.minecraft.setScreen(new LanguageSelectScreen(this, this.minecraft.options, this.minecraft.getLanguageManager()))));
+        y+=25;
+        //
+        addRenderableWidget(new Button(x+25, y, 185, 20, InterfaceUtils.DesignType.VANILLA, Component.translatable("kelui.menu.quit"), (OnPress) -> this.minecraft.stop()));
+        addRenderableWidget(new ButtonSprite(x, y, 20, 20, InterfaceUtils.DesignType.VANILLA, ACCESSIBILITY, Component.translatable("options.accessibility"), (OnPress) -> this.minecraft.setScreen(new AccessibilityOptionsScreen(this, this.minecraft.options))));
         if(KelUI.config.getBoolean("MAIN_MENU.INFO", true)) {
             int yT = height-20;
             if(KelUI.config.getBoolean("MAIN_MENU.CREDITS", true)) {
