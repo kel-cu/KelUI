@@ -39,7 +39,6 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     // Mods libs
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-    modImplementation "maven.modrinth:controlify:${project.controlify_version}"
     //
     modImplementation("ru.kelcuprum.alinlib:AlinLib-fabric:${project.alinlib}")
     include(implementation ("meteordevelopment:starscript:0.2.2"))

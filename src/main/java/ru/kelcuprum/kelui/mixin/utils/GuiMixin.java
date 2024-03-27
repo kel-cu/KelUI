@@ -16,6 +16,7 @@ import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -58,6 +59,8 @@ public abstract class GuiMixin {
 
     @Shadow @Final private DebugScreenOverlay debugOverlay;
 
+    @Shadow protected abstract void renderVehicleHealth(GuiGraphics guiGraphics);
+
     @Inject(method = "render", at = @At("HEAD"))
     void render(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
         int y = screenHeight/2;
@@ -66,29 +69,32 @@ public abstract class GuiMixin {
         int maxText = 0;
         if(this.debugOverlay.showDebugScreen()) return;
         if(KelUI.config.getBoolean("HUD.ARMOR_INFO", true)) {
-            for (int i = 0; i < 4; i++) {
-                ItemStack item = getCameraPlayer().getInventory().getArmor(3 - i);
-                if (!item.isEmpty()) {
-                    items.add(item);
-                    if(KelUI.config.getBoolean("HUD.ARMOR_INFO.DAMAGE", true)) {
-                        Component itext = Component.literal(KelUI.getArmorDamage(item));
-                        if (KelUI.MINECRAFT.font.width(itext) > maxText)
-                            maxText = KelUI.MINECRAFT.font.width(itext);
-                        text.add(itext);
+            if(getCameraPlayer() instanceof Player) {
+                for (int i = 0; i < 4; i++) {
+                    ItemStack item = getCameraPlayer().getInventory().getArmor(3 - i);
+                    if (!item.isEmpty()) {
+                        items.add(item);
+                        if (KelUI.config.getBoolean("HUD.ARMOR_INFO.DAMAGE", true)) {
+                            Component itext = Component.literal(KelUI.getArmorDamage(item));
+                            if (KelUI.MINECRAFT.font.width(itext) > maxText)
+                                maxText = KelUI.MINECRAFT.font.width(itext);
+                            text.add(itext);
+                        }
                     }
                 }
-            }
-            if (!items.isEmpty()) {
-                y -= ((20 * items.size()) / 2);
-                int j = 0;
-                guiGraphics.fill(0, y, 20, y + (18 * items.size()), 0x75000000);
-                if (maxText > 0) {
-                    guiGraphics.fill(20, y, 26 + maxText, y + (18 * items.size()), 0x75000000);
-                }
-                for (ItemStack item : items) {
-                    guiGraphics.renderFakeItem(item, 2, y + (j * 18) + 2);
-                    if(!text.isEmpty()) guiGraphics.drawString(minecraft.font, text.get(j), 22, y + (j * 18) + (20 / 2) - (minecraft.font.lineHeight / 2), 0xFFFFFFFF);
-                    j++;
+                if (!items.isEmpty()) {
+                    y -= ((20 * items.size()) / 2);
+                    int j = 0;
+                    guiGraphics.fill(0, y, 20, y + (18 * items.size()), 0x75000000);
+                    if (maxText > 0) {
+                        guiGraphics.fill(20, y, 26 + maxText, y + (18 * items.size()), 0x75000000);
+                    }
+                    for (ItemStack item : items) {
+                        guiGraphics.renderFakeItem(item, 2, y + (j * 18) + 2);
+                        if (!text.isEmpty())
+                            guiGraphics.drawString(minecraft.font, text.get(j), 22, y + (j * 18) + (20 / 2) - (minecraft.font.lineHeight / 2), 0xFFFFFFFF);
+                        j++;
+                    }
                 }
             }
         }
@@ -281,6 +287,7 @@ public abstract class GuiMixin {
     @Inject(method = "renderVehicleHealth", at=@At("HEAD"), cancellable = true)
     void renderVehicleHealth(GuiGraphics guiGraphics, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        if(this.minecraft.gameMode.getPlayerMode() == GameType.SPECTATOR) return;
         int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 0 : (this.screenWidth-180) / 2;
         int i = this.screenHeight-22;
         int x = 0;
