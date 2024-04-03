@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
@@ -29,6 +30,7 @@ import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
+import ru.kelcuprum.kelui.gui.PanoramaRenderHelper;
 import ru.kelcuprum.kelui.gui.components.PlayerHeadWidget;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.*;
@@ -49,6 +51,17 @@ public abstract class TitleScreenMixin extends Screen {
 
     protected TitleScreenMixin() {
         super(null);
+    }
+
+    @Inject(method = "render", at=@At(value = "INVOKE",target = "Lnet/minecraft/client/renderer/PanoramaRenderer;render(FF)V"))
+    public void updatePanorama(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta, CallbackInfo ci){
+        PanoramaRenderHelper.getInstance().update(panorama, PANORAMA_OVERLAY, fading, fadeInStart);
+    }
+
+    @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blit(Lnet/minecraft/resources/ResourceLocation;IIIIFFIIII)V"),index = 0)
+    private ResourceLocation getOverlayProd(ResourceLocation location) {
+        PanoramaRenderHelper.getInstance().updateOverlayId(location);
+        return location;
     }
 
     @Inject(method = "init", at = @At("HEAD"), cancellable = true)
@@ -125,6 +138,7 @@ public abstract class TitleScreenMixin extends Screen {
         super.render(guiGraphics, i, j, f);
         cl.cancel();
     }
+
 
 
 }

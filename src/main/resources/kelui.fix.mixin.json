@@ -7,7 +7,12 @@
   "client": [
     "fix.AbstractSelectionListMixin",
     "fix.ConnectScreenMixin",
-    "fix.TabNavigationBarMixin"
+    "fix.TabNavigationBarMixin",
+    "screen.AbstractSelectionListMixin",
+    "screen.GameRendererMixin",
+    "screen.PanoramaRendererMixin",
+    "screen.ScreenMixin",
+    "utils.PanoramaRendererAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
