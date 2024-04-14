@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.mixin.screen;
+package ru.kelcuprum.kelui.mixin.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.realmsclient.RealmsMainScreen;

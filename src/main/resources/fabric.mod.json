@@ -14,10 +14,13 @@
     "email": "me@kelcuprum.ru"
   },
   "license": "MIT",
-  "environment": "client",
+  "environment": "*",
   "entrypoints": {
     "client": [
       "ru.kelcuprum.kelui.KelUI"
+    ],
+    "server": [
+      "ru.kelcuprum.kelui.KelUIServer"
     ],
     "modmenu": [
       "ru.kelcuprum.kelui.gui.ModMenuIntegration"
@@ -25,7 +28,8 @@
   },
   "mixins": [
     "kelui.mixin.json",
-    "kelui.fix.mixin.json"
+    "kelui.fix.mixin.json",
+    "kelui.server.mixin.json"
   ],
   "icon": "assets/kelui/icon.png",
   "depends": {

@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.mixin.fix;
+package ru.kelcuprum.kelui.mixin.client.fix;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractSelectionList;

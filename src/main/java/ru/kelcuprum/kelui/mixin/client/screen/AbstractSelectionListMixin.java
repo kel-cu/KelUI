@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.mixin.screen;
+package ru.kelcuprum.kelui.mixin.client.screen;
 
 import com.terraformersmc.modmenu.gui.widget.DescriptionListWidget;
 import net.minecraft.client.Minecraft;

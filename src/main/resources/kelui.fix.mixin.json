@@ -5,14 +5,14 @@
   "plugin": "ru.kelcuprum.kelui.mixin.KelUIMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "fix.AbstractSelectionListMixin",
-    "fix.ConnectScreenMixin",
-    "fix.TabNavigationBarMixin",
-    "screen.AbstractSelectionListMixin",
-    "screen.GameRendererMixin",
-    "screen.PanoramaRendererMixin",
-    "screen.ScreenMixin",
-    "utils.PanoramaRendererAccessor"
+    "client.fix.AbstractSelectionListMixin",
+    "client.fix.ConnectScreenMixin",
+    "client.fix.TabNavigationBarMixin",
+    "client.screen.AbstractSelectionListMixin",
+    "client.screen.GameRendererMixin",
+    "client.screen.PanoramaRendererMixin",
+    "client.screen.ScreenMixin",
+    "client.utils.PanoramaRendererAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

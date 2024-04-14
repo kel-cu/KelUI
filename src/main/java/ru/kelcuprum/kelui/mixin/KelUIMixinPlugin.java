@@ -13,6 +13,8 @@ import java.util.Set;
 
 public class KelUIMixinPlugin implements IMixinConfigPlugin {
     public static final Logger LOG = LogManager.getLogger("KelUI > Mixin");
+    public boolean isPauseScreenEnable = true;
+    public static boolean isReplayModInstalled = FabricLoader.getInstance().isModLoaded("replaymod");
     @Override
     public void onLoad(String mixinPackage) {
 
@@ -28,8 +30,13 @@ public class KelUIMixinPlugin implements IMixinConfigPlugin {
         if(!mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.")){
             return false;
         }
-        if(FabricLoader.getInstance().isModLoaded("controlify") && (mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.screen.Title") || mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.screen.Pause"))){
+        if(FabricLoader.getInstance().isModLoaded("controlify") && (mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.Title") || mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.Pause"))){
             LOG.error(String.format("Mixin %s for %s not loaded, Controlify not compatibility", mixinClassName, targetClassName));
+            isPauseScreenEnable = false;
+            return false;
+        }
+        if((!isReplayModInstalled || !isPauseScreenEnable) && mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.replaymod")){
+            LOG.error(String.format("Mixin %s for %s not loaded, %s", mixinClassName, targetClassName, (!isReplayModInstalled ? "ReplayMod not installed" : "Controlify not compatibility")));
             return false;
         }
         return true;

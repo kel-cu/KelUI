@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.mixin.screen;
+package ru.kelcuprum.kelui.mixin.client.screen;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.*;
@@ -20,12 +20,13 @@ import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.PlayerHeadWidget;
+import ru.kelcuprum.kelui.tui.ColorUtils;
 
 import java.util.Objects;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.LANGUAGE;
 
-@Mixin(PauseScreen.class)
+@Mixin(value = PauseScreen.class, priority = -1)
 public abstract class PauseScreenMixin extends Screen {
 
     protected PauseScreenMixin() {

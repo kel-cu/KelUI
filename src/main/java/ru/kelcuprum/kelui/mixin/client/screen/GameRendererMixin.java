@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.mixin.screen;
+package ru.kelcuprum.kelui.mixin.client.screen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;

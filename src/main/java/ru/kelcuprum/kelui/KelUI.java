@@ -13,8 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.spongepowered.asm.launch.MixinLaunchPlugin;
-import org.spongepowered.asm.mixin.Mixin;
 import ru.kelcuprum.alinlib.config.Config;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
@@ -40,11 +38,16 @@ public class KelUI implements ClientModInitializer {
     public static Minecraft MINECRAFT = Minecraft.getInstance();
     public static final String MINECRAFT_LAUNCHED_VERSION = MINECRAFT.getLaunchedVersion();
     public static IconStorageHelper iconStorageHelper = new IconStorageHelper();
+    //
 
     @Override
     public void onInitializeClient() {
-        config.load();
+//        com.replaymod.core.mixin.GuiScreenAccessor
+        onInitialize();
         iconStorageHelper.init();
+    }
+
+    public static void onInitialize() {
         log("Hello, world!");
     }
 
@@ -89,9 +92,11 @@ public class KelUI implements ClientModInitializer {
                     (item.getMaxDamage() == 0 ? "" : item.getMaxDamage() == (item.getMaxDamage() - item.getDamageValue()) ? String.format("%s", item.getMaxDamage()) : String.format("%s/%s", item.getMaxDamage() - item.getDamageValue(), item.getMaxDamage()));
         };
     }
-    public static int getPingColor(int ping){
+
+    public static int getPingColor(int ping) {
         int color = 0xFFFFFFFF;
-        if(config.getBoolean("TAB.PING_TO_TEXT.COLOR_ENABLE", true)) color = ping < 150 ? SEADRIVE : ping < 300 ? CLOWNFISH : GROUPIE;
+        if (config.getBoolean("TAB.PING_TO_TEXT.COLOR_ENABLE", true))
+            color = ping < 150 ? SEADRIVE : ping < 300 ? CLOWNFISH : GROUPIE;
         return color;
     }
 
@@ -112,13 +117,14 @@ public class KelUI implements ClientModInitializer {
 
     public interface TEXTS {
         Component NAME = Component.translatable("kelui.name");
+
         interface TITLE {
-            Component MENU_CONFIG    = Component.translatable("kelui.config.title.main_menu");
-            Component PAUSE_CONFIG   = Component.translatable("kelui.config.title.pause_menu");
-            Component HUD_CONFIG     = Component.translatable("kelui.config.title.hud");
-            Component PLAYER_LIST_CONFIG   = Component.translatable("kelui.config.title.player_list");
+            Component MENU_CONFIG = Component.translatable("kelui.config.title.main_menu");
+            Component PAUSE_CONFIG = Component.translatable("kelui.config.title.pause_menu");
+            Component HUD_CONFIG = Component.translatable("kelui.config.title.hud");
+            Component PLAYER_LIST_CONFIG = Component.translatable("kelui.config.title.player_list");
             Component LOADING_CONFIG = Component.translatable("kelui.config.title.loading");
-            Component OTHER_CONFIG   = Component.translatable("kelui.config.title.other");
+            Component OTHER_CONFIG = Component.translatable("kelui.config.title.other");
         }
     }
 }

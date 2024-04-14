@@ -41,7 +41,14 @@ dependencies {
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     //
     modImplementation("ru.kelcuprum.alinlib:AlinLib-fabric:${project.alinlib}")
+    modImplementation "maven.modrinth:replaymod:${project.replaymod}"
     include(implementation ("meteordevelopment:starscript:0.2.2"))
+
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
 
     subprojects.each {
         implementation project(path: ":${it.name}", configuration: 'namedElements')

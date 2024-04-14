@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.mixin.utils;
+package ru.kelcuprum.kelui.mixin.client.utils;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.DebugScreenOverlay;

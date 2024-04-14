@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.mixin.screen;
+package ru.kelcuprum.kelui.mixin.client.screen;
 
 import net.minecraft.client.gui.screens.ChatScreen;
 import org.spongepowered.asm.mixin.Mixin;

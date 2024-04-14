@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.CubeMap;
 import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import ru.kelcuprum.kelui.mixin.utils.PanoramaRendererAccessor;
+import ru.kelcuprum.kelui.mixin.client.utils.PanoramaRendererAccessor;
 
 public class PanoramaRenderHelper {
 

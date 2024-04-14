@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.mixin.utils;
+package ru.kelcuprum.kelui.mixin.client.utils;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;

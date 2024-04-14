@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.mixin.fix;
+package ru.kelcuprum.kelui.mixin.client.fix;
 
 import net.minecraft.client.gui.screens.ConnectScreen;
 import net.minecraft.client.gui.screens.DisconnectedScreen;

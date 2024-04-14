@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.mixin.utils;
+package ru.kelcuprum.kelui.mixin.client.utils;
 
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
