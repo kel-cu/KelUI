@@ -44,7 +44,6 @@ public class OtherConfigScreen {
 
                 .addWidget(new TextBox(KelUI.TEXTS.TITLE.OTHER_CONFIG, true))
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.other.render"))
-                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.screen.better_background"), true).setConfig(KelUI.config, "SCREEN.BETTER_BACKGROUND").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.map_slot"), true).setConfig(KelUI.config, "HUD.MAP_SLOT").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.ui.smooth_menu"), false).setConfig(KelUI.config, "UI.SMOOTH_MENU").build())
                 )

@@ -1,6 +1,7 @@
 package ru.kelcuprum.kelui.mixin.client.screen;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
@@ -22,6 +23,7 @@ import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.PlayerHeadWidget;
 import ru.kelcuprum.kelui.tui.ColorUtils;
 
+import java.util.Iterator;
 import java.util.Objects;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.LANGUAGE;
@@ -82,16 +84,21 @@ public abstract class PauseScreenMixin extends Screen {
     protected abstract void onDisconnect();
 
 
-    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo cl) {
+    @Inject(method = "renderBackground", at = @At("HEAD"), cancellable = true)
+    void renderBackground(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo cl) {
+        super.renderBackground(guiGraphics, i, j, f);
         if(!KelUI.config.getBoolean("PAUSE_MENU", true)) return;
         if(KelUI.config.getBoolean("PAUSE_MENU.ALPHA", true)){
             InterfaceUtils.renderLeftPanel(guiGraphics, 230, this.height);
         } else {
             InterfaceUtils.renderTextureLeftPanel(guiGraphics, 230, this.height);
         }
-
-
+        cl.cancel();
+    }
+    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
+    void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo cl) {
+        super.render(guiGraphics, i, j, f);
+        if(!KelUI.config.getBoolean("PAUSE_MENU", true)) return;
         if(KelUI.config.getBoolean("PAUSE_MENU.PLAYER", true)) {
             int i1 = (width - 150) / 2;
             int x = i1 + 150;
@@ -99,8 +106,6 @@ public abstract class PauseScreenMixin extends Screen {
             assert this.minecraft.player != null;
             InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, x, 0, width, height, (width-x)/3, 0.0625F, (float) width /2, (float) height /2, this.minecraft.player);
         }
-
-        super.render(guiGraphics, i, j, f);
         cl.cancel();
     }
 }

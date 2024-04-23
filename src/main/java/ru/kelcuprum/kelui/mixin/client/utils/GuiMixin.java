@@ -1,5 +1,6 @@
 package ru.kelcuprum.kelui.mixin.client.utils;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.GameType;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
@@ -40,14 +42,14 @@ public abstract class GuiMixin {
 
     @Shadow protected abstract Player getCameraPlayer();
 
-    @Shadow private int screenHeight;
+    @Unique int screenHeight;
 
     @Shadow @Final private Minecraft minecraft;
 
     @Shadow protected abstract void renderSlot(GuiGraphics guiGraphics, int i, int j, float f, Player player, ItemStack itemStack, int k);
 
 
-    @Shadow private int screenWidth;
+    @Unique int screenWidth;
 
     @Shadow private int toolHighlightTimer;
 
@@ -63,6 +65,8 @@ public abstract class GuiMixin {
 
     @Inject(method = "render", at = @At("HEAD"))
     void render(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
+        this.screenWidth = guiGraphics.guiWidth();
+        this.screenHeight = guiGraphics.guiHeight();
         int y = screenHeight/2;
         List<ItemStack> items = new ArrayList<>();
         List<Component> text = new ArrayList<>();
@@ -111,7 +115,7 @@ public abstract class GuiMixin {
     }
     // -=-=-=-=-=-=-=-=-=-
     @ModifyArgs(
-            method = "render",
+            method = "renderOverlayMessage",
             at = @At(
                     value = "INVOKE",
                     target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V"
@@ -126,7 +130,7 @@ public abstract class GuiMixin {
         }
     }
     @Inject(method = "renderEffects", at = @At("HEAD"), cancellable = true)
-    void renderEffects(GuiGraphics guiGraphics, CallbackInfo ci){
+    void renderEffects(GuiGraphics guiGraphics, float f, CallbackInfo ci){
         if(!KelUI.config.getBoolean("HUD.NEW_EFFECTS", false)) return;
         if(!this.debugOverlay.showDebugScreen()) {
             assert this.minecraft.player != null;
@@ -152,8 +156,8 @@ public abstract class GuiMixin {
         }
         ci.cancel();
     }
-    @Inject(method = "renderHotbar", at = @At("HEAD"), cancellable = true)
-    void renderHotbar(float f, GuiGraphics guiGraphics, CallbackInfo ci){
+    @Inject(method = "renderItemHotbar", at = @At("HEAD"), cancellable = true)
+    void renderItemHotbar(GuiGraphics guiGraphics, float f, CallbackInfo ci){
         if(!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
         int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 0 : (this.screenWidth-180) / 2;
         int l = 1;
@@ -332,7 +336,7 @@ public abstract class GuiMixin {
     void renderSelectedItemName(GuiGraphics guiGraphics, CallbackInfo ci){
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
         if (this.toolHighlightTimer > 0 && !this.lastToolHighlight.isEmpty()) {
-            MutableComponent mutableComponent = Component.empty().append(this.lastToolHighlight.getHoverName()).withStyle(this.lastToolHighlight.getRarity().color);
+            MutableComponent mutableComponent = Component.empty().append(this.lastToolHighlight.getHoverName()).withStyle(this.lastToolHighlight.getRarity().color());
             int l = (int) ((float) this.toolHighlightTimer * 256.0F / 10.0F);
             if (l > 255) {
                 l = 255;

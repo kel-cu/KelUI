@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
@@ -43,8 +44,8 @@ public abstract class GuiGraphicsMixin {
         if(!KelUI.config.getBoolean("HUD.MAP_SLOT", true)) return;
         if (!stack.is(Items.FILLED_MAP)) return;
 
-        var mapId = MapItem.getMapId(stack);
-        var savedData = MapItem.getSavedData(mapId, this.minecraft.level);
+        var savedData = MapItem.getSavedData(stack, this.minecraft.level);
+        var mapId = stack.get(DataComponents.MAP_ID);
 
         if (savedData == null) return;
 

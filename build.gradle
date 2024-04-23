@@ -1,6 +1,6 @@
 //file:noinspection GroovyUnusedAssignment
 plugins {
-    id 'dev.architectury.loom' version '1.5-SNAPSHOT'
+    id 'fabric-loom' version '1.6-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'maven-publish'
 }
@@ -33,7 +33,7 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings loom.layered() {
         officialMojangMappings()
-        parchment "org.parchmentmc.data:parchment-${project.minecraft_version}:${project.parchment_version}@zip"
+//        parchment "org.parchmentmc.data:parchment-${project.minecraft_version}:${project.parchment_version}@zip"
     }
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
@@ -41,14 +41,13 @@ dependencies {
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     //
     modImplementation("ru.kelcuprum.alinlib:AlinLib-fabric:${project.alinlib}")
-    modImplementation "maven.modrinth:replaymod:${project.replaymod}"
     include(implementation ("meteordevelopment:starscript:0.2.2"))
 
-    compileOnly 'org.projectlombok:lombok:1.18.26'
-    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
-    testCompileOnly 'org.projectlombok:lombok:1.18.26'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     subprojects.each {
         implementation project(path: ":${it.name}", configuration: 'namedElements')

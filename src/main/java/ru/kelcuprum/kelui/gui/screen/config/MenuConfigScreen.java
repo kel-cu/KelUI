@@ -31,8 +31,6 @@ public class MenuConfigScreen {
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu"), true).setConfig(KelUI.config, "MAIN_MENU").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.enable_realms"), false).setConfig(KelUI.config, "MAIN_MENU.ENABLE_REALMS").build())
                 .addWidget(new SelectorBuilder(Component.translatable("kelui.config.main_menu.realms_small_button")).setList(types).setValue(0).setConfig(KelUI.config, "MAIN_MENU.REALMS_SMALL_BUTTON").build())
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.panorama"), true).setConfig(KelUI.config, "MAIN_MENU.PANORAMA").build())
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.texture_background"), false).setConfig(KelUI.config, "MAIN_MENU.TEXTURE_BACKGROUND").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.info"), true).setConfig(KelUI.config, "MAIN_MENU.INFO").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.version"), true).setConfig(KelUI.config, "MAIN_MENU.VERSION").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.credits"), true).setConfig(KelUI.config, "MAIN_MENU.CREDITS").build())

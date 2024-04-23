@@ -6,13 +6,7 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "client.fix.AbstractSelectionListMixin",
-    "client.fix.ConnectScreenMixin",
-    "client.fix.TabNavigationBarMixin",
-    "client.screen.AbstractSelectionListMixin",
-    "client.screen.GameRendererMixin",
-    "client.screen.PanoramaRendererMixin",
-    "client.screen.ScreenMixin",
-    "client.utils.PanoramaRendererAccessor"
+    "client.fix.ConnectScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

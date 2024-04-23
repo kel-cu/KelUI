@@ -28,7 +28,7 @@ public class PauseConfigScreen {
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.alpha"), true).setConfig(KelUI.config, "PAUSE_MENU.ALPHA").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.info"), true).setConfig(KelUI.config, "PAUSE_MENU.INFO").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.version"), true).setConfig(KelUI.config, "PAUSE_MENU.VERSION").build())
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.credits"), true).setConfig(KelUI.config, "PAUSE_MENU.CREDITS").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.credits"), false).setConfig(KelUI.config, "PAUSE_MENU.CREDITS").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.player"), true).setConfig(KelUI.config, "PAUSE_MENU.PLAYER").build())
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.pause_menu.short_command"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.enable_short_command"), false).setConfig(KelUI.config, "PAUSE_MENU.ENABLE_SHORT_COMMAND").build())

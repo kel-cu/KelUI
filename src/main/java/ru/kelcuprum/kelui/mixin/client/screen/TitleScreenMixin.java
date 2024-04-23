@@ -12,13 +12,13 @@ import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.realms.RealmsScreen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -30,38 +30,22 @@ import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
-import ru.kelcuprum.kelui.gui.PanoramaRenderHelper;
 import ru.kelcuprum.kelui.gui.components.PlayerHeadWidget;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.*;
 
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
-    @Final
-    @Shadow
-    private static ResourceLocation PANORAMA_OVERLAY;
-    @Final
-    @Shadow
-    private PanoramaRenderer panorama;
     @Shadow
     private long fadeInStart;
     @Final
     @Shadow
     private boolean fading;
 
+    @Shadow protected abstract void renderPanorama(GuiGraphics guiGraphics, float f);
+
     protected TitleScreenMixin() {
         super(null);
-    }
-
-    @Inject(method = "render", at=@At(value = "INVOKE",target = "Lnet/minecraft/client/renderer/PanoramaRenderer;render(FF)V"))
-    public void updatePanorama(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta, CallbackInfo ci){
-        PanoramaRenderHelper.getInstance().update(panorama, PANORAMA_OVERLAY, fading, fadeInStart);
-    }
-
-    @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blit(Lnet/minecraft/resources/ResourceLocation;IIIIFFIIII)V"),index = 0)
-    private ResourceLocation getOverlayProd(ResourceLocation location) {
-        PanoramaRenderHelper.getInstance().updateOverlayId(location);
-        return location;
     }
 
     @Inject(method = "init", at = @At("HEAD"), cancellable = true)
@@ -111,24 +95,10 @@ public abstract class TitleScreenMixin extends Screen {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo cl) {
         if(!KelUI.config.getBoolean("MAIN_MENU", true)) return;
-        if(KelUI.config.getBoolean("MAIN_MENU.TEXTURE_BACKGROUND", false)){
-            ResourceLocation texture = new ResourceLocation("kelui", "textures/gui/sprites/main_menu/background.png");
-            RenderSystem.setShader(GameRenderer::getPositionTexShader); // getPositionTexProgram
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.setShaderTexture(0, texture);
-            guiGraphics.blit(texture, 0, 0, width, height, 0f, 0f, 1920, 1080, 1920, 1080);
-        } else if(KelUI.config.getBoolean("MAIN_MENU.PANORAMA", true)){
-            if (this.fadeInStart == 0L && this.fading) {
-                this.fadeInStart = Util.getMillis();
-            }
-            float g = (float)(Util.getMillis() - this.fadeInStart) / 1000.0F;
-            this.panorama.render(f, Mth.clamp(g, 0.0F, 1.0F));
-            guiGraphics.setColor(1.0F, 1.0F, 1.0F, (float)Mth.ceil(Mth.clamp(g, 0.0F, 1.0F)));
-            guiGraphics.blit(PANORAMA_OVERLAY, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
-            guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-        } else {
-            renderDirtBackground(guiGraphics);
+        if (this.fadeInStart == 0L && this.fading) {
+            this.fadeInStart = Util.getMillis();
         }
+        this.renderPanorama(guiGraphics, f);
         InterfaceUtils.renderLeftPanel(guiGraphics, 230, this.height);
         if (KelUI.config.getBoolean("FIRST_START", true)) {
             KelUI.config.setBoolean("FIRST_START", false);
@@ -138,7 +108,5 @@ public abstract class TitleScreenMixin extends Screen {
         super.render(guiGraphics, i, j, f);
         cl.cancel();
     }
-
-
 
 }
