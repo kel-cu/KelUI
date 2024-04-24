@@ -79,7 +79,7 @@
   "kelui.config.global.custom_version_type": "Custom loader name",
   "kelui.config.global.enable_custom_version": "Enable custom version",
   "kelui.config.global.custom_version": "Custom version",
-  "kelui.config.global.enable_custom_icon": "Enable custon icons",
+  "kelui.config.global.enable_custom_icon": "Enable custom icons",
   "kelui.config.global.enable_custom_icon.mod": "Icon from mod",
   "kelui.config.global.custom_icon.path": "Icons path",
   "kelui.config.global.custom_icon.update": "Icon force update",
