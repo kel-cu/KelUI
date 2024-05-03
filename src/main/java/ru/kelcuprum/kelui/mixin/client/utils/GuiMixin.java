@@ -69,7 +69,7 @@ public abstract class GuiMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
     void init(Minecraft minecraft, CallbackInfo ci){
         LayeredDraw kelUILayer = new LayeredDraw().add(this::renderDebugOverlay).add(this::renderPaperDoll).add(this::renderArmorInfo);
-        layers.add(kelUILayer, () -> { return !minecraft.options.hideGui; });
+        layers.add(kelUILayer, () -> !minecraft.options.hideGui);
     }
     @Unique
     public void renderDebugOverlay(GuiGraphics guiGraphics, float f){
