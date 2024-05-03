@@ -48,7 +48,6 @@ public abstract class GuiMixin {
 
     @Shadow protected abstract void renderSlot(GuiGraphics guiGraphics, int i, int j, float f, Player player, ItemStack itemStack, int k);
 
-
     @Unique int screenWidth;
 
     @Shadow private int toolHighlightTimer;
@@ -61,9 +60,6 @@ public abstract class GuiMixin {
 
     @Shadow @Final private DebugScreenOverlay debugOverlay;
     @Shadow @Final private LayeredDraw layers;
-
-
-    @Shadow protected abstract void renderDemoOverlay(GuiGraphics guiGraphics, float f);
 
     @Inject(method = "render", at = @At("HEAD"))
     void render(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
@@ -96,7 +92,7 @@ public abstract class GuiMixin {
     @Unique
     public void renderArmorInfo(GuiGraphics guiGraphics, float f){
         if(this.debugOverlay.showDebugScreen()) return;
-        if(KelUI.config.getBoolean("HUD.ARMOR_INFO", true)) return;
+        if(!KelUI.config.getBoolean("HUD.ARMOR_INFO", true)) return;
         List<ItemStack> items = new ArrayList<>();
         List<Component> text = new ArrayList<>();
         int y = screenHeight/2;
