@@ -258,15 +258,21 @@ public abstract class GuiMixin {
             int healthColor = KelUI.MINECRAFT.player.hasEffect(MobEffects.POISON) ? 0xFFa3b18a :
                     KelUI.MINECRAFT.player.hasEffect(MobEffects.WITHER) ? 0xff4a4e69 :
                             KelUI.MINECRAFT.player.isFullyFrozen() ? 0x90e0ef : GROUPIE;
-            guiGraphics.fill(pos + 182 + x, i, pos + 184 + x, i + 20, healthColor - 0x75000000);
+            guiGraphics.fill(pos + 182 + x, i, pos + 184 + x, i + 20, 0x7f000000);
+//            guiGraphics.fill(pos + 182 + x, i, pos + 184 + x, i + 20, healthColor - 0x75000000);
             guiGraphics.fill(pos + 182 + x, i, pos + 184 + x, (int) (i + (20 * health)), healthColor);
-            guiGraphics.fill(pos + 186 + x, i, pos + 188 + x, i + 20, 0x75598392);
+
+            guiGraphics.fill(pos + 186 + x, i, pos + 188 + x, i + 20, 0x7f000000);
+//            guiGraphics.fill(pos + 186 + x, i, pos + 188 + x, i + 20, 0x75598392);
             guiGraphics.fill(pos + 186 + x, i, pos + 188 + x, (int) (i + (20 * armor)), 0xff598392);
 
-            guiGraphics.fill(pos + 190 + x, i, pos + 192 + x, i + 20, 0x75ff9b54);
+            guiGraphics.fill(pos + 190 + x, i, pos + 192 + x, i + 20, 0x7f000000);
+//            guiGraphics.fill(pos + 190 + x, i, pos + 192 + x, i + 20, 0x75ff9b54);
             guiGraphics.fill(pos + 190 + x, i, pos + 192 + x, (int) (i + (20 * hunger)), 0xFFff9b54);
+
             if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
-                guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, 0x7fcae9ff);
+                guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, 0x7f000000);
+//                guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, 0x7fcae9ff);
                 guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, (int) (i + (20 * air)), 0xffcae9ff);
             }
         } else {
@@ -275,19 +281,23 @@ public abstract class GuiMixin {
             int healthColor = KelUI.MINECRAFT.player.hasEffect(MobEffects.POISON) ? 0xFFa3b18a :
                     KelUI.MINECRAFT.player.hasEffect(MobEffects.WITHER) ? 0xff4a4e69 :
                             KelUI.MINECRAFT.player.isFullyFrozen() ? 0x90e0ef : GROUPIE;
-            guiGraphics.fill(pos, i - 2, pos + 80, i, healthColor - 0x75000000);
+            guiGraphics.fill(pos, i - 2, pos + 80, i, 0x75000000);
+//            guiGraphics.fill(pos, i - 2, pos + 80, i, healthColor - 0x75000000);
             guiGraphics.fill(pos, i - 2, (int) (pos + (80 * health)), i, healthColor);
             //
             if (armor != 0) {
-                guiGraphics.fill(pos, i - 4, pos + 80, i - 6, 0x75598392);
+                guiGraphics.fill(pos, i - 4, pos + 80, i - 6, 0x75000000);
+//                guiGraphics.fill(pos, i - 4, pos + 80, i - 6, 0x75598392);
                 guiGraphics.fill(pos, i - 4, (int) (pos + (80 * armor)), i - 6, 0xff598392);
             }
 
-            guiGraphics.fill(pos + 100, i - 2, pos + 180, i, 0x75ff9b54);
+            guiGraphics.fill(pos + 100, i - 2, pos + 180, i, 0x75000000);
+//            guiGraphics.fill(pos + 100, i - 2, pos + 180, i, 0x75ff9b54);
             guiGraphics.fill(pos + 100, i - 2, (int) (pos + 100 + (80 * hunger)), i, 0xFFff9b54);
 
             if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
-                guiGraphics.fill(pos + 100, i - 4, pos + 180, i - 6, 0x7fcae9ff);
+                guiGraphics.fill(pos + 100, i - 4, pos + 180, i - 6, 0x75000000);
+//                guiGraphics.fill(pos + 100, i - 4, pos + 180, i - 6, 0x7fcae9ff);
                 guiGraphics.fill(pos + 100, i - 4, (int) (pos + 100 + (80 * air)), i - 6, 0xffcae9ff);
             }
         }
@@ -315,12 +325,14 @@ public abstract class GuiMixin {
             if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
                 x += 4;
             }
-            guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, SEADRIVE - 0x75000000);
+            guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, 0x75000000);
+//            guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, SEADRIVE - 0x75000000);
             guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, (int) (i + (20 * exp)), SEADRIVE);
             guiGraphics.drawString(minecraft.font, "" + this.minecraft.player.experienceLevel, pos + 198 + x, i + (20 / 2) - (minecraft.font.lineHeight / 2), SEADRIVE);
         } else {
             int i = this.screenHeight - 24;
-            guiGraphics.fill(pos, i, pos + 180, i - 2, SEADRIVE - 0x75000000);
+            guiGraphics.fill(pos, i, pos + 180, i - 2, 0x75000000);
+//            guiGraphics.fill(pos, i, pos + 180, i - 2, SEADRIVE - 0x75000000);
             guiGraphics.fill(pos, i, (int) (pos + (180 * exp)), i - 2, SEADRIVE);
             guiGraphics.drawCenteredString(minecraft.font, "" + this.minecraft.player.experienceLevel, (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 90 : this.screenWidth / 2, i - 2 - minecraft.font.lineHeight, SEADRIVE);
         }
