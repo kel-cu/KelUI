@@ -9,9 +9,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Items;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -39,17 +42,24 @@ public abstract class TitleScreenMixin extends Screen {
 
     @Shadow protected abstract void renderPanorama(GuiGraphics guiGraphics, float f);
 
+
     protected TitleScreenMixin() {
         super(null);
     }
     @Unique public int menuType = 0;
+    @Unique boolean isGameStarted = false;
 
     @Inject(method = "init", at = @At("HEAD"), cancellable = true)
     void init(CallbackInfo cl) {
         if(!KelUI.config.getBoolean("MAIN_MENU", true)) return;
         menuType = KelUI.config.getNumber("MAIN_MENU.TYPE", 0).intValue();
         switch (menuType){
-            case 1 -> kelui$oneShotStyle();
+            case 1 -> {
+                kelui$oneShotStyle();
+                if(isGameStarted){
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_cancel")), 1.0F));
+                }
+            }
             case 2 -> KelUI.log("Чувак, ты думал тут что-то будет?");
             default -> kelui$defaultStyle();
         }
@@ -138,6 +148,7 @@ public abstract class TitleScreenMixin extends Screen {
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo cl) {
+        if(!isGameStarted) isGameStarted = true;
         if(!KelUI.config.getBoolean("MAIN_MENU", true)) return;
         if (this.fadeInStart == 0L && this.fading) {
             this.fadeInStart = Util.getMillis();

@@ -4,14 +4,19 @@
       "kelui:oneshot_title_cursor"
     ]
   },
+  "oneshot_title_decision": {
+    "sounds": [
+      "kelui:oneshot_title_decision"
+    ]
+  },
   "oneshot_menu_decision": {
     "sounds": [
       "kelui:oneshot_menu_decision"
     ]
   },
-  "oneshot_title_decision": {
+  "oneshot_menu_cancel": {
     "sounds": [
-      "kelui:oneshot_title_decision"
+      "kelui:oneshot_menu_cancel"
     ]
   }
 }

@@ -217,7 +217,11 @@ public abstract class GuiMixin {
     }
     @Unique
     void kelUI$renderSlot(GuiGraphics guiGraphics, int i, int j, float f, Player player, ItemStack itemStack, int k, boolean isSelected){
-        guiGraphics.fill(i, j, i + 20, j + 20, 0x75000000);
+        int color = isSelected ? TETRA : 0xFF000000;
+        if (!itemStack.isEmpty() && itemStack.isDamageableItem() && isSelected){
+            color = (itemStack.getBarColor() | -16777216);
+        }
+        guiGraphics.fill(i, j, i + 20, j + 20, color-0x75000000);
         if (!itemStack.isEmpty()) {
             float g = (float) itemStack.getPopTime() - f;
             if (g > 0.0F) {
@@ -235,7 +239,7 @@ public abstract class GuiMixin {
             guiGraphics.renderItemDecorations(this.minecraft.font, itemStack, i + 2, j + 2);
         }
         if(isSelected) {
-            guiGraphics.fill(i, this.screenHeight - 3, i + 20, this.screenHeight - 1, SEADRIVE);
+            guiGraphics.fill(i, this.screenHeight - 3, i + 20, this.screenHeight - 1, color == 0xFF000000 ? SEADRIVE : color);
         }
     }
 
