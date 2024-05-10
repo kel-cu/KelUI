@@ -46,6 +46,7 @@ public class OtherConfigScreen {
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.other.render"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.map_slot"), true).setConfig(KelUI.config, "HUD.MAP_SLOT").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.ui.smooth_menu"), false).setConfig(KelUI.config, "UI.SMOOTH_MENU").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.ui.alinlib_style"), false).setConfig(KelUI.config, "UI.ALINLIB_STYLE").build())
                 )
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.other.chat"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.chat.edgeless_screen"), true).setConfig(KelUI.config, "CHAT.EDGELESS_SCREEN").build())

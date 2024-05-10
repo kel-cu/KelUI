@@ -75,6 +75,8 @@ public abstract class GuiMixin {
     @Final
     private LayeredDraw layers;
 
+    @Shadow protected abstract boolean isExperienceBarVisible();
+
     @Inject(method = "render", at = @At("HEAD"))
     void render(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
         this.screenWidth = guiGraphics.guiWidth();
@@ -122,9 +124,11 @@ public abstract class GuiMixin {
                     items.add(item);
                     if (KelUI.config.getBoolean("HUD.ARMOR_INFO.DAMAGE", true)) {
                         Component itext = Component.literal(KelUI.getArmorDamage(item));
-                        if (KelUI.MINECRAFT.font.width(itext) > maxText)
-                            maxText = KelUI.MINECRAFT.font.width(itext);
-                        text.add(itext);
+                        if(itext.getString().isBlank()) {
+                            if (KelUI.MINECRAFT.font.width(itext) > maxText)
+                                maxText = KelUI.MINECRAFT.font.width(itext);
+                            text.add(itext);
+                        }
                     }
                 }
             }
@@ -200,20 +204,19 @@ public abstract class GuiMixin {
         int o = this.screenHeight - 22;
         for (m = 0; m < 9; ++m) {
             n = m * 20;
-            this.renderSlot(guiGraphics, pos + n, o, f, getCameraPlayer(), getCameraPlayer().getInventory().items.get(m), l++);
+            boolean isSelected = m == getCameraPlayer().getInventory().selected;
+            kelUI$renderSlot(guiGraphics, pos + n, o, f, getCameraPlayer(), getCameraPlayer().getInventory().items.get(m), l++, isSelected);
         }
-        int selected = getCameraPlayer().getInventory().selected * 20;
-        guiGraphics.fill(pos + selected, this.screenHeight - 3, pos + selected + 20, this.screenHeight - 1, InterfaceUtils.Colors.SEADRIVE);
+//        int selected = getCameraPlayer().getInventory().selected * 20;
+//        guiGraphics.fill(pos + selected, this.screenHeight - 3, pos + selected + 20, this.screenHeight - 1, InterfaceUtils.Colors.SEADRIVE);
         ItemStack itemStack = getCameraPlayer().getOffhandItem();
         if (!itemStack.isEmpty()) {
-            this.renderSlot(guiGraphics, pos + 182, o, f, getCameraPlayer(), itemStack, l);
+            kelUI$renderSlot(guiGraphics, pos + 182, o, f, getCameraPlayer(), itemStack, l, false);
         }
         ci.cancel();
     }
-
-    @Inject(method = "renderSlot", at = @At("HEAD"), cancellable = true)
-    void renderSlot(GuiGraphics guiGraphics, int i, int j, float f, Player player, ItemStack itemStack, int k, CallbackInfo ci) {
-        if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+    @Unique
+    void kelUI$renderSlot(GuiGraphics guiGraphics, int i, int j, float f, Player player, ItemStack itemStack, int k, boolean isSelected){
         guiGraphics.fill(i, j, i + 20, j + 20, 0x75000000);
         if (!itemStack.isEmpty()) {
             float g = (float) itemStack.getPopTime() - f;
@@ -229,10 +232,11 @@ public abstract class GuiMixin {
             if (g > 0.0F) {
                 guiGraphics.pose().popPose();
             }
-
             guiGraphics.renderItemDecorations(this.minecraft.font, itemStack, i + 2, j + 2);
         }
-        ci.cancel();
+        if(isSelected) {
+            guiGraphics.fill(i, this.screenHeight - 3, i + 20, this.screenHeight - 1, SEADRIVE);
+        }
     }
 
     @Inject(method = "renderPlayerHealth", at = @At("HEAD"), cancellable = true)
@@ -258,21 +262,17 @@ public abstract class GuiMixin {
             int healthColor = KelUI.MINECRAFT.player.hasEffect(MobEffects.POISON) ? 0xFFa3b18a :
                     KelUI.MINECRAFT.player.hasEffect(MobEffects.WITHER) ? 0xff4a4e69 :
                             KelUI.MINECRAFT.player.isFullyFrozen() ? 0x90e0ef : GROUPIE;
-            guiGraphics.fill(pos + 182 + x, i, pos + 184 + x, i + 20, 0x7f000000);
-//            guiGraphics.fill(pos + 182 + x, i, pos + 184 + x, i + 20, healthColor - 0x75000000);
+            guiGraphics.fill(pos + 182 + x, i, pos + 184 + x, i + 20, getAlphaBarColor(healthColor));
             guiGraphics.fill(pos + 182 + x, i, pos + 184 + x, (int) (i + (20 * health)), healthColor);
 
-            guiGraphics.fill(pos + 186 + x, i, pos + 188 + x, i + 20, 0x7f000000);
-//            guiGraphics.fill(pos + 186 + x, i, pos + 188 + x, i + 20, 0x75598392);
+            guiGraphics.fill(pos + 186 + x, i, pos + 188 + x, i + 20, getAlphaBarColor(0xff598392));
             guiGraphics.fill(pos + 186 + x, i, pos + 188 + x, (int) (i + (20 * armor)), 0xff598392);
 
-            guiGraphics.fill(pos + 190 + x, i, pos + 192 + x, i + 20, 0x7f000000);
-//            guiGraphics.fill(pos + 190 + x, i, pos + 192 + x, i + 20, 0x75ff9b54);
+            guiGraphics.fill(pos + 190 + x, i, pos + 192 + x, i + 20, getAlphaBarColor(0xFFff9b54));
             guiGraphics.fill(pos + 190 + x, i, pos + 192 + x, (int) (i + (20 * hunger)), 0xFFff9b54);
 
             if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
-                guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, 0x7f000000);
-//                guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, 0x7fcae9ff);
+                guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, getAlphaBarColor(0xffcae9ff));
                 guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, (int) (i + (20 * air)), 0xffcae9ff);
             }
         } else {
@@ -281,29 +281,28 @@ public abstract class GuiMixin {
             int healthColor = KelUI.MINECRAFT.player.hasEffect(MobEffects.POISON) ? 0xFFa3b18a :
                     KelUI.MINECRAFT.player.hasEffect(MobEffects.WITHER) ? 0xff4a4e69 :
                             KelUI.MINECRAFT.player.isFullyFrozen() ? 0x90e0ef : GROUPIE;
-            guiGraphics.fill(pos, i - 2, pos + 80, i, 0x75000000);
-//            guiGraphics.fill(pos, i - 2, pos + 80, i, healthColor - 0x75000000);
+            guiGraphics.fill(pos, i - 2, pos + 80, i, getAlphaBarColor(healthColor));
             guiGraphics.fill(pos, i - 2, (int) (pos + (80 * health)), i, healthColor);
             //
             if (armor != 0) {
-                guiGraphics.fill(pos, i - 4, pos + 80, i - 6, 0x75000000);
-//                guiGraphics.fill(pos, i - 4, pos + 80, i - 6, 0x75598392);
+                guiGraphics.fill(pos, i - 4, pos + 80, i - 6, getAlphaBarColor(0xff598392));
                 guiGraphics.fill(pos, i - 4, (int) (pos + (80 * armor)), i - 6, 0xff598392);
             }
 
-            guiGraphics.fill(pos + 100, i - 2, pos + 180, i, 0x75000000);
-//            guiGraphics.fill(pos + 100, i - 2, pos + 180, i, 0x75ff9b54);
+            guiGraphics.fill(pos + 100, i - 2, pos + 180, i, getAlphaBarColor(0xFFff9b54));
             guiGraphics.fill(pos + 100, i - 2, (int) (pos + 100 + (80 * hunger)), i, 0xFFff9b54);
 
             if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
-                guiGraphics.fill(pos + 100, i - 4, pos + 180, i - 6, 0x75000000);
-//                guiGraphics.fill(pos + 100, i - 4, pos + 180, i - 6, 0x7fcae9ff);
+                guiGraphics.fill(pos + 100, i - 4, pos + 180, i - 6, getAlphaBarColor(0xffcae9ff));
                 guiGraphics.fill(pos + 100, i - 4, (int) (pos + 100 + (80 * air)), i - 6, 0xffcae9ff);
             }
         }
         ci.cancel();
     }
-
+    @Unique
+    int getAlphaBarColor(int color){
+        return KelUI.config.getBoolean("HUD.NEW_HOTBAR.COLORED_BAR", false) ? color-0x75000000 : 0x75000000;
+    }
     @Inject(method = "renderExperienceBar", at = @At("HEAD"), cancellable = true)
     void renderExperienceBar(GuiGraphics guiGraphics, int j, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
@@ -325,16 +324,12 @@ public abstract class GuiMixin {
             if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
                 x += 4;
             }
-            guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, 0x75000000);
-//            guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, SEADRIVE - 0x75000000);
+            guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, getAlphaBarColor(SEADRIVE));
             guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, (int) (i + (20 * exp)), SEADRIVE);
-            guiGraphics.drawString(minecraft.font, "" + this.minecraft.player.experienceLevel, pos + 198 + x, i + (20 / 2) - (minecraft.font.lineHeight / 2), SEADRIVE);
         } else {
             int i = this.screenHeight - 24;
-            guiGraphics.fill(pos, i, pos + 180, i - 2, 0x75000000);
-//            guiGraphics.fill(pos, i, pos + 180, i - 2, SEADRIVE - 0x75000000);
+            guiGraphics.fill(pos, i, pos + 180, i - 2, getAlphaBarColor(SEADRIVE));
             guiGraphics.fill(pos, i, (int) (pos + (180 * exp)), i - 2, SEADRIVE);
-            guiGraphics.drawCenteredString(minecraft.font, "" + this.minecraft.player.experienceLevel, (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 90 : this.screenWidth / 2, i - 2 - minecraft.font.lineHeight, SEADRIVE);
         }
         ci.cancel();
     }
@@ -342,6 +337,29 @@ public abstract class GuiMixin {
     @Inject(method = "renderExperienceLevel", at = @At("HEAD"), cancellable = true)
     void renderExperienceLevel(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        assert this.minecraft.player != null;
+        if (this.isExperienceBarVisible() && this.minecraft.player.experienceLevel > 0) {
+            int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 0 : (this.screenWidth - 180) / 2;
+            if (KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 0) {
+                int i = this.screenHeight - 22;
+                int x = 0;
+                ItemStack itemStack = getCameraPlayer().getOffhandItem();
+                if (!itemStack.isEmpty()) {
+                    x = 22;
+                }
+                LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
+                if (livingEntity != null) {
+                    x += 4;
+                }
+                if (getCameraPlayer().isUnderWater() || getCameraPlayer().getAirSupply() != getCameraPlayer().getMaxAirSupply()) {
+                    x += 4;
+                }
+                guiGraphics.drawString(minecraft.font, "" + this.minecraft.player.experienceLevel, pos + 198 + x, i + (20 / 2) - (minecraft.font.lineHeight / 2), SEADRIVE);
+            } else {
+                int i = this.screenHeight - 24;
+                guiGraphics.drawCenteredString(minecraft.font, "" + this.minecraft.player.experienceLevel, (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 90 : this.screenWidth / 2, i - 2 - minecraft.font.lineHeight, SEADRIVE);
+            }
+        }
         ci.cancel();
     }
 

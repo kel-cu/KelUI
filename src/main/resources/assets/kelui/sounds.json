@@ -1,0 +1,17 @@
+{
+  "oneshot_title_cursor": {
+    "sounds": [
+      "kelui:oneshot_title_cursor"
+    ]
+  },
+  "oneshot_menu_decision": {
+    "sounds": [
+      "kelui:oneshot_menu_decision"
+    ]
+  },
+  "oneshot_title_decision": {
+    "sounds": [
+      "kelui:oneshot_title_decision"
+    ]
+  }
+}

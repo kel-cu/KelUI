@@ -9,11 +9,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -24,6 +25,7 @@ import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
+import ru.kelcuprum.kelui.gui.components.OneShotButton;
 import ru.kelcuprum.kelui.gui.components.PlayerHeadWidget;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.*;
@@ -40,10 +42,21 @@ public abstract class TitleScreenMixin extends Screen {
     protected TitleScreenMixin() {
         super(null);
     }
+    @Unique public int menuType = 0;
 
     @Inject(method = "init", at = @At("HEAD"), cancellable = true)
     void init(CallbackInfo cl) {
         if(!KelUI.config.getBoolean("MAIN_MENU", true)) return;
+        menuType = KelUI.config.getNumber("MAIN_MENU.TYPE", 0).intValue();
+        switch (menuType){
+            case 1 -> kelui$oneShotStyle();
+            case 2 -> KelUI.log("Чувак, ты думал тут что-то будет?");
+            default -> kelui$defaultStyle();
+        }
+        cl.cancel();
+    }
+    @Unique
+    public void kelui$defaultStyle(){
         int x = 10;
         //
         assert this.minecraft != null;
@@ -79,7 +92,47 @@ public abstract class TitleScreenMixin extends Screen {
                 addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
             }
         }
-        cl.cancel();
+    }
+
+    @Unique
+    public void kelui$oneShotStyle(){
+        int bHeight = font.lineHeight+4;
+        int bHeight2 = (bHeight+3);
+        int y = height-(bHeight2*(KelUI.config.getBoolean("MAIN_MENU.ENABLE_REALMS", false) ? 6 : 5));
+        int bWidth = font.width("...");
+        Component[] texts = {
+                Component.translatable("menu.singleplayer"),
+                Component.translatable("menu.multiplayer"),
+                Component.translatable("gui.toRealms"),
+                ModMenuApi.createModsButtonText(),
+                Component.translatable("menu.options"),
+                Component.translatable("menu.quit")
+        };
+        for(Component text : texts){
+            int i = font.width(text)+5;
+            bWidth = Math.max(bWidth, i);
+        }
+        int x = width-bWidth-45;
+
+        assert this.minecraft != null;
+        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.singleplayer"), true, (OnPress) -> this.minecraft.setScreen(new SelectWorldScreen(this))));
+        y+=bHeight2;
+
+        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.multiplayer"), true, (OnPress) -> this.minecraft.setScreen(new JoinMultiplayerScreen(this))));
+        y+=bHeight2;
+
+        if(KelUI.config.getBoolean("MAIN_MENU.ENABLE_REALMS", false)) {
+            addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("gui.toRealms"), (OnPress) -> this.minecraft.setScreen(new RealmsMainScreen(this))));
+            y += bHeight2;
+        }
+
+        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, ModMenuApi.createModsButtonText(), (OnPress) -> this.minecraft.setScreen(new ModsScreen(this))));
+        y+=bHeight2;
+
+        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this))));
+        y+=bHeight2;
+
+        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.quit"), true, (OnPress) -> this.minecraft.destroy()));
     }
 
 
@@ -90,7 +143,7 @@ public abstract class TitleScreenMixin extends Screen {
             this.fadeInStart = Util.getMillis();
         }
         this.renderPanorama(guiGraphics, f);
-        InterfaceUtils.renderLeftPanel(guiGraphics, 230, this.height);
+        if(menuType == 0) InterfaceUtils.renderLeftPanel(guiGraphics, 230, this.height);
         if (KelUI.config.getBoolean("FIRST_START", true)) {
             KelUI.config.setBoolean("FIRST_START", false);
             KelUI.config.save();

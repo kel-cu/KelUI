@@ -88,6 +88,7 @@ public class KelUI implements ClientModInitializer {
                     (item.getMaxDamage() == 0 ? "" : String.valueOf(item.getMaxDamage() - item.getDamageValue()));// Full damage
             case 2 ->
                     (item.getMaxDamage() == 0 ? "" : Localization.getRounding(((double) (item.getMaxDamage() - item.getDamageValue()) / item.getMaxDamage()) * 100, config.getBoolean("HUD.ARMOR_INFO.DAMAGE.TYPE.CUT", true)) + "%");
+            case 3 -> "";
             default ->
                     (item.getMaxDamage() == 0 ? "" : item.getMaxDamage() == (item.getMaxDamage() - item.getDamageValue()) ? String.format("%s", item.getMaxDamage()) : String.format("%s/%s", item.getMaxDamage() - item.getDamageValue(), item.getMaxDamage()));
         };

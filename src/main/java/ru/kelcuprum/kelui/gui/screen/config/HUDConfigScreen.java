@@ -47,6 +47,7 @@ public class HUDConfigScreen {
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info.damage.type.cut"), true).setConfig(KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE.CUT").build()))
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.new_interface"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.new_hotbar"), false).setConfig(KelUI.config, "HUD.NEW_HOTBAR").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.new_hotbar.colored_bar"), false).setConfig(KelUI.config, "HUD.NEW_HOTBAR.COLORED_BAR").build())
                         .addValue(new SelectorBuilder(Component.translatable("kelui.config.hud.new_hotbar.position")).setValue(0).setList(hudPosition).setConfig(KelUI.config, "HUD.NEW_HOTBAR.POSITION").build())
                         .addValue(new SelectorBuilder(Component.translatable("kelui.config.hud.new_hotbar.state_type")).setValue(0).setList(stateType).setConfig(KelUI.config, "HUD.NEW_HOTBAR.STATE_TYPE").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.new_effects"), false).setConfig(KelUI.config, "HUD.NEW_EFFECTS").build())

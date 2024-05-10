@@ -15,7 +15,9 @@
     "client.utils.GuiMixin",
     "client.utils.IconsMixin",
     "client.utils.MinecraftMixin",
-    "client.utils.PlayerListMixin"
+    "client.utils.PlayerListMixin",
+    "client.utils.components.AbstractButtonMixin",
+    "client.utils.components.AbstractSliderButtonMixin"
   ],
   "injectors": {
     "defaultRequire": 1
