@@ -81,7 +81,6 @@ public class OtherConfigScreen {
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.other.fix"))
                         .addValue(new TextBox(Component.translatable("kelui.fix.connect_screen"), false))
                         .addValue(new TextBox(Component.translatable("kelui.fix.selection_list"), false))
-                        .addValue(new TextBox(Component.translatable("kelui.fix.tab_navigation_bar"), false))
                 )
 
                 .build();

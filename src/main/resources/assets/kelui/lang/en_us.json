@@ -4,6 +4,7 @@
 
   "kelui.config.title.main_menu": "Main Menu",
   "kelui.config.main_menu": "Restyle Main Menu",
+  "kelui.config.main_menu.type": "Main Menu style",
   "kelui.config.main_menu.enable_realms": "Enable Realms button",
   "kelui.config.main_menu.realms_small_button": "Settings button next to Realms",
   "kelui.config.main_menu.info": "Enable info text in main menu",
@@ -35,6 +36,7 @@
 
   "kelui.config.new_interface": "Redesign interface",
   "kelui.config.hud.new_hotbar": "New Design Hotbar",
+  "kelui.config.hud.new_hotbar.colored_bar": "Colored background bar",
   "kelui.config.hud.new_hotbar.position": "Re-design Hotbar position",
   "kelui.config.hud.new_hotbar.state_type": "Player stats type",
   "kelui.config.hud.new_effects": "New Design Effects",
@@ -58,6 +60,7 @@
   "kelui.config.hud.map_slot": "Drawing a map in the inventory",
   "kelui.config.debug.dark_graph": "Dark graph",
   "kelui.config.ui.smooth_menu": "Smooth menu",
+  "kelui.config.ui.alinlib_style": "AlinLib Style (Flat design)",
   "kelui.config.title.other.chat": "Chat",
   "kelui.config.chat.edgeless_screen": "Edgeless Chat Screen",
   "kelui.config.chat.timestamp": "Enable timestamp",

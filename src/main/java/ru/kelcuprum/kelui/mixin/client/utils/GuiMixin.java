@@ -124,7 +124,7 @@ public abstract class GuiMixin {
                     items.add(item);
                     if (KelUI.config.getBoolean("HUD.ARMOR_INFO.DAMAGE", true)) {
                         Component itext = Component.literal(KelUI.getArmorDamage(item));
-                        if(itext.getString().isBlank()) {
+                        if(!itext.getString().isBlank()) {
                             if (KelUI.MINECRAFT.font.width(itext) > maxText)
                                 maxText = KelUI.MINECRAFT.font.width(itext);
                             text.add(itext);
@@ -207,8 +207,6 @@ public abstract class GuiMixin {
             boolean isSelected = m == getCameraPlayer().getInventory().selected;
             kelUI$renderSlot(guiGraphics, pos + n, o, f, getCameraPlayer(), getCameraPlayer().getInventory().items.get(m), l++, isSelected);
         }
-//        int selected = getCameraPlayer().getInventory().selected * 20;
-//        guiGraphics.fill(pos + selected, this.screenHeight - 3, pos + selected + 20, this.screenHeight - 1, InterfaceUtils.Colors.SEADRIVE);
         ItemStack itemStack = getCameraPlayer().getOffhandItem();
         if (!itemStack.isEmpty()) {
             kelUI$renderSlot(guiGraphics, pos + 182, o, f, getCameraPlayer(), itemStack, l, false);
