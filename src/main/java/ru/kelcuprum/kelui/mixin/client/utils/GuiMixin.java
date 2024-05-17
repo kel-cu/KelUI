@@ -128,7 +128,7 @@ public abstract class GuiMixin {
                             if (KelUI.MINECRAFT.font.width(itext) > maxText)
                                 maxText = KelUI.MINECRAFT.font.width(itext);
                             text.add(itext);
-                        }
+                        } else text.add(Component.empty());
                     }
                 }
             }
