@@ -150,13 +150,22 @@ public abstract class LoadingOverlayMixin {
         return i & 16777215 | j << 24;
     }
 
-    @Shadow
-    @Final
-    static ResourceLocation MOJANG_STUDIOS_LOGO_LOCATION;
-
     @Inject(method = "drawProgressBar", at = @At("HEAD"), cancellable = true)
     private void drawProgressBar(GuiGraphics guiGraphics, int i, int j, int k, int l, float f, CallbackInfo ci) {
-        if (!KelUI.config.getBoolean("LOADING", true)) return;
+        if(KelUI.config.getBoolean("LOADING.NEW")){
+            int kB = 255;
+            if (f < 1.0F) {
+                int px = i;
+                int py = j;
+                int width = k;
+                int height = l;
+                guiGraphics.fill(px, py, width, height, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
+                guiGraphics.fill(px + 2, py + 2, (width - 2), height - 2, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_BACKGROUND_C0LOR", 0xFFD9D9D9).intValue(), kB));
+                guiGraphics.fill(px + 3, py + 3, (int) ((int) px+(((width - 3 - px) * this.currentProgress))), height - 3, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
+            }
+            ci.cancel();
+            return;
+        } else if (!KelUI.config.getBoolean("LOADING", true)) return;
         int m = Mth.ceil((float) (k - i - 2) * this.currentProgress);
         int o = KelUI.config.getNumber("LOADING.BAR_COLOR", 0xffff4f4f).intValue();
         int a = KelUI.config.getNumber("LOADING.BAR_COLOR.BORDER", 0xffffffff).intValue();
