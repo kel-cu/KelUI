@@ -155,6 +155,7 @@ public abstract class LoadingOverlayMixin {
         if(KelUI.config.getBoolean("LOADING.NEW")){
             int kB = 255;
             if (f < 1.0F) {
+                l+=5;
                 guiGraphics.fill(i, j, k, l, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
                 guiGraphics.fill(i + 2, j + 2, (k - 2), l - 2, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_BACKGROUND_C0LOR", 0xFFD9D9D9).intValue(), kB));
                 guiGraphics.fill(i + 3, j + 3, (int) ((int) i +(((k - 3 - i) * this.currentProgress))), l - 3, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
