@@ -88,7 +88,6 @@ public abstract class LoadingOverlayMixin {
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         }
         // Progress bar
-        // 61
         if (f < 1.0F) {
             int px = guiGraphics.guiWidth() / 2;
             int py = guiGraphics.guiHeight() - 57;
