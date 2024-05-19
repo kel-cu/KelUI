@@ -27,6 +27,7 @@ public class HUDConfigScreen {
         String[] stateType = {
                 "Default",
                 "Vanilla-like",
+//                "Modern"
         };
         //"HUD.NEW_HOTBAR.POSITION"
         return new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME, KelUI.configDesignType)

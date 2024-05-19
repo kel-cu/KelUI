@@ -6,6 +6,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.gui.components.DebugScreenOverlay;
+import net.minecraft.client.gui.components.PlayerFaceRenderer;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.resources.MobEffectTextureManager;
 import net.minecraft.network.chat.Component;
@@ -77,6 +78,8 @@ public abstract class GuiMixin {
 
     @Shadow protected abstract boolean isExperienceBarVisible();
 
+    @Shadow public abstract void render(GuiGraphics guiGraphics, float f);
+
     @Inject(method = "render", at = @At("HEAD"))
     void render(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
         this.screenWidth = guiGraphics.guiWidth();
@@ -85,19 +88,30 @@ public abstract class GuiMixin {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     void init(Minecraft minecraft, CallbackInfo ci) {
-        LayeredDraw kelUILayer = new LayeredDraw().add(this::renderDebugOverlay).add(this::renderPaperDoll).add(this::renderArmorInfo);
+        LayeredDraw kelUILayer = new LayeredDraw().add(this::renderDebugOverlay).add(this::renderPaperDoll).add(this::renderArmorInfo).add(this::renderModernStateOverlay);
         layers.add(kelUILayer, () -> !minecraft.options.hideGui);
     }
+    @Unique
+    public void renderModernStateOverlay(GuiGraphics guiGraphics, float f){
+        if (this.debugOverlay.showDebugScreen()) return;
+        if(KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() != 2) return;
 
+        PlayerFaceRenderer.draw(guiGraphics, KelUI.MINECRAFT.getSkinManager().getInsecureSkin(KelUI.MINECRAFT.getGameProfile()), 5, 5, 20);
+    }
     @Unique
     public void renderDebugOverlay(GuiGraphics guiGraphics, float f) {
         if (this.debugOverlay.showDebugScreen()) return;
         if (!KelUI.config.getBoolean("HUD.DEBUG_OVERLAY", false)) return;
         int x = 2;
         int y1 = 2;
+        int size = 2 + getFont().lineHeight + 4;
+
         Component fps = Component.literal(String.format("%s FPS", this.minecraft.getFps()));
-        guiGraphics.fill(x, y1, x + 4 + getFont().width(fps) + 4, y1 + 2 + getFont().lineHeight + 4, 0x7f000000);
+        guiGraphics.fill(x, y1, x + 4 + getFont().width(fps) + 4, y1 + size, 0x7f000000);
         guiGraphics.drawString(getFont(), fps, x + 4, y1 + 4, -1);
+
+        y1+=size;
+
     }
 
     @Unique
@@ -277,7 +291,7 @@ public abstract class GuiMixin {
                 guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, i + 20, getAlphaBarColor(0xffcae9ff));
                 guiGraphics.fill(pos + 194 + x, i, pos + 196 + x, (int) (i + (20 * air)), 0xffcae9ff);
             }
-        } else {
+        } else if(KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 1) {
             int i = this.screenHeight - 28;
             assert KelUI.MINECRAFT.player != null;
             int healthColor = KelUI.MINECRAFT.player.hasEffect(MobEffects.POISON) ? 0xFFa3b18a :
