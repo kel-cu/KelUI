@@ -30,9 +30,8 @@ public class KelUIMixinPlugin implements IMixinConfigPlugin {
         if(!mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.")){
             return false;
         }
-        if(FabricLoader.getInstance().isModLoaded("controlify") && (mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.Title") || mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.Pause"))){
-            LOG.error(String.format("Mixin %s for %s not loaded, Controlify not compatibility", mixinClassName, targetClassName));
-            isPauseScreenEnable = false;
+        if(FabricLoader.getInstance().isModLoaded("betterpingdisplay") && mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.utils.PlayerListMixin")){
+            LOG.error(String.format("Mixin %s for %s not loaded, Better Display Ping not compatibility", mixinClassName, targetClassName));
             return false;
         }
         if((!isReplayModInstalled || !isPauseScreenEnable) && mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.replaymod")){
