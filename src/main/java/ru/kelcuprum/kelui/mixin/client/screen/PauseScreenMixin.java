@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -64,6 +65,7 @@ public abstract class PauseScreenMixin extends Screen {
         else addRenderableWidget(new Button(x+25, height/2+15, 185, 20, InterfaceUtils.DesignType.FLAT, Localization.toText(KelUI.config.getString("PAUSE_MENU.SHORT_COMMAND.NAME", "Lobby")), (OnPress) -> KelUI.executeCommand(this.minecraft.player, KelUI.config.getString("PAUSE_MENU.SHORT_COMMAND.COMMAND", "/lobby"))));
         //
         Component component = this.minecraft.isLocalServer() ? Component.translatable("menu.returnToMenu") : CommonComponents.GUI_DISCONNECT;
+        this.disconnectButton = net.minecraft.client.gui.components.Button.builder(component, (s) -> {}).build();
         addRenderableWidget(new Button(x, height/2+40, 210, 20, InterfaceUtils.DesignType.FLAT, component, (OnPress) -> {
             OnPress.setActive(false);
             this.minecraft.getReportingContext().draftReportHandled(this.minecraft, this, this::onDisconnect, true);
@@ -84,6 +86,8 @@ public abstract class PauseScreenMixin extends Screen {
     @Final
     protected abstract void onDisconnect();
 
+
+    @Shadow @Nullable private net.minecraft.client.gui.components.Button disconnectButton;
 
     @Inject(method = "renderBackground", at = @At("HEAD"), cancellable = true)
     void renderBackground(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo cl) {

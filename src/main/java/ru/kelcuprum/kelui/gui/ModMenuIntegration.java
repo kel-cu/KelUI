@@ -13,5 +13,5 @@ import ru.kelcuprum.kelui.gui.screen.config.MenuConfigScreen;
 public class ModMenuIntegration implements ModMenuApi {
 
     @Override
-    public ConfigScreenFactory<Screen> getModConfigScreenFactory() { return FabricLoader.getInstance().isModLoaded("controlify") ? new HUDConfigScreen()::build : new MenuConfigScreen()::build; }
+    public ConfigScreenFactory<Screen> getModConfigScreenFactory() { return new MenuConfigScreen()::build; }
 }

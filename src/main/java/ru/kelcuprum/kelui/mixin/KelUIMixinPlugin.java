@@ -35,10 +35,6 @@ public class KelUIMixinPlugin implements IMixinConfigPlugin {
             isPauseScreenEnable = false;
             return false;
         }
-        if(FabricLoader.getInstance().isModLoaded("betterpingdisplay") && mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.utils.PlayerListMixin")){
-            LOG.error(String.format("Mixin %s for %s not loaded, Better Display Ping not compatibility", mixinClassName, targetClassName));
-            return false;
-        }
         if((!isReplayModInstalled || !isPauseScreenEnable) && mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.replaymod")){
             LOG.error(String.format("Mixin %s for %s not loaded, %s", mixinClassName, targetClassName, (!isReplayModInstalled ? "ReplayMod not installed" : "Controlify not compatibility")));
             return false;

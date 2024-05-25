@@ -115,6 +115,15 @@ public abstract class GuiMixin {
     }
 
     @Unique
+    public void renderFireOverlay(GuiGraphics guiGraphics, float f){
+        int height = this.screenHeight/2;
+        for(int i = 0; i<screenWidth;i++){
+//            KelUI.log(String.valueOf((heigth*Math.random())));
+            guiGraphics.fill(i, (int) (height*Math.min(0.25, Math.random())+height), i+1, guiGraphics.guiHeight(), 0x75FFFFFF);
+        }
+    }
+
+    @Unique
     public void renderPaperDoll(GuiGraphics guiGraphics, float f) {
         if (this.debugOverlay.showDebugScreen()) return;
         if (!KelUI.config.getBoolean("HUD.PAPER_DOLL", false)) return;
