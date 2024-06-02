@@ -1,19 +1,15 @@
 package ru.kelcuprum.kelui.mixin.client.screen;
 
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +18,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
 import ru.kelcuprum.alinlib.gui.components.buttons.ButtonSprite;
@@ -30,11 +25,7 @@ import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.*;
-import ru.kelcuprum.kelui.tui.ColorUtils;
-
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.LANGUAGE;
@@ -217,7 +208,8 @@ public abstract class PauseScreenMixin extends Screen {
             widget.active = widget.visible = !this.oneshot$disconnectMenuEnable;
         }
         for(AbstractWidget widget : oneshot$disconnectButtons){
-            widget.active = widget.visible = this.oneshot$disconnectMenuEnable;
+            if(!(widget instanceof TextBox)) widget.active = oneshot$disconnectMenuEnable;
+            widget.visible = this.oneshot$disconnectMenuEnable;
         }
     }
     @Shadow
