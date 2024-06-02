@@ -39,6 +39,9 @@ public class PauseConfigScreen {
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.pause_menu.short_command.name")).setValue("Lobby").setConfig(KelUI.config, "PAUSE_MENU.SHORT_COMMAND.NAME").build())
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.pause_menu.short_command.command")).setValue("/lobby").setConfig(KelUI.config, "PAUSE_MENU.SHORT_COMMAND.COMMAND").build())
                 )
+                .addWidget(new CategoryBox(Component.translatable("kelui.config.pause_menu.oneshot"))
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.niko_roomba"), true).setConfig(KelUI.config, "PAUSE_MENU.NIKO_ROOMBA").build())
+                )
                 .build();
     }
 }

@@ -19,6 +19,7 @@ import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.*;
@@ -93,6 +94,11 @@ public class KelUI implements ClientModInitializer {
             default ->
                     (item.getMaxDamage() == 0 ? "" : item.getMaxDamage() == (item.getMaxDamage() - item.getDamageValue()) ? String.format("%s", item.getMaxDamage()) : String.format("%s/%s", item.getMaxDamage() - item.getDamageValue(), item.getMaxDamage()));
         };
+    }
+
+    public static boolean isAprilFool(){
+        return true;
+//        return LocalDate.now().getMonthValue() == 4 && LocalDate.now().getDayOfMonth() == 1;
     }
 
     public static int getPingColor(int ping) {

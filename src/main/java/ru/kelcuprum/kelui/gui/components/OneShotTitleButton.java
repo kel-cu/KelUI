@@ -43,7 +43,7 @@ public class OneShotTitleButton extends AbstractButton {
     }
 
     private double getValuePos(){
-        double value = (double) (System.currentTimeMillis() - timeFocused) / 250;
+        double value = (double) (System.currentTimeMillis() - timeFocused) / 125;
         if(value >= 1.0) value = 1.0;
         return value;
     }
@@ -52,8 +52,8 @@ public class OneShotTitleButton extends AbstractButton {
     @Override
     public void setFocused(boolean bl) {
         super.setFocused(bl);
-        if((System.currentTimeMillis() - timeFocused) >= 250) timeFocused = System.currentTimeMillis();
-        if(bl && !isHovered()) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_title_cursor")), 1.0F));
+        if((System.currentTimeMillis() - timeFocused) >= 125) timeFocused = System.currentTimeMillis();
+        if(bl && !isHovered()) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_cursor")), 1.0F));
     }
 
     @Override

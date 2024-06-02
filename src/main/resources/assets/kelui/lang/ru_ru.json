@@ -27,6 +27,9 @@
   "kelui.config.pause_menu.short_command.name": "Название кнопки",
   "kelui.config.pause_menu.short_command.command": "Команда",
 
+  "kelui.config.pause_menu.oneshot": "Стиль OneShot",
+  "kelui.config.pause_menu.niko_roomba": "Niko Roomba",
+
   "kelui.config.title.hud": "HUD",
   "kelui.config.hud.debug_overlay": "Оверлей ФПС",
   "kelui.config.hud.paper_doll": "Paper Doll (Эксперимент!)",

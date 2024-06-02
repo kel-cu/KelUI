@@ -228,7 +228,11 @@ public abstract class PauseScreenMixin extends Screen {
                 InterfaceUtils.renderTextureLeftPanel(guiGraphics, 230, this.height);
             }
         } else {
-            if(!oneshot$disconnectMenuEnable && !oneshot$otherMenuEnable) guiGraphics.blitSprite(new ResourceLocation("kelui", "pause_menu/oneshot_pause_panel"), 5, 5,  width-10, 38);
+            if(!oneshot$disconnectMenuEnable && !oneshot$otherMenuEnable) {
+                guiGraphics.blitSprite(new ResourceLocation("kelui", "pause_menu/oneshot_pause_panel"), 5, 5,  width-10, 38);
+                int nikoSize = height/3;
+                if(KelUI.isAprilFool() || KelUI.config.getBoolean("PAUSE_MENU.NIKO_ROOMBA", false)) guiGraphics.blitSprite(new ResourceLocation("kelui", "pause_menu/niko_roomba"), width/2-nikoSize/2, height/2-nikoSize/2, nikoSize, nikoSize);
+            }
             else guiGraphics.fill(0, 0, width, height, 0x7f000000);
         }
         cl.cancel();
