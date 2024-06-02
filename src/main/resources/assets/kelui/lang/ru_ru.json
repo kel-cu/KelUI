@@ -15,6 +15,7 @@
 
   "kelui.config.title.pause_menu": "Меню паузы",
   "kelui.config.pause_menu": "Редизайн меню паузы",
+  "kelui.config.pause_menu.type": "Стиль меню паузы",
   "kelui.config.pause_menu.alpha": "Включить прозрачный фон",
   "kelui.config.pause_menu.info": "Включить информационный текст в меню паузы",
   "kelui.config.pause_menu.version": "Включить вывод версии",

@@ -12,14 +12,15 @@ import ru.kelcuprum.kelui.KelUI;
 
 public class MenuConfigScreen {
 
+    public static String[] types = {
+            "KelUI",
+            "OneShot"
+    };
+
     public Screen build(Screen parent) {
         String[] realmsTypes = {
                 "Skin",
                 "Sounds"
-        };
-        String[] types = {
-                "KelUI",
-                "OneShot"
         };
         return new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME, KelUI.configDesignType)
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.MENU_CONFIG, (s) -> Minecraft.getInstance().setScreen(new MenuConfigScreen().build(parent))).build())
