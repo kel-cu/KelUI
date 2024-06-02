@@ -2,6 +2,8 @@
   "kelui.name": "KelUI",
   "kelui.toast.hello": "Привет!",
 
+  "kelui.oneshot.disconnect": "Выйти и записать прогресс?",
+
   "kelui.config.title.main_menu": "Главное меню",
   "kelui.config.main_menu": "Редизайн главного меню",
   "kelui.config.main_menu.type": "Стиль главного меню",

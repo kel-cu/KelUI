@@ -1,7 +1,6 @@
 package ru.kelcuprum.kelui.gui.screen.config;
 
 import com.mojang.blaze3d.platform.IconSet;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;

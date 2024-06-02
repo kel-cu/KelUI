@@ -2,6 +2,8 @@
   "kelui.name": "KelUI",
   "kelui.toast.hello": "Hello!",
 
+  "kelui.oneshot.disconnect": "Quit and record your progress?",
+
   "kelui.config.title.main_menu": "Main Menu",
   "kelui.config.main_menu": "Restyle Main Menu",
   "kelui.config.main_menu.type": "Main Menu style",

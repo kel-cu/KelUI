@@ -1,4 +1,9 @@
 {
+  "oneshot_menu_cursor": {
+    "sounds": [
+      "kelui:oneshot_menu_cursor"
+    ]
+  },
   "oneshot_title_cursor": {
     "sounds": [
       "kelui:oneshot_title_cursor"
