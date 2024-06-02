@@ -97,8 +97,8 @@ public class KelUI implements ClientModInitializer {
     }
 
     public static boolean isAprilFool(){
-        return true;
-//        return LocalDate.now().getMonthValue() == 4 && LocalDate.now().getDayOfMonth() == 1;
+//        return true;
+        return LocalDate.now().getMonthValue() == 4 && LocalDate.now().getDayOfMonth() == 1;
     }
 
     public static int getPingColor(int ping) {
