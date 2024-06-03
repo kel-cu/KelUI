@@ -28,7 +28,6 @@ import ru.kelcuprum.kelui.gui.components.*;
 import ru.kelcuprum.kelui.gui.screen.pause_screen.DisconnectScreen;
 import ru.kelcuprum.kelui.gui.screen.pause_screen.OtherScreen;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.LANGUAGE;
@@ -112,10 +111,21 @@ public abstract class PauseScreenMixin extends Screen {
         AbstractWidget helloControlify = addRenderableWidget(new Button(-20, -20, 20, 20, Component.translatable("menu.returnToGame")));
         helloControlify.visible = helloControlify.active = false;
 
-        addRenderableWidget(new OneShotPauseButton(12, 12, size, 24, Component.translatable("menu.options"), (s) -> this.minecraft.setScreen(KelUI.getOptionScreen(this))));
+        addRenderableWidget(new OneShotPauseButton(12, 12, size, 24, Component.translatable("menu.options"), (s) -> {
+            assert this.minecraft != null;
+            this.minecraft.setScreen(KelUI.getOptionScreen(this));
+        }));
 
-        addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, Component.translatable("kelui.config.title.other"), (s) -> this.minecraft.setScreen(new OtherScreen(this))));
+        if(KelUI.config.getBoolean("PAUSE_SCREEN.ONESHOT.OTHER", true)) addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, Component.translatable("kelui.config.title.other"), (s) -> {
+            assert this.minecraft != null;
+            this.minecraft.setScreen(new OtherScreen(this));
+        }));
+        else addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, ModMenuApi.createModsButtonText(), (s) -> {
+            assert this.minecraft != null;
+            this.minecraft.setScreen(ModMenuApi.createModsScreen(this));
+        }));
 
+        assert this.minecraft != null;
         Component component = this.minecraft.isLocalServer() ? Component.translatable("menu.returnToMenu") : CommonComponents.GUI_DISCONNECT;
         this.disconnectButton = net.minecraft.client.gui.components.Button.builder(component, (s) -> {}).build();
 

@@ -41,6 +41,7 @@ public class PauseConfigScreen {
                 )
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.pause_menu.oneshot"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.oneshot.niko_roomba"), false).setConfig(KelUI.config, "PAUSE_MENU.ONESHOT.NIKO_ROOMBA").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.oneshot.other"), true).setConfig(KelUI.config, "PAUSE_MENU.ONESHOT.OTHER").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.oneshot.quit_question"), true).setConfig(KelUI.config, "PAUSE_MENU.ONESHOT.QUIT_QUESTION").build())
                 )
                 .build();
