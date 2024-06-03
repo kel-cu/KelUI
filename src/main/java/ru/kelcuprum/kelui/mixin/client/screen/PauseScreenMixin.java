@@ -116,7 +116,7 @@ public abstract class PauseScreenMixin extends Screen {
             this.minecraft.setScreen(KelUI.getOptionScreen(this));
         }));
 
-        if(KelUI.config.getBoolean("PAUSE_SCREEN.ONESHOT.OTHER", true)) addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, Component.translatable("kelui.config.title.other"), (s) -> {
+        if(KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.OTHER", true)) addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, Component.translatable("kelui.config.title.other"), (s) -> {
             assert this.minecraft != null;
             this.minecraft.setScreen(new OtherScreen(this));
         }));

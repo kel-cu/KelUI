@@ -29,6 +29,7 @@
 
   "kelui.config.pause_menu.oneshot": "Стиль OneShot",
   "kelui.config.pause_menu.oneshot.niko_roomba": "Niko Roomba",
+  "kelui.config.pause_menu.oneshot.other": "Кнопка \"Другое\"",
   "kelui.config.pause_menu.oneshot.quit_question": "Вопрос перед выходом",
 
   "kelui.config.title.hud": "HUD",
