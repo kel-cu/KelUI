@@ -28,7 +28,8 @@
   "kelui.config.pause_menu.short_command.command": "Command",
 
   "kelui.config.pause_menu.oneshot": "OneShot Style",
-  "kelui.config.pause_menu.niko_roomba": "Niko Roomba",
+  "kelui.config.pause_menu.oneshot.niko_roomba": "Niko Roomba",
+  "kelui.config.pause_menu.oneshot.quit_question": "A question before we go out",
 
   "kelui.config.title.hud": "HUD",
   "kelui.config.hud.debug_overlay": "FPS Overlay",

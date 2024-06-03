@@ -40,7 +40,8 @@ public class PauseConfigScreen {
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.pause_menu.short_command.command")).setValue("/lobby").setConfig(KelUI.config, "PAUSE_MENU.SHORT_COMMAND.COMMAND").build())
                 )
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.pause_menu.oneshot"))
-                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.niko_roomba"), false).setConfig(KelUI.config, "PAUSE_MENU.NIKO_ROOMBA").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.oneshot.niko_roomba"), false).setConfig(KelUI.config, "PAUSE_MENU.ONESHOT.NIKO_ROOMBA").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.oneshot.quit_question"), true).setConfig(KelUI.config, "PAUSE_MENU.ONESHOT.QUIT_QUESTION").build())
                 )
                 .build();
     }

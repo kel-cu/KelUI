@@ -42,6 +42,9 @@ public class OneShotTitleButton extends AbstractButton {
 
     }
 
+    public void setTime(){
+        timeFocused = System.currentTimeMillis();
+    }
     private double getValuePos(){
         double value = (double) (System.currentTimeMillis() - timeFocused) / 125;
         if(value >= 1.0) value = 1.0;

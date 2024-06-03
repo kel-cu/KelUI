@@ -25,6 +25,9 @@ import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.*;
+import ru.kelcuprum.kelui.gui.screen.pause_screen.DisconnectScreen;
+import ru.kelcuprum.kelui.gui.screen.pause_screen.OtherScreen;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -55,15 +58,6 @@ public abstract class PauseScreenMixin extends Screen {
             default -> kelui$defaultStyle();
         }
         cl.cancel();
-    }
-
-    @Unique
-    public void onClose() {
-        assert this.minecraft != null;
-
-        if(this.oneshot$disconnectMenuEnable) this.changeMenuDisconnectState();
-        else if(this.oneshot$otherMenuEnable) this.changeMenuState();
-        else this.minecraft.setScreen(null);
     }
 
     @Unique
@@ -111,106 +105,24 @@ public abstract class PauseScreenMixin extends Screen {
             }
         }
     }
-    @Unique ArrayList<AbstractWidget> oneshot$mainButtons = new ArrayList<>();
-    @Unique ArrayList<AbstractWidget> oneshot$otherButtons = new ArrayList<>();
-    @Unique ArrayList<AbstractWidget> oneshot$disconnectButtons = new ArrayList<>();
     @Unique
     void kelui$oneShotStyle() {
         // 86
         int size = (width - 24 - 10)/3;
         AbstractWidget helloControlify = addRenderableWidget(new Button(-20, -20, 20, 20, Component.translatable("menu.returnToGame")));
         helloControlify.visible = helloControlify.active = false;
-        AbstractWidget options = addRenderableWidget(new OneShotPauseButton(12, 12, size, 24, Component.translatable("menu.options"), (s) -> this.minecraft.setScreen(KelUI.getOptionScreen(this))));
-        options.active = !this.oneshot$otherMenuEnable;
-        options.visible = !this.oneshot$disconnectMenuEnable && !this.oneshot$otherMenuEnable;
-        oneshot$mainButtons.add(options);
-        AbstractWidget other = addRenderableWidget(new OneShotPauseButton(width/2-size/2, 12, size, 24, Component.translatable("kelui.config.title.other"), (s) -> {
-            changeMenuState();
-        }));
-        other.active = !this.oneshot$otherMenuEnable;
-        other.visible = !this.oneshot$disconnectMenuEnable && !this.oneshot$otherMenuEnable;
-        oneshot$mainButtons.add(other);
+
+        addRenderableWidget(new OneShotPauseButton(12, 12, size, 24, Component.translatable("menu.options"), (s) -> this.minecraft.setScreen(KelUI.getOptionScreen(this))));
+
+        addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, Component.translatable("kelui.config.title.other"), (s) -> this.minecraft.setScreen(new OtherScreen(this))));
+
         Component component = this.minecraft.isLocalServer() ? Component.translatable("menu.returnToMenu") : CommonComponents.GUI_DISCONNECT;
         this.disconnectButton = net.minecraft.client.gui.components.Button.builder(component, (s) -> {}).build();
-        AbstractWidget disconnect = addRenderableWidget(new OneShotPauseButton(width-12-size, 12, size, 24, component, (s) -> changeMenuDisconnectState()));
-        disconnect.active = !this.oneshot$otherMenuEnable;
-        disconnect.visible = !this.oneshot$disconnectMenuEnable && !this.oneshot$otherMenuEnable;
-        oneshot$mainButtons.add(disconnect);
-        kelui$oneShotOtherStyle();
-        kelui$oneShotDisconnectStyle();
-    }
 
-    @Unique
-    void kelui$oneShotOtherStyle() {
-        int bHeight = font.lineHeight+4;
-        int bHeight2 = (bHeight+3);
-        int y = 43+ 24;
-        int bWidth = font.width("...");
-        Component[] texts = {
-                ModMenuApi.createModsButtonText(),
-                Component.translatable("gui.advancements"),
-                Component.translatable("gui.stats")
-        };
-        for(Component text : texts){
-            int i = font.width(text)+5;
-            bWidth = Math.max(bWidth, i);
-        }
-
-        AbstractWidget titleBox = addRenderableWidget(new OneShotTitle(20, y-34, width-30, font.lineHeight*3, Component.translatable("kelui.config.title.other")));
-        titleBox.visible = oneshot$otherMenuEnable && !oneshot$disconnectMenuEnable;
-        oneshot$otherButtons.add(titleBox);
-
-        AbstractWidget mods = addRenderableWidget(new OneShotTitleButton(30, y+10, bWidth, bHeight, texts[0], (s) -> this.minecraft.setScreen(ModMenuApi.createModsScreen(this))));
-        mods.visible = mods.active = oneshot$otherMenuEnable && !oneshot$disconnectMenuEnable;
-        oneshot$otherButtons.add(mods);
-        y+=bHeight2;
-        AbstractWidget advancements = addRenderableWidget(new OneShotTitleButton(30, y+10, bWidth, bHeight, texts[1], (s) -> this.minecraft.setScreen(new AdvancementsScreen(Objects.requireNonNull(this.minecraft.getConnection()).getAdvancements()))));
-        advancements.visible = advancements.active = oneshot$otherMenuEnable && !oneshot$disconnectMenuEnable;
-        oneshot$otherButtons.add(advancements);
-        y+=bHeight2;
-        AbstractWidget stats = addRenderableWidget(new OneShotTitleButton(30, y+10, bWidth, bHeight, texts[2], (s) -> {
-            assert this.minecraft.player != null;
-            this.minecraft.setScreen(new StatsScreen(this, this.minecraft.player.getStats()));
+        addRenderableWidget(new OneShotPauseButton(width - 12 - size, 12, size, 24, component, (s) -> {
+            if (KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.QUIT_QUESTION", true)) this.minecraft.setScreen(new DisconnectScreen(this, this::onDisconnect));
+            else onDisconnect();
         }));
-        stats.visible = stats.active = oneshot$otherMenuEnable && !oneshot$disconnectMenuEnable;
-        oneshot$otherButtons.add(stats);
-    }
-    @Unique
-    void kelui$oneShotDisconnectStyle() {
-        AbstractWidget textBox = addRenderableWidget(new TextBox(width/2-100, 50, 200, 20, Component.translatable("kelui.oneshot.disconnect"), true));
-        textBox.active = textBox.visible = oneshot$disconnectMenuEnable;
-        oneshot$disconnectButtons.add(textBox);
-
-        AbstractWidget yes = addRenderableWidget(new OneShotPauseButton(width/2-80, height/2-26, 75, 24, CommonComponents.GUI_YES, (s) -> onDisconnect()));
-        yes.active = yes.visible = this.oneshot$disconnectMenuEnable;
-        oneshot$disconnectButtons.add(yes);
-
-        AbstractWidget no = addRenderableWidget(new OneShotPauseButton(width/2+5, height/2-26, 75, 24, CommonComponents.GUI_NO, (s) -> changeMenuDisconnectState()));
-        no.active = no.visible = this.oneshot$disconnectMenuEnable;
-        oneshot$disconnectButtons.add(no);
-    }
-    @Unique
-    void changeMenuState(){
-        this.oneshot$otherMenuEnable = !this.oneshot$otherMenuEnable;
-        for(AbstractWidget widget : oneshot$mainButtons){
-            widget.active = widget.visible = !this.oneshot$otherMenuEnable;
-        }
-        for(AbstractWidget widget : oneshot$otherButtons){
-            if(!(widget instanceof OneShotTitle)) widget.active = oneshot$otherMenuEnable;
-            widget.visible = this.oneshot$otherMenuEnable;
-        }
-    }
-    @Unique
-    void changeMenuDisconnectState(){
-        this.oneshot$disconnectMenuEnable = !this.oneshot$disconnectMenuEnable;
-        this.oneshot$otherMenuEnable = !this.oneshot$otherMenuEnable;
-        for(AbstractWidget widget : oneshot$mainButtons){
-            widget.active = widget.visible = !this.oneshot$disconnectMenuEnable;
-        }
-        for(AbstractWidget widget : oneshot$disconnectButtons){
-            if(!(widget instanceof TextBox)) widget.active = oneshot$disconnectMenuEnable;
-            widget.visible = this.oneshot$disconnectMenuEnable;
-        }
     }
     @Shadow
     @Final
@@ -231,7 +143,7 @@ public abstract class PauseScreenMixin extends Screen {
             if(!oneshot$disconnectMenuEnable && !oneshot$otherMenuEnable) {
                 guiGraphics.blitSprite(new ResourceLocation("kelui", "pause_menu/oneshot_pause_panel"), 5, 5,  width-10, 38);
                 int nikoSize = height/3;
-                if(KelUI.isAprilFool() || KelUI.config.getBoolean("PAUSE_MENU.NIKO_ROOMBA", false)) guiGraphics.blitSprite(new ResourceLocation("kelui", "pause_menu/niko_roomba"), width/2-nikoSize/2, height/2-nikoSize/2, nikoSize, nikoSize);
+                if(KelUI.isAprilFool() || KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.NIKO_ROOMBA", false)) guiGraphics.blitSprite(new ResourceLocation("kelui", "pause_menu/niko_roomba"), width/2-nikoSize/2, height/2-nikoSize/2, nikoSize, nikoSize);
             }
             else guiGraphics.fill(0, 0, width, height, 0x7f000000);
         }
