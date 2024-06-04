@@ -16,6 +16,7 @@ import net.minecraft.util.Mth;
 public class OneShotButton extends AbstractButton {
     protected OnPress onPress;
     protected boolean isExit;
+    protected boolean isInit = false;
     public OneShotButton(int i, int j, int k, int l, Component component, OnPress onPress) {
         this(i, j, k, l, component, false, onPress);
     }
@@ -34,6 +35,7 @@ public class OneShotButton extends AbstractButton {
     protected void renderWidget(GuiGraphics guiGraphics, int i, int j, float f) {
         int k = this.active ? 16777215 : 10526880;
         renderString(guiGraphics, Minecraft.getInstance().font, k | Mth.ceil(this.alpha * 255.0F) << 24);
+        if(!isInit) isInit = true;
     }
     @Override
     public void renderString(GuiGraphics guiGraphics, Font font, int i){
@@ -48,7 +50,7 @@ public class OneShotButton extends AbstractButton {
     @Override
     public void setFocused(boolean bl) {
         super.setFocused(bl);
-        if(bl && !isHovered()) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_title_cursor")), 1.0F));
+        if(bl && !isHovered() && isInit) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_title_cursor")), 1.0F));
     }
 
     @Override
