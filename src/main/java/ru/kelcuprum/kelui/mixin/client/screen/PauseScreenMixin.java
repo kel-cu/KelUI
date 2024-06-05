@@ -60,7 +60,7 @@ public abstract class PauseScreenMixin extends Screen {
                 kelui$oneShotStyle();
                 if(!isPlayedSound){
                     isPlayedSound = true;
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_cancel")), 1.0F));
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_decision")), 1.0F));
                 }
             }
             case 2 -> KelUI.log("Чувак, ты думал тут что-то будет?");
@@ -68,7 +68,11 @@ public abstract class PauseScreenMixin extends Screen {
         }
         cl.cancel();
     }
-
+    @Unique
+    public void onClose(){
+        if(menuType == 1) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_cancel")), 1.0F));
+        super.onClose();
+    }
     @Unique
     void kelui$defaultStyle() {
         int x = 10;
