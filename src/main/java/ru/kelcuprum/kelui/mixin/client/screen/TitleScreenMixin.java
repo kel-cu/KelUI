@@ -47,6 +47,7 @@ public abstract class TitleScreenMixin extends Screen {
     }
     @Unique public int menuType = 0;
     @Unique boolean isGameStarted = false;
+    @Unique boolean isPlayedSound = false;
 
     @Inject(method = "init", at = @At("HEAD"), cancellable = true)
     void init(CallbackInfo cl) {
@@ -55,7 +56,8 @@ public abstract class TitleScreenMixin extends Screen {
         switch (menuType){
             case 1 -> {
                 kelui$oneShotStyle();
-                if(isGameStarted){
+                if(isGameStarted && !isPlayedSound){
+                    isPlayedSound = true;
                     Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_cancel")), 1.0F));
                 }
             }
@@ -124,21 +126,36 @@ public abstract class TitleScreenMixin extends Screen {
         int x = width-bWidth-45;
 
         assert this.minecraft != null;
-        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.singleplayer"), true, (OnPress) -> this.minecraft.setScreen(new SelectWorldScreen(this))));
+        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.singleplayer"), true, (OnPress) -> {
+            this.minecraft.setScreen(new SelectWorldScreen(this));
+            isPlayedSound = false;
+        }));
         y+=bHeight2;
 
-        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.multiplayer"), true, (OnPress) -> this.minecraft.setScreen(new JoinMultiplayerScreen(this))));
+        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.multiplayer"), true, (OnPress) -> {
+            this.minecraft.setScreen(new JoinMultiplayerScreen(this));
+            isPlayedSound = false;
+        }));
         y+=bHeight2;
 
         if(KelUI.config.getBoolean("MAIN_MENU.ENABLE_REALMS", false)) {
-            addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("gui.toRealms"), (OnPress) -> this.minecraft.setScreen(new RealmsMainScreen(this))));
+            addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("gui.toRealms"), (OnPress) -> {
+                this.minecraft.setScreen(new RealmsMainScreen(this));
+                isPlayedSound = false;
+            }));
             y += bHeight2;
         }
 
-        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, ModMenuApi.createModsButtonText(), (OnPress) -> this.minecraft.setScreen(new ModsScreen(this))));
+        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, ModMenuApi.createModsButtonText(), (OnPress) -> {
+            this.minecraft.setScreen(new ModsScreen(this));
+            isPlayedSound = false;
+        }));
         y+=bHeight2;
 
-        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this))));
+        addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.options"), (OnPress) -> {
+            this.minecraft.setScreen(KelUI.getOptionScreen(this));
+            isPlayedSound = false;
+        }));
         y+=bHeight2;
 
         addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.quit"), true, (OnPress) -> this.minecraft.destroy()));
