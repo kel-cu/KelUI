@@ -5,12 +5,12 @@
   "version": "${version}",
   "description": "Custom menu for my taste, i.e. how I feel comfortable using components",
   "authors": [
-    "Im_Kel (Kel Cuprum)"
+    "Kel Cuprum"
   ],
   "contact": {
-    "repo": "https://github.com/simply-kel/kelmenu",
-    "homepage": "https://github.com/simply-kel/kelmenu",
-    "issues": "https://github.com/simply-kel/kelmenu/issues",
+    "repo": "https://github.com/kel-cu/kelui",
+    "homepage": "https://github.com/kel-cu/kelui",
+    "issues": "https://github.com/kel-cu/kelui/issues",
     "email": "me@kelcuprum.ru"
   },
   "license": "GPL-3.0",
@@ -33,7 +33,7 @@
   ],
   "icon": "assets/kelui/icon.png",
   "depends": {
-    "fabricloader": ">=0.14.17",
+    "fabricloader": "*",
     "fabric": "*",
     "modmenu": "*",
     "alinlib": "*",
@@ -43,8 +43,8 @@
     "modmenu": {
       "links": {
         "modmenu.modrinth": "https://modrinth.com/mod/kelui",
-        "modmenu.donate": "https://kelcuprum.ru/r/don",
-        "modmenu.discord": "https://kelcuprum.ru/r/ds"
+        "modmenu.donate": "https://kelcu.ru/don",
+        "modmenu.discord": "https://kelcu.ru/ds"
       }
     }
   }
