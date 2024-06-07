@@ -9,6 +9,7 @@
     "client.screen.LoadingOverlayMixin",
     "client.screen.PauseScreenMixin",
     "client.screen.TitleScreenMixin",
+    "client.screen.sodium_extra.SodiumExtraHudMixin",
     "client.utils.ChatOverlayMixin",
     "client.utils.DebugScreenOverlayMixin",
     "client.utils.GuiGraphicsMixin",

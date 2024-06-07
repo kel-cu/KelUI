@@ -40,6 +40,9 @@ dependencies {
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     //
     modImplementation("ru.kelcuprum.alinlib:AlinLib-fabric:${project.alinlib}")
+
+    modImplementation("maven.modrinth:sodium-extra:${project.sound_extra_version}")
+
     include(implementation ("meteordevelopment:starscript:0.2.2"))
 
     compileOnly 'org.projectlombok:lombok:1.18.30'

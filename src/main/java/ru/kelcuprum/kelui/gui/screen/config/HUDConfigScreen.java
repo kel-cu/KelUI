@@ -30,7 +30,7 @@ public class HUDConfigScreen {
 //                "Modern"
         };
         //"HUD.NEW_HOTBAR.POSITION"
-        return new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME, KelUI.configDesignType)
+        ConfigScreenBuilder builder = new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME, KelUI.configDesignType)
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.MENU_CONFIG, (s) -> Minecraft.getInstance().setScreen(new MenuConfigScreen().build(parent))).build())
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.PAUSE_CONFIG, (s) -> Minecraft.getInstance().setScreen(new PauseConfigScreen().build(parent))).build())
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent))).build())
@@ -38,9 +38,12 @@ public class HUDConfigScreen {
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.LOADING_CONFIG, (s) -> Minecraft.getInstance().setScreen(new LoadingConfigScreen().build(parent))).build())
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent))).build())
 
-                .addWidget(new TextBox(KelUI.TEXTS.TITLE.HUD_CONFIG, true))
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY").build())
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.paper_doll"), false).setConfig(KelUI.config, "HUD.PAPER_DOLL").build())
+                .addWidget(new TextBox(KelUI.TEXTS.TITLE.HUD_CONFIG, true));
+        if (!KelUI.isSodiumExtraEnable)
+            builder.addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY").build());
+        else
+            builder.addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.sodium_extra_debug"), false).setConfig(KelUI.config, "HUD.SODIUM_EXTRA_DEBUG").build());
+        builder.addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.paper_doll"), false).setConfig(KelUI.config, "HUD.PAPER_DOLL").build())
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.hud.armor_info.title"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info"), true).setConfig(KelUI.config, "HUD.ARMOR_INFO").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info.damage"), true).setConfig(KelUI.config, "HUD.ARMOR_INFO.DAMAGE").build())
@@ -57,7 +60,7 @@ public class HUDConfigScreen {
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.debug.dark_graph"), true).setConfig(KelUI.config, "DEBUG.DARK_GRAPH").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.dark_debug_overlay"), false).setConfig(KelUI.config, "HUD.DARK_DEBUG_OVERLAY").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay.remove_game_info"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_GAME_INFO").build())
-                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay.remove_system_info"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_SYSTEM_INFO").build()))
-                .build();
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay.remove_system_info"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_SYSTEM_INFO").build()));
+        return builder.build();
     }
 }

@@ -34,6 +34,7 @@
 
   "kelui.config.title.hud": "HUD",
   "kelui.config.hud.debug_overlay": "Оверлей ФПС",
+  "kelui.config.hud.sodium_extra_debug": "Оверлей Sodium Extra",
   "kelui.config.hud.paper_doll": "Paper Doll (Эксперимент!)",
 
   "kelui.config.hud.armor_info.title": "Информация брони",

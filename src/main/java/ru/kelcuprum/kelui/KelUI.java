@@ -40,6 +40,7 @@ public class KelUI implements ClientModInitializer {
     public static Minecraft MINECRAFT = Minecraft.getInstance();
     public static final String MINECRAFT_LAUNCHED_VERSION = MINECRAFT.getLaunchedVersion();
     public static IconStorageHelper iconStorageHelper = new IconStorageHelper();
+    public static final boolean isSodiumExtraEnable = FabricLoader.getInstance().isModLoaded("sodium-extra");
     //
 
     @Override

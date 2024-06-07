@@ -13,8 +13,7 @@ import java.util.Set;
 
 public class KelUIMixinPlugin implements IMixinConfigPlugin {
     public static final Logger LOG = LogManager.getLogger("KelUI > Mixin");
-    public boolean isPauseScreenEnable = true;
-    public static boolean isReplayModInstalled = FabricLoader.getInstance().isModLoaded("replaymod");
+    public static boolean isSodiumExtraEnable = FabricLoader.getInstance().isModLoaded("sodium-extra");
     @Override
     public void onLoad(String mixinPackage) {
 
@@ -34,9 +33,9 @@ public class KelUIMixinPlugin implements IMixinConfigPlugin {
             LOG.error(String.format("Mixin %s for %s not loaded, Better Display Ping not compatibility", mixinClassName, targetClassName));
             return false;
         }
-        if((!isReplayModInstalled || !isPauseScreenEnable) && mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.replaymod")){
-            LOG.error(String.format("Mixin %s for %s not loaded, %s", mixinClassName, targetClassName, (!isReplayModInstalled ? "ReplayMod not installed" : "Controlify not compatibility")));
-            return false;
+        if(isSodiumExtraEnable && mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium_extra.")){
+            LOG.error(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "Sodium Extra installed"));
+            return true;
         }
         return true;
     }

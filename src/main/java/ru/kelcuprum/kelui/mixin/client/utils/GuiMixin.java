@@ -28,7 +28,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
-import ru.kelcuprum.alinlib.gui.InterfaceUtils;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.Util;
 
@@ -50,9 +49,6 @@ public abstract class GuiMixin {
     @Shadow
     @Final
     private Minecraft minecraft;
-
-    @Shadow
-    protected abstract void renderSlot(GuiGraphics guiGraphics, int i, int j, float f, Player player, ItemStack itemStack, int k);
 
     @Unique
     int screenWidth;
@@ -100,7 +96,7 @@ public abstract class GuiMixin {
     }
     @Unique
     public void renderDebugOverlay(GuiGraphics guiGraphics, float f) {
-        if (this.debugOverlay.showDebugScreen()) return;
+        if (this.debugOverlay.showDebugScreen() || KelUI.isSodiumExtraEnable) return;
         if (!KelUI.config.getBoolean("HUD.DEBUG_OVERLAY", false)) return;
         int x = 2;
         int y1 = 2;
@@ -109,18 +105,6 @@ public abstract class GuiMixin {
         Component fps = Component.literal(String.format("%s FPS", this.minecraft.getFps()));
         guiGraphics.fill(x, y1, x + 4 + getFont().width(fps) + 4, y1 + size, 0x7f000000);
         guiGraphics.drawString(getFont(), fps, x + 4, y1 + 4, -1);
-
-        y1+=size;
-
-    }
-
-    @Unique
-    public void renderFireOverlay(GuiGraphics guiGraphics, float f){
-        int height = this.screenHeight/2;
-        for(int i = 0; i<screenWidth;i++){
-//            KelUI.log(String.valueOf((heigth*Math.random())));
-            guiGraphics.fill(i, (int) (height*Math.min(0.25, Math.random())+height), i+1, guiGraphics.guiHeight(), 0x75FFFFFF);
-        }
     }
 
     @Unique
