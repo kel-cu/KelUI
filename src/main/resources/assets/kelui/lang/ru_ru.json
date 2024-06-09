@@ -81,9 +81,12 @@
   "kelui.config.credits": "Авторство",
   "kelui.config.credits.custom": "Кастомное авторство",
   "kelui.config.title.other.fix": "Исправления",
-  "kelui.fix.connect_screen": "Исправление кнопки экрана подключения",
-  "kelui.fix.selection_list": "Исправлена подсветка виджетов в меню сервера.",
-  "kelui.fix.tab_navigation_bar": "Исправление цвета в вкладке навигации",
+  "kelui.fix.connect_screen": "Исправление кнопок на экране подключения",
+  "kelui.fix.selection_list": "Исправление подсветки виджетов в меню выбора серверов",
+  "kelui.fix.disabled_blur": "Исправление отключенного размытия",
+  "kelui.fix.disabled_blur.description": "Замена размытия на затемнение, когда само размытие отключено",
+
+
   "kelui.config.title.other.global": "Глобальное",
   "kelui.config.global.enable_custom_name": "Включить кастомное имя в заголовке",
   "kelui.config.global.custom_name": "Пользовательское имя в заголовке",

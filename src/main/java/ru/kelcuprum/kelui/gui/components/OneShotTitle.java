@@ -22,10 +22,7 @@ public class OneShotTitle extends AbstractWidget {
         guiGraphics.pose().popPose();
     }
 
-    private long timeFocused = System.currentTimeMillis();
-    public void setTime(){
-        timeFocused = System.currentTimeMillis();
-    }
+    private final long timeFocused = System.currentTimeMillis();
     private double getValuePos(){
         double value = (double) (System.currentTimeMillis() - timeFocused) / 200;
         if(value >= 1.0) value = 1.0;

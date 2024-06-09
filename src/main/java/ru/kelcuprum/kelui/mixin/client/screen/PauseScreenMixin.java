@@ -49,19 +49,15 @@ public abstract class PauseScreenMixin extends Screen {
     public int menuType = 0;
     @Unique boolean oneshot$otherMenuEnable = false;
     @Unique boolean oneshot$disconnectMenuEnable = false;
-    @Unique boolean isPlayedSound = false;
 
     @Inject(method = "init", at = @At("HEAD"), cancellable = true)
     void init(CallbackInfo cl) {
         if (!KelUI.config.getBoolean("PAUSE_MENU", true)) return;
+        if(!showPauseMenu) return;
         menuType = KelUI.config.getNumber("PAUSE_MENU.TYPE", 0).intValue();
         switch (menuType) {
             case 1 -> {
                 kelui$oneShotStyle();
-                if(!isPlayedSound){
-                    isPlayedSound = true;
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_decision")), 1.0F));
-                }
             }
             case 2 -> KelUI.log("Чувак, ты думал тут что-то будет?");
             default -> kelui$defaultStyle();
@@ -128,18 +124,15 @@ public abstract class PauseScreenMixin extends Screen {
         addRenderableWidget(new OneShotPauseButton(12, 12, size, 24, Component.translatable("menu.options"), (s) -> {
             assert this.minecraft != null;
             this.minecraft.setScreen(KelUI.getOptionScreen(this));
-            isPlayedSound = false;
         }));
 
         if(KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.OTHER", true)) addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, Component.translatable("kelui.config.title.other"), (s) -> {
             assert this.minecraft != null;
             this.minecraft.setScreen(new OtherScreen(this));
-            isPlayedSound = false;
         }));
         else addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, ModMenuApi.createModsButtonText(), (s) -> {
             assert this.minecraft != null;
             this.minecraft.setScreen(ModMenuApi.createModsScreen(this));
-            isPlayedSound = false;
         }));
 
         assert this.minecraft != null;
@@ -149,7 +142,6 @@ public abstract class PauseScreenMixin extends Screen {
         addRenderableWidget(new OneShotPauseButton(width - 12 - size, 12, size, 24, component, (s) -> {
             if (KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.QUIT_QUESTION", true)) {
                 this.minecraft.setScreen(new DisconnectScreen(this, this::onDisconnect));
-                isPlayedSound = false;
             }
             else onDisconnect();
         }));
@@ -158,10 +150,13 @@ public abstract class PauseScreenMixin extends Screen {
     @Final
     protected abstract void onDisconnect();
 
+    @Shadow @Final private boolean showPauseMenu;
+
     @Inject(method = "renderBackground", at = @At("HEAD"), cancellable = true)
     void renderBackground(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo cl) {
-        super.renderBackground(guiGraphics, i, j, f);
         if (!KelUI.config.getBoolean("PAUSE_MENU", true)) return;
+        if (!showPauseMenu) return;
+        super.renderBackground(guiGraphics, i, j, f);
 
         if (menuType == 0) {
             if (KelUI.config.getBoolean("PAUSE_MENU.ALPHA", true)) {
@@ -182,10 +177,11 @@ public abstract class PauseScreenMixin extends Screen {
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo cl) {
+        if (!KelUI.config.getBoolean("PAUSE_MENU", true)) return;
+        if (!showPauseMenu) return;
         super.render(guiGraphics, i, j, f);
 
         if (menuType == 0) {
-            if (!KelUI.config.getBoolean("PAUSE_MENU", true)) return;
             if (KelUI.config.getBoolean("PAUSE_MENU.PLAYER", true)) {
                 int i1 = (width - 150) / 2;
                 int x = i1 + 150;

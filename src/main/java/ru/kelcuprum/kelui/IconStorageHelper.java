@@ -56,6 +56,8 @@ public class IconStorageHelper {
             return new ByteArrayInputStream(data);
         } else {
             String dir = KelUI.config.getString("GLOBAL.CUSTOM_ICON_PATH", "config/KelUI/icons/");
+            if(!dir.endsWith("/")) dir+="/";
+
             File file = new File(dir+path);
             if(file.exists()){
                 try {

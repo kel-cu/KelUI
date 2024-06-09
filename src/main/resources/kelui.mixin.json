@@ -19,7 +19,8 @@
     "client.utils.PlayerListMixin",
     "client.utils.components.AbstractButtonMixin",
     "client.utils.components.AbstractSliderButtonMixin",
-    "client.utils.components.TooltipRenderUtilMixin"
+    "client.utils.components.TooltipRenderUtilMixin",
+    "client.fix.ScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

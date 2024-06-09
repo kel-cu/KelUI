@@ -45,7 +45,8 @@ public class OtherConfigScreen {
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.other.render"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.map_slot"), true).setConfig(KelUI.config, "HUD.MAP_SLOT").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.ui.smooth_menu"), false).setConfig(KelUI.config, "UI.SMOOTH_MENU").build())
-                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.ui.textured_tooltip"), false).setConfig(KelUI.config, "UI.TEXTURED_TOOLTIP").build())
+//                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.ui.textured_tooltip"), false).setConfig(KelUI.config, "UI.TEXTURED_TOOLTIP").build())
+                        .addValue(new SelectorBuilder(Component.translatable("kelui.config.ui.tooltip_type")).setValue(0).setList(new String[]{"Vanilla", "KelUI", "KelUI [Textured]"}).setConfig(KelUI.config, "UI.TOOLTIP_TYPE").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.ui.alinlib_style"), false).setConfig(KelUI.config, "UI.ALINLIB_STYLE").build())
                 )
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.other.chat"))
@@ -79,8 +80,11 @@ public class OtherConfigScreen {
                         }).build())
                 )
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.other.fix"))
-                        .addValue(new TextBox(Component.translatable("kelui.fix.connect_screen"), false))
-                        .addValue(new TextBox(Component.translatable("kelui.fix.selection_list"), false))
+                        //
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.fix.connect_screen"), true).setConfig(KelUI.config, "FIX.CONNECTION_SCREEN").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.fix.selection_list"), true).setConfig(KelUI.config, "FIX.RENDER_SELECTION").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.fix.disabled_blur"), true).setConfig(KelUI.config, "FIX.DISABLED_BLUR").build()
+                                .setDescription(Component.translatable("kelui.fix.disabled_blur.description")))
                 )
 
                 .build();

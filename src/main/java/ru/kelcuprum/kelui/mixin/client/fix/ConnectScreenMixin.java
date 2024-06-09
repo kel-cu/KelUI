@@ -23,6 +23,7 @@ public class ConnectScreenMixin extends Screen {
             )
     )
     private void changeTitleY(Args args) {
+        if(!KelUI.config.getBoolean("FIX.CONNECTION_SCREEN", true)) return;
         args.set(3, (this.height/2)-(KelUI.MINECRAFT.font.lineHeight/2)-40);
 
     }
@@ -34,6 +35,7 @@ public class ConnectScreenMixin extends Screen {
             )
     )
     private void changeButtonY(Args args) {
+        if(!KelUI.config.getBoolean("FIX.CONNECTION_SCREEN", true)) return;
         args.set(1, ((this.height/2)-(KelUI.MINECRAFT.font.lineHeight/2)));
     }
 }
