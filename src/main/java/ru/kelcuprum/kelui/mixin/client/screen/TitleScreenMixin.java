@@ -8,6 +8,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
+import net.minecraft.client.gui.screens.options.AccessibilityOptionsScreen;
+import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
+import net.minecraft.client.gui.screens.options.SkinCustomizationScreen;
+import net.minecraft.client.gui.screens.options.SoundOptionsScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -58,7 +62,7 @@ public abstract class TitleScreenMixin extends Screen {
                 kelui$oneShotStyle();
                 if(isGameStarted && !isPlayedSound){
                     isPlayedSound = true;
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_cancel")), 1.0F));
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("kelui", "oneshot_menu_cancel")), 1.0F));
                 }
             }
             case 2 -> KelUI.log("Чувак, ты думал тут что-то будет?");

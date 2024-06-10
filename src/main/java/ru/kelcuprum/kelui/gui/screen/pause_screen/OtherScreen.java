@@ -2,11 +2,11 @@ package ru.kelcuprum.kelui.gui.screen.pause_screen;
 
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.LanguageSelectScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.ShareToLanScreen;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
+import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.kelui.KelUI;

@@ -1,5 +1,6 @@
 package ru.kelcuprum.kelui.mixin.client.utils;
 
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
@@ -74,10 +75,9 @@ public abstract class GuiMixin {
 
     @Shadow protected abstract boolean isExperienceBarVisible();
 
-    @Shadow public abstract void render(GuiGraphics guiGraphics, float f);
 
     @Inject(method = "render", at = @At("HEAD"))
-    void render(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
+    void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         this.screenWidth = guiGraphics.guiWidth();
         this.screenHeight = guiGraphics.guiHeight();
     }
@@ -88,14 +88,14 @@ public abstract class GuiMixin {
         layers.add(kelUILayer, () -> !minecraft.options.hideGui);
     }
     @Unique
-    public void renderModernStateOverlay(GuiGraphics guiGraphics, float f){
+    public void renderModernStateOverlay(GuiGraphics guiGraphics, DeltaTracker deltaTracker){
         if (this.debugOverlay.showDebugScreen()) return;
         if(KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() != 2) return;
 
         PlayerFaceRenderer.draw(guiGraphics, KelUI.MINECRAFT.getSkinManager().getInsecureSkin(KelUI.MINECRAFT.getGameProfile()), 5, 5, 20);
     }
     @Unique
-    public void renderDebugOverlay(GuiGraphics guiGraphics, float f) {
+    public void renderDebugOverlay(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         if (this.debugOverlay.showDebugScreen() || KelUI.isSodiumExtraEnable) return;
         if (!KelUI.config.getBoolean("HUD.DEBUG_OVERLAY", false)) return;
         int x = 2;
@@ -108,7 +108,7 @@ public abstract class GuiMixin {
     }
 
     @Unique
-    public void renderPaperDoll(GuiGraphics guiGraphics, float f) {
+    public void renderPaperDoll(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         if (this.debugOverlay.showDebugScreen()) return;
         if (!KelUI.config.getBoolean("HUD.PAPER_DOLL", false)) return;
         assert this.minecraft.player != null;
@@ -117,7 +117,7 @@ public abstract class GuiMixin {
     }
 
     @Unique
-    public void renderArmorInfo(GuiGraphics guiGraphics, float f) {
+    public void renderArmorInfo(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         if (this.debugOverlay.showDebugScreen()) return;
         if (!KelUI.config.getBoolean("HUD.ARMOR_INFO", true)) return;
         List<ItemStack> items = new ArrayList<>();
@@ -174,7 +174,7 @@ public abstract class GuiMixin {
     }
 
     @Inject(method = "renderEffects", at = @At("HEAD"), cancellable = true)
-    void renderEffects(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
+    void renderEffects(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_EFFECTS", false)) return;
         if (!this.debugOverlay.showDebugScreen()) {
             assert this.minecraft.player != null;
@@ -202,7 +202,7 @@ public abstract class GuiMixin {
     }
 
     @Inject(method = "renderItemHotbar", at = @At("HEAD"), cancellable = true)
-    void renderItemHotbar(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
+    void renderItemHotbar(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
         int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 0 : (this.screenWidth - 180) / 2;
         int l = 1;
@@ -212,23 +212,23 @@ public abstract class GuiMixin {
         for (m = 0; m < 9; ++m) {
             n = m * 20;
             boolean isSelected = m == getCameraPlayer().getInventory().selected;
-            kelUI$renderSlot(guiGraphics, pos + n, o, f, getCameraPlayer(), getCameraPlayer().getInventory().items.get(m), l++, isSelected);
+            kelUI$renderSlot(guiGraphics, pos + n, o, deltaTracker, getCameraPlayer(), getCameraPlayer().getInventory().items.get(m), l++, isSelected);
         }
         ItemStack itemStack = getCameraPlayer().getOffhandItem();
         if (!itemStack.isEmpty()) {
-            kelUI$renderSlot(guiGraphics, pos + 182, o, f, getCameraPlayer(), itemStack, l, false);
+            kelUI$renderSlot(guiGraphics, pos + 182, o, deltaTracker, getCameraPlayer(), itemStack, l, false);
         }
         ci.cancel();
     }
     @Unique
-    void kelUI$renderSlot(GuiGraphics guiGraphics, int i, int j, float f, Player player, ItemStack itemStack, int k, boolean isSelected){
+    void kelUI$renderSlot(GuiGraphics guiGraphics, int i, int j, DeltaTracker deltaTracker, Player player, ItemStack itemStack, int k, boolean isSelected){
         int color = isSelected ? TETRA : 0xFF000000;
         if (!itemStack.isEmpty() && itemStack.isDamageableItem() && isSelected){
             color = (itemStack.getBarColor() | -16777216);
         }
         guiGraphics.fill(i, j, i + 20, j + 20, color-0x75000000);
         if (!itemStack.isEmpty()) {
-            float g = (float) itemStack.getPopTime() - f;
+            float g = (float) itemStack.getPopTime() - deltaTracker.getGameTimeDeltaTicks();
             if (g > 0.0F) {
                 float h = 1.0F + g / 5.0F;
                 guiGraphics.pose().pushPose();
@@ -344,7 +344,7 @@ public abstract class GuiMixin {
     }
 
     @Inject(method = "renderExperienceLevel", at = @At("HEAD"), cancellable = true)
-    void renderExperienceLevel(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
+    void renderExperienceLevel(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
         assert this.minecraft.player != null;
         if (this.isExperienceBarVisible() && this.minecraft.player.experienceLevel > 0) {

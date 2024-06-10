@@ -27,7 +27,7 @@ public class OneShotPauseButton extends AbstractButton {
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int i, int j, float f) {
-        if(isHoveredOrFocused() && active) guiGraphics.blitSprite(new ResourceLocation("kelui", "pause_menu/oneshot_pause_button"), getX(), getY(), getWidth(), getHeight());
+        if(isHoveredOrFocused() && active) guiGraphics.blitSprite(ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/oneshot_pause_button"), getX(), getY(), getWidth(), getHeight());
         int k = this.active ? 16777215 : 10526880;
         renderString(guiGraphics, Minecraft.getInstance().font, k | Mth.ceil(this.alpha * 255.0F) << 24);
         if(!isInit) isInit = true;
@@ -44,12 +44,12 @@ public class OneShotPauseButton extends AbstractButton {
     @Override
     public void setFocused(boolean bl) {
         super.setFocused(bl);
-        if(bl && !isHovered() && isInit) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_cursor")), 1.0F));
+        if(bl && !isHovered() && isInit) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("kelui", "oneshot_menu_cursor")), 1.0F));
     }
 
     @Override
     public void playDownSound(SoundManager soundManager) {
-        soundManager.play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_decision")), 1.0F));
+        soundManager.play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("kelui", "oneshot_menu_decision")), 1.0F));
     }
 
     public interface OnPress {

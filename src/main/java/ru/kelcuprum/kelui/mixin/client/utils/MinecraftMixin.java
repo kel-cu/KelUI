@@ -21,8 +21,6 @@ import ru.kelcuprum.kelui.KelUI;
 @Mixin({Minecraft.class})
 public abstract class MinecraftMixin {
 
-    @Shadow private static Minecraft instance;
-
     @Shadow @Nullable public Screen screen;
 
     @Inject(method = "getFramerateLimit", at = @At("HEAD"), cancellable = true)
@@ -53,6 +51,6 @@ public abstract class MinecraftMixin {
 
     @Inject(method = "pauseGame", at = @At("TAIL"))
     void pauseGame(boolean pauseOnly, CallbackInfo ci){
-        if(this.screen instanceof PauseScreen && !pauseOnly && KelUI.config.getBoolean("PAUSE_MENU", true) && KelUI.config.getNumber("PAUSE_MENU.TYPE", 0).intValue() == 1) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_decision")), 1.0F));
+        if(this.screen instanceof PauseScreen && !pauseOnly && KelUI.config.getBoolean("PAUSE_MENU", true) && KelUI.config.getNumber("PAUSE_MENU.TYPE", 0).intValue() == 1) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("kelui", "oneshot_menu_decision")), 1.0F));
     }
 }

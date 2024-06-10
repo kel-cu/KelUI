@@ -50,13 +50,13 @@ public class OneShotButton extends AbstractButton {
     @Override
     public void setFocused(boolean bl) {
         super.setFocused(bl);
-        if(bl && !isHovered() && isInit) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_title_cursor")), 1.0F));
+        if(bl && !isHovered() && isInit) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("kelui", "oneshot_title_cursor")), 1.0F));
     }
 
     @Override
     public void playDownSound(SoundManager soundManager) {
-        if(isExit) soundManager.play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_title_decision")), 1.0F, 0.25F));
-        else soundManager.play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_decision")), 1.0F));
+        if(isExit) soundManager.play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("kelui", "oneshot_title_decision")), 1.0F, 0.25F));
+        else soundManager.play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("kelui", "oneshot_menu_decision")), 1.0F));
     }
 
     public interface OnPress {

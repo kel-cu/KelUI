@@ -3,8 +3,8 @@ package ru.kelcuprum.kelui;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.OptionsScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -13,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.kelcuprum.alinlib.api.events.alinlib.LocalizationEvents;
 import ru.kelcuprum.alinlib.config.Config;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.InterfaceUtils;
@@ -116,12 +115,12 @@ public class KelUI implements ClientModInitializer {
     }
 
     public interface ICONS {
-        ResourceLocation LOADING_ICON = new ResourceLocation("kelui", "textures/gui/loading/icon.png");
-        ResourceLocation LANGUAGE = new ResourceLocation("kelui", "textures/gui/sprites/icon/language.png");
-        ResourceLocation HAT_SMALL = new ResourceLocation("kelui", "textures/gui/sprites/icon/hat_small.png");
-        ResourceLocation MONITOR = new ResourceLocation("kelui", "textures/gui/sprites/icon/monitor.png");
-        ResourceLocation MUSIC = new ResourceLocation("kelui", "textures/gui/sprites/icon/music.png");
-        ResourceLocation ACCESSIBILITY = new ResourceLocation("kelui", "textures/gui/sprites/icon/accessibility.png");
+        ResourceLocation LOADING_ICON = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/loading/icon.png");
+        ResourceLocation LANGUAGE = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/language.png");
+        ResourceLocation HAT_SMALL = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/hat_small.png");
+        ResourceLocation MONITOR = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/monitor.png");
+        ResourceLocation MUSIC = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/music.png");
+        ResourceLocation ACCESSIBILITY = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/accessibility.png");
     }
 
     public interface TEXTS {

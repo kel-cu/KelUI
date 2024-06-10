@@ -23,7 +23,7 @@ public class TooltipRenderUtilMixin {
             guiGraphics.fill(x-3, y-2, x-2, y+height+2, z, 0x7fFFFFFF);
             guiGraphics.fill(x+width+2, y-2, x+width+3, y+height+2, z, 0x7fFFFFFF);
         }
-        else guiGraphics.blitSprite(new ResourceLocation("kelui", "tooltip/tooltip_background"), x-5, y-5, z, width+10, height+10);
+        else guiGraphics.blitSprite(ResourceLocation.fromNamespaceAndPath("kelui", "tooltip/tooltip_background"), x-5, y-5, z, width+10, height+10);
         ci.cancel();
     }
 }

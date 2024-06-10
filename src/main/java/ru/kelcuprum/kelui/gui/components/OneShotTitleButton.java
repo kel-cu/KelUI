@@ -55,12 +55,12 @@ public class OneShotTitleButton extends AbstractButton {
     public void setFocused(boolean bl) {
         super.setFocused(bl);
         if((System.currentTimeMillis() - timeFocused) >= 125) timeFocused = System.currentTimeMillis();
-        if(bl && !isHovered() && isInit) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_cursor")), 1.0F));
+        if(bl && !isHovered() && isInit) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("kelui", "oneshot_menu_cursor")), 1.0F));
     }
 
     @Override
     public void playDownSound(SoundManager soundManager) {
-        soundManager.play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("kelui:oneshot_menu_decision")), 1.0F));
+        soundManager.play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("kelui", "oneshot_menu_decision")), 1.0F));
     }
 
     public interface OnPress {
