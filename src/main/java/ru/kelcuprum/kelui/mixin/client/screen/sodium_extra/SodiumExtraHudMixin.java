@@ -3,6 +3,7 @@ package ru.kelcuprum.kelui.mixin.client.screen.sodium_extra;
 import me.flashyreese.mods.sodiumextra.client.SodiumExtraClientMod;
 import me.flashyreese.mods.sodiumextra.client.gui.SodiumExtraGameOptions;
 import me.flashyreese.mods.sodiumextra.client.gui.SodiumExtraHud;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -25,7 +26,7 @@ public class SodiumExtraHudMixin {
     @Shadow
     private List<Component> textList;
     @Inject(method = "onHudRender", at = @At("HEAD"), cancellable = true)
-    public void onHudRender(GuiGraphics guiGraphics, float tickDelta, CallbackInfo ci) {
+    public void onHudRender(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         if(!KelUI.config.getBoolean("HUD.SODIUM_EXTRA_DEBUG", false)) return;
         if (!this.client.getDebugOverlay().showDebugScreen() && !this.client.options.hideGui) {
             if (!textList.isEmpty()) {
