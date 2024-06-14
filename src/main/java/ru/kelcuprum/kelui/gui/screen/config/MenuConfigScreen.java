@@ -14,6 +14,7 @@ public class MenuConfigScreen {
 
     public static String[] types = {
             "KelUI",
+            "KelUI V2",
             "OneShot"
     };
 

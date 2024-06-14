@@ -120,6 +120,9 @@ public class KelUI implements ClientModInitializer {
         ResourceLocation HAT_SMALL = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/hat_small.png");
         ResourceLocation MONITOR = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/monitor.png");
         ResourceLocation MUSIC = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/music.png");
+        ResourceLocation MULTIPLAYER = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/multiplayer.png");
+        ResourceLocation SINGLEPLAYER = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/singleplayer.png");
+        ResourceLocation REALMS = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/realms.png");
         ResourceLocation ACCESSIBILITY = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/accessibility.png");
     }
 

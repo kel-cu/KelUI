@@ -212,18 +212,18 @@ public abstract class GuiMixin {
         for (m = 0; m < 9; ++m) {
             n = m * 20;
             boolean isSelected = m == getCameraPlayer().getInventory().selected;
-            kelUI$renderSlot(guiGraphics, pos + n, o, deltaTracker, getCameraPlayer(), getCameraPlayer().getInventory().items.get(m), l++, isSelected);
+            kelUI$renderSlot(guiGraphics, pos + n, o, deltaTracker, getCameraPlayer(), getCameraPlayer().getInventory().items.get(m), l++, isSelected, false);
         }
         ItemStack itemStack = getCameraPlayer().getOffhandItem();
         if (!itemStack.isEmpty()) {
-            kelUI$renderSlot(guiGraphics, pos + 182, o, deltaTracker, getCameraPlayer(), itemStack, l, false);
+            kelUI$renderSlot(guiGraphics, pos + 182, o, deltaTracker, getCameraPlayer(), itemStack, l, false, true);
         }
         ci.cancel();
     }
     @Unique
-    void kelUI$renderSlot(GuiGraphics guiGraphics, int i, int j, DeltaTracker deltaTracker, Player player, ItemStack itemStack, int k, boolean isSelected){
+    void kelUI$renderSlot(GuiGraphics guiGraphics, int i, int j, DeltaTracker deltaTracker, Player player, ItemStack itemStack, int k, boolean isSelected, boolean renderItemColor){
         int color = isSelected ? TETRA : 0xFF000000;
-        if (!itemStack.isEmpty() && itemStack.isDamageableItem() && isSelected){
+        if (!itemStack.isEmpty() && itemStack.isDamageableItem() && (isSelected || renderItemColor)){
             color = (itemStack.getBarColor() | -16777216);
         }
         guiGraphics.fill(i, j, i + 20, j + 20, color-0x75000000);
