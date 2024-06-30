@@ -1,8 +1,11 @@
 package ru.kelcuprum.kelui.mixin.client.utils;
 
+import com.mojang.blaze3d.platform.Monitor;
+import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -23,10 +26,20 @@ public abstract class MinecraftMixin {
 
     @Shadow @Nullable public Screen screen;
 
+    @Shadow public abstract Window getWindow();
+
+    @Shadow @Nullable public ClientLevel level;
+
     @Inject(method = "getFramerateLimit", at = @At("HEAD"), cancellable = true)
     protected void renderSelection(CallbackInfoReturnable<Integer> cir) {
-        if(!KelUI.config.getBoolean("UI.SMOOTH_MENU", false)) return;
-        cir.setReturnValue(((Minecraft)(Object)this).getWindow().getFramerateLimit());
+        if(!KelUI.config.getBoolean("UI.SMOOTH_MENU", false) && level != null) return;
+        Window window = getWindow();
+        Monitor monitor = window.findBestMonitor();
+        int fps = window.getFramerateLimit();
+        if (monitor != null) {
+            fps = monitor.getCurrentMode().getRefreshRate()+10;
+        }
+        cir.setReturnValue(fps);
     }
     @Inject(method = "getVersionType", at = @At("HEAD"), cancellable = true)
     protected void getVersionType(CallbackInfoReturnable<String> cir) {
