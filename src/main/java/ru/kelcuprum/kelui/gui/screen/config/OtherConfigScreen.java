@@ -17,7 +17,7 @@ import ru.kelcuprum.kelui.KelUI;
 
 import java.io.IOException;
 
-import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.SEADRIVE;
+import static ru.kelcuprum.alinlib.gui.Colors.SEADRIVE;
 
 public class OtherConfigScreen {
 
@@ -33,7 +33,7 @@ public class OtherConfigScreen {
                 "Custom",
                 "Nothing",
         };
-        return new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME, KelUI.configDesignType)
+        return new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME)
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.MENU_CONFIG, (s) -> Minecraft.getInstance().setScreen(new MenuConfigScreen().build(parent))).build())
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.PAUSE_CONFIG, (s) -> Minecraft.getInstance().setScreen(new PauseConfigScreen().build(parent))).build())
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent))).build())

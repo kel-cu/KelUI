@@ -15,17 +15,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.kelcuprum.alinlib.config.Config;
 import ru.kelcuprum.alinlib.config.Localization;
-import ru.kelcuprum.alinlib.gui.InterfaceUtils;
+import ru.kelcuprum.alinlib.gui.styles.FlatStyle;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
-import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.*;
+import static ru.kelcuprum.alinlib.gui.Colors.*;
 
 public class KelUI implements ClientModInitializer {
     public static final Logger LOG = LogManager.getLogger("KelUI");
-    public static final InterfaceUtils.DesignType configDesignType = InterfaceUtils.DesignType.FLAT;
+    public static final FlatStyle flatStyle = new FlatStyle();
 
     public static void log(String message) {
         log(message, Level.INFO);
@@ -118,8 +118,6 @@ public class KelUI implements ClientModInitializer {
         ResourceLocation LOADING_ICON = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/loading/icon.png");
         ResourceLocation LANGUAGE = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/language.png");
         ResourceLocation HAT_SMALL = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/hat_small.png");
-        ResourceLocation MONITOR = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/monitor.png");
-        ResourceLocation MUSIC = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/music.png");
         ResourceLocation MULTIPLAYER = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/multiplayer.png");
         ResourceLocation SINGLEPLAYER = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/singleplayer.png");
         ResourceLocation REALMS = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/realms.png");

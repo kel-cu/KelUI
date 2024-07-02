@@ -25,10 +25,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.kelcuprum.alinlib.config.Localization;
-import ru.kelcuprum.alinlib.gui.InterfaceUtils;
-import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonWithIconBuilder;
-import ru.kelcuprum.alinlib.gui.components.buttons.ButtonSprite;
-import ru.kelcuprum.alinlib.gui.components.buttons.base.Button;
+import ru.kelcuprum.alinlib.gui.Colors;
+import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
@@ -36,6 +34,7 @@ import ru.kelcuprum.kelui.gui.components.OneShotButton;
 import ru.kelcuprum.kelui.gui.components.PlayerHeadWidget;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.*;
+import static ru.kelcuprum.alinlib.gui.Icons.*;
 
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
@@ -77,27 +76,37 @@ public abstract class TitleScreenMixin extends Screen {
         //
         assert this.minecraft != null;
         int y = height/2-35;
-        addRenderableWidget(new Button(x+25, y, 185, 20, InterfaceUtils.DesignType.FLAT, Component.translatable("menu.singleplayer"), (OnPress) -> this.minecraft.setScreen(new SelectWorldScreen(this))));
+        addRenderableWidget(new ButtonBuilder(Component.translatable("menu.singleplayer"), (OnPress) -> this.minecraft.setScreen(new SelectWorldScreen(this)))
+                .setPosition(x+25, y).setSize(185, 20).build());
         addRenderableWidget(new PlayerHeadWidget(x, y, 20, 20));
         y+=25;
         //
-        addRenderableWidget(new Button(x+25, y, 185, 20, InterfaceUtils.DesignType.FLAT, Component.translatable("menu.multiplayer"), (OnPress) -> this.minecraft.setScreen(new JoinMultiplayerScreen(this))));
-        addRenderableWidget(new ButtonSprite(x, y, 20, 20, InterfaceUtils.DesignType.FLAT, InterfaceUtils.Icons.OPTIONS, Component.translatable("menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this))));
+        addRenderableWidget(new ButtonBuilder(Component.translatable("menu.multiplayer"), (OnPress) -> this.minecraft.setScreen(new JoinMultiplayerScreen(this)))
+                .setPosition(x+25, y).setSize(185, 20).build());
+        addRenderableWidget(new ButtonBuilder(Component.translatable("menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this)))
+                .setSprite(OPTIONS).setPosition(x, y).setSize(20,20).build());
         y+=25;
         //
         if(KelUI.config.getBoolean("MAIN_MENU.ENABLE_REALMS", false)){
-            if (KelUI.config.getNumber("MAIN_MENU.REALMS_SMALL_BUTTON", 0).intValue() == 1) addRenderableWidget(new ButtonSprite(x, y, 20, 20, InterfaceUtils.DesignType.FLAT, InterfaceUtils.Icons.MUSIC, Component.translatable("options.sounds"), (OnPress) -> this.minecraft.setScreen(new SoundOptionsScreen(this, this.minecraft.options))));
-            else addRenderableWidget(new ButtonSprite(x, y, 20, 20, InterfaceUtils.DesignType.FLAT, HAT_SMALL, Component.translatable("options.skinCustomisation"), (OnPress) -> this.minecraft.setScreen(new SkinCustomizationScreen(this, this.minecraft.options))));
-            addRenderableWidget(new Button(x+25, y, 185, 20, InterfaceUtils.DesignType.FLAT, Component.translatable("menu.online"), (OnPress) -> this.minecraft.setScreen(new RealmsMainScreen(this))));
+            if (KelUI.config.getNumber("MAIN_MENU.REALMS_SMALL_BUTTON", 0).intValue() == 1) addRenderableWidget(new ButtonBuilder(Component.translatable("options.sounds"), (OnPress) -> this.minecraft.setScreen(new SoundOptionsScreen(this, this.minecraft.options)))
+                    .setSprite(MUSIC).setPosition(x, y).setSize(20,20).build());
+            else addRenderableWidget(new ButtonBuilder(Component.translatable("options.skinCustomisation"), (OnPress) -> this.minecraft.setScreen(new SkinCustomizationScreen(this, this.minecraft.options)))
+                    .setSprite(HAT_SMALL).setPosition(x, y).setSize(20,20).build());
+            addRenderableWidget(new ButtonBuilder(Component.translatable("menu.online"), (OnPress) -> this.minecraft.setScreen(new RealmsMainScreen(this)))
+                    .setPosition(x+25, y).setSize(185, 20).build());
             y+=25;
         }
         //
-        addRenderableWidget(new Button(x+25, y, 185, 20, InterfaceUtils.DesignType.FLAT, ModMenuApi.createModsButtonText(), (OnPress) -> this.minecraft.setScreen(new ModsScreen(this))));
-        addRenderableWidget(new ButtonSprite(x, y, 20, 20, InterfaceUtils.DesignType.FLAT, LANGUAGE, Component.translatable("options.language"), (OnPress) -> this.minecraft.setScreen(new LanguageSelectScreen(this, this.minecraft.options, this.minecraft.getLanguageManager()))));
+        addRenderableWidget(new ButtonBuilder(ModMenuApi.createModsButtonText(), (OnPress) -> this.minecraft.setScreen(new ModsScreen(this)))
+                .setPosition(x+25, y).setSize(185, 20).build());
+        addRenderableWidget(new ButtonBuilder(Component.translatable("options.language"), (OnPress) -> this.minecraft.setScreen(new LanguageSelectScreen(this, this.minecraft.options, this.minecraft.getLanguageManager())))
+                .setSprite(LANGUAGE).setPosition(x, y).setSize(20,20).build());
         y+=25;
         //
-        addRenderableWidget(new Button(x+25, y, 185, 20, InterfaceUtils.DesignType.FLAT, Component.translatable("menu.quit"), (OnPress) -> this.minecraft.stop()));
-        addRenderableWidget(new ButtonSprite(x, y, 20, 20, InterfaceUtils.DesignType.FLAT, ACCESSIBILITY, Component.translatable("options.accessibility"), (OnPress) -> this.minecraft.setScreen(new AccessibilityOptionsScreen(this, this.minecraft.options))));
+        addRenderableWidget(new ButtonBuilder(Component.translatable("menu.quit"), (OnPress) -> this.minecraft.stop())
+                .setPosition(x+25, y).setSize(185, 20).build());
+        addRenderableWidget(new ButtonBuilder(Component.translatable("options.accessibility"), (OnPress) -> this.minecraft.setScreen(new AccessibilityOptionsScreen(this, this.minecraft.options)))
+                .setSprite(ACCESSIBILITY).setPosition(x, y).setSize(20,20).build());
         if(KelUI.config.getBoolean("MAIN_MENU.INFO", true)) {
             int yT = height-20;
             if(KelUI.config.getBoolean("MAIN_MENU.CREDITS", true)) {
@@ -117,31 +126,37 @@ public abstract class TitleScreenMixin extends Screen {
         int y = height/2-60;
         if(KelUI.config.getBoolean("MAIN_MENU.ENABLE_REALMS", false)) y-=12;
 
-        addRenderableWidget(new ButtonWithIconBuilder(Component.translatable("menu.singleplayer"), SINGLEPLAYER)
-                .setWidth(210).setPosition(x, y)
-                .setOnPress((s) -> this.minecraft.setScreen(new SelectWorldScreen(this))).build());
+        addRenderableWidget(new ButtonBuilder(Component.translatable("menu.singleplayer"))
+                .setOnPress((s) -> this.minecraft.setScreen(new SelectWorldScreen(this)))
+                .setIcon(SINGLEPLAYER)
+                .setWidth(210).setPosition(x, y).build());
         y+=25;
-        addRenderableWidget(new ButtonWithIconBuilder(Component.translatable("menu.multiplayer"), MULTIPLAYER)
-                .setWidth(210).setPosition(x, y)
-                .setOnPress((s) -> this.minecraft.setScreen(new JoinMultiplayerScreen(this))).build());
+        addRenderableWidget(new ButtonBuilder(Component.translatable("menu.multiplayer"))
+                .setOnPress((s) -> this.minecraft.setScreen(new JoinMultiplayerScreen(this)))
+                .setIcon(MULTIPLAYER)
+                .setWidth(210).setPosition(x, y).build());
         y+=25;
-        addRenderableWidget(new ButtonWithIconBuilder(ModMenuApi.createModsButtonText(), InterfaceUtils.Icons.LIST)
-                .setWidth(210).setPosition(x, y)
-                .setOnPress((s) -> this.minecraft.setScreen(new ModsScreen(this))).build());
+        addRenderableWidget(new ButtonBuilder(ModMenuApi.createModsButtonText())
+                .setOnPress((s) -> this.minecraft.setScreen(new ModsScreen(this)))
+                .setIcon(LIST)
+                .setWidth(210).setPosition(x, y).build());
         y+=25;
         if(KelUI.config.getBoolean("MAIN_MENU.ENABLE_REALMS", false)) {
-            addRenderableWidget(new ButtonWithIconBuilder(Component.translatable("menu.online"), REALMS)
-                    .setWidth(210).setPosition(x, y)
-                    .setOnPress((s) -> this.minecraft.setScreen(new RealmsMainScreen(this))).build());
+            addRenderableWidget(new ButtonBuilder(Component.translatable("menu.online"))
+                    .setIcon(REALMS)
+                    .setOnPress((s) -> this.minecraft.setScreen(new RealmsMainScreen(this)))
+                    .setWidth(210).setPosition(x, y).build());
             y += 25;
         }
-        addRenderableWidget(new ButtonWithIconBuilder(Component.translatable("menu.options"), InterfaceUtils.Icons.OPTIONS)
-                .setWidth(210).setPosition(x, y)
-                .setOnPress((s) -> this.minecraft.setScreen(KelUI.getOptionScreen(this))).build());
+        addRenderableWidget(new ButtonBuilder(Component.translatable("menu.options"))
+                .setIcon(OPTIONS)
+                .setOnPress((s) -> this.minecraft.setScreen(KelUI.getOptionScreen(this)))
+                .setWidth(210).setPosition(x, y).build());
         y+=25;
-        addRenderableWidget(new ButtonWithIconBuilder(Component.translatable("menu.quit"), InterfaceUtils.Icons.CLOWNFISH)
-                .setWidth(210).setPosition(x, y)
-                .setOnPress((s) -> this.minecraft.stop()).build());
+        addRenderableWidget(new ButtonBuilder(Component.translatable("menu.quit"))
+                .setIcon(CLOWNFISH)
+                .setOnPress((s) -> this.minecraft.stop())
+                .setWidth(210).setPosition(x, y).build());
 
         if(KelUI.config.getBoolean("MAIN_MENU.INFO", true)) {
             int yT = height-20;
@@ -189,7 +204,7 @@ public abstract class TitleScreenMixin extends Screen {
         y+=bHeight2;
 
         if(KelUI.config.getBoolean("MAIN_MENU.ENABLE_REALMS", false)) {
-            addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("gui.toRealms"), (OnPress) -> {
+            addRenderableWidget(new OneShotButton(x, y, bWidth, bHeight, Component.translatable("menu.online"), (OnPress) -> {
                 this.minecraft.setScreen(new RealmsMainScreen(this));
                 isPlayedSound = false;
             }));
@@ -220,7 +235,7 @@ public abstract class TitleScreenMixin extends Screen {
             this.fadeInStart = Util.getMillis();
         }
         this.renderPanorama(guiGraphics, f);
-        if(menuType == 0 || menuType == 1) InterfaceUtils.renderLeftPanel(guiGraphics, 230, this.height);
+        if(menuType == 0 || menuType == 1) guiGraphics.fill(0, 0, 230, this.height, Colors.BLACK_ALPHA);
         if (KelUI.config.getBoolean("FIRST_START", true)) {
             KelUI.config.setBoolean("FIRST_START", false);
             KelUI.config.save();

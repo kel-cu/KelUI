@@ -18,7 +18,7 @@ import static ru.kelcuprum.kelui.gui.screen.config.MenuConfigScreen.types;
 public class PauseConfigScreen {
 
     public Screen build(Screen parent) {
-        return new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME, KelUI.configDesignType)
+        return new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME)
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.MENU_CONFIG, (s) -> Minecraft.getInstance().setScreen(new MenuConfigScreen().build(parent))).build())
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.PAUSE_CONFIG, (s) -> Minecraft.getInstance().setScreen(new PauseConfigScreen().build(parent))).build())
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent))).build())
@@ -29,7 +29,6 @@ public class PauseConfigScreen {
                 .addWidget(new TextBox(KelUI.TEXTS.TITLE.PAUSE_CONFIG, true))
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu"), true).setConfig(KelUI.config, "PAUSE_MENU").build())
                 .addWidget(new SelectorBuilder(Component.translatable("kelui.config.pause_menu.type")).setValue(0).setList(types).setConfig(KelUI.config, "PAUSE_MENU.TYPE").build())
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.alpha"), true).setConfig(KelUI.config, "PAUSE_MENU.ALPHA").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.info"), true).setConfig(KelUI.config, "PAUSE_MENU.INFO").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.version"), true).setConfig(KelUI.config, "PAUSE_MENU.VERSION").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.credits"), false).setConfig(KelUI.config, "PAUSE_MENU.CREDITS").build())

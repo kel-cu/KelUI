@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static ru.kelcuprum.alinlib.gui.InterfaceUtils.Colors.*;
+import static ru.kelcuprum.alinlib.gui.Colors.*;
 
 @Mixin(Gui.class)
 public abstract class GuiMixin {

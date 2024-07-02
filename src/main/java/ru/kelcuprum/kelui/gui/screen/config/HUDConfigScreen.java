@@ -1,6 +1,5 @@
 package ru.kelcuprum.kelui.gui.screen.config;
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -26,11 +25,9 @@ public class HUDConfigScreen {
         };
         String[] stateType = {
                 "Default",
-                "Vanilla-like",
-//                "Modern"
+                "Vanilla-like"
         };
-        //"HUD.NEW_HOTBAR.POSITION"
-        ConfigScreenBuilder builder = new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME, KelUI.configDesignType)
+        ConfigScreenBuilder builder = new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME)
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.MENU_CONFIG, (s) -> Minecraft.getInstance().setScreen(new MenuConfigScreen().build(parent))).build())
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.PAUSE_CONFIG, (s) -> Minecraft.getInstance().setScreen(new PauseConfigScreen().build(parent))).build())
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent))).build())
