@@ -45,7 +45,6 @@ public class OtherConfigScreen {
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.other.render"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.map_slot"), true).setConfig(KelUI.config, "HUD.MAP_SLOT").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.ui.smooth_menu"), false).setConfig(KelUI.config, "UI.SMOOTH_MENU").build())
-//                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.ui.textured_tooltip"), false).setConfig(KelUI.config, "UI.TEXTURED_TOOLTIP").build())
                         .addValue(new SelectorBuilder(Component.translatable("kelui.config.ui.tooltip_type")).setValue(0).setList(new String[]{"Vanilla", "KelUI", "KelUI [Textured]"}).setConfig(KelUI.config, "UI.TOOLTIP_TYPE").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.ui.alinlib_style"), false).setConfig(KelUI.config, "UI.ALINLIB_STYLE").build())
                 )

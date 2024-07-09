@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.api.events.client.ClientLifecycleEvents;
 import ru.kelcuprum.alinlib.config.Config;
 import ru.kelcuprum.alinlib.config.Localization;
@@ -76,14 +77,14 @@ public class KelUI implements ClientModInitializer {
             case 1 ->
                     String.format("Minecraft %s (Mods: %s)", MINECRAFT.getLaunchedVersion(), FabricLoader.getInstance().getAllMods().size());
             case 2 -> String.format("Minecraft %s (%s)", MINECRAFT.getLaunchedVersion(), MINECRAFT.getVersionType());
-            case 3 -> KelUI.config.getString("VERSION_TYPE.CUSTOM", "Modpack v1.0.0");
+            case 3 -> AlinLib.localization.getParsedText(KelUI.config.getString("VERSION_TYPE.CUSTOM", "Modpack v1.0.0"));
             default -> String.format("Minecraft %s", MINECRAFT.getLaunchedVersion());
         };
     }
 
     public static String getStringCredits() {
         return switch (KelUI.config.getNumber("CREDITS", 0).intValue()) {
-            case 1 -> KelUI.config.getString("CREDITS.CUSTOM", "Made with ❤ by Kel");
+            case 1 -> AlinLib.localization.getParsedText(KelUI.config.getString("CREDITS.CUSTOM", "Made with ❤ by Kel"));
             case 2 -> "";
             default -> Component.translatable("title.credits").getString();
         };

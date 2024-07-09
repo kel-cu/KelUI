@@ -1,8 +1,6 @@
 package ru.kelcuprum.kelui.gui.screen.config;
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBooleanBuilder;

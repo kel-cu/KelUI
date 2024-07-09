@@ -18,5 +18,4 @@ public class PreviewLoadingOverlay extends LoadingOverlay {
     public void onRemoved() {
         if (onRemoved != null) onRemoved.run();
     }
-
 }

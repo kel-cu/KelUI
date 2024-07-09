@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
+import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.kelui.KelUI;
 
 @Mixin({Minecraft.class})
@@ -33,23 +34,19 @@ public abstract class MinecraftMixin {
     @Inject(method = "getFramerateLimit", at = @At("HEAD"), cancellable = true)
     protected void renderSelection(CallbackInfoReturnable<Integer> cir) {
         if(!KelUI.config.getBoolean("UI.SMOOTH_MENU", false) && level != null) return;
-        Window window = getWindow();
-        Monitor monitor = window.findBestMonitor();
-        int fps = window.getFramerateLimit();
-        if (monitor != null) {
-            fps = monitor.getCurrentMode().getRefreshRate()+10;
-        }
+        Monitor monitor = getWindow().findBestMonitor();
+        int fps = monitor == null ? getWindow().getFramerateLimit() : monitor.getCurrentMode().getRefreshRate()+10;
         cir.setReturnValue(fps);
     }
     @Inject(method = "getVersionType", at = @At("HEAD"), cancellable = true)
     protected void getVersionType(CallbackInfoReturnable<String> cir) {
         if(!KelUI.config.getBoolean("GLOBAL.ENABLE_CUSTOM_VERSION_TYPE", false)) return;
-        cir.setReturnValue(KelUI.config.getString("GLOBAL.CUSTOM_VERSION_TYPE", "KelUI"));
+        cir.setReturnValue(AlinLib.localization.getParsedText(KelUI.config.getString("GLOBAL.CUSTOM_VERSION_TYPE", "KelUI")));
     }
     @Inject(method = "getLaunchedVersion", at = @At("HEAD"), cancellable = true)
     protected void getVersion(CallbackInfoReturnable<String> cir) {
         if(!KelUI.config.getBoolean("GLOBAL.ENABLE_CUSTOM_VERSION", false)) return;
-        cir.setReturnValue(KelUI.config.getString("GLOBAL.CUSTOM_VERSION", KelUI.MINECRAFT_LAUNCHED_VERSION));
+        cir.setReturnValue(AlinLib.localization.getParsedText(KelUI.config.getString("GLOBAL.CUSTOM_VERSION", KelUI.MINECRAFT_LAUNCHED_VERSION)));
     }
     @ModifyArgs(
             method = "createTitle",
@@ -59,7 +56,7 @@ public abstract class MinecraftMixin {
             )
     )
     protected void createTitle(Args args) {
-        if(KelUI.config.getBoolean("GLOBAL.ENABLE_CUSTOM_NAME", false)) args.set(0, KelUI.config.getString("GLOBAL.CUSTOM_NAME", "KelUI"));
+        if(KelUI.config.getBoolean("GLOBAL.ENABLE_CUSTOM_NAME", false)) args.set(0, AlinLib.localization.getParsedText(KelUI.config.getString("GLOBAL.CUSTOM_NAME", "KelUI")));
     }
 
     @Inject(method = "pauseGame", at = @At("TAIL"))
