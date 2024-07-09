@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'maven-publish'
 }
@@ -43,6 +43,9 @@ dependencies {
     modImplementation("ru.kelcuprum.alinlib:AlinLib-fabric:${project.alinlib}")
 
     modImplementation("maven.modrinth:sodium-extra:${project.sound_extra_version}")
+    modImplementation("maven.modrinth:sodium:RncWhTxD")
+//    modImplementation("maven.modrinth:skinshuffle:IKBsfEhV")
+    modApi("maven.modrinth:entitytexturefeatures:O3jDICoH")
 
     include(implementation ("meteordevelopment:starscript:0.2.2"))
 

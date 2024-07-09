@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.kelcuprum.alinlib.api.events.client.ClientLifecycleEvents;
 import ru.kelcuprum.alinlib.config.Config;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.styles.FlatStyle;
@@ -20,6 +22,7 @@ import ru.kelcuprum.alinlib.gui.styles.FlatStyle;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
 import static ru.kelcuprum.alinlib.gui.Colors.*;
 
@@ -40,12 +43,14 @@ public class KelUI implements ClientModInitializer {
     public static final String MINECRAFT_LAUNCHED_VERSION = MINECRAFT.getLaunchedVersion();
     public static IconStorageHelper iconStorageHelper = new IconStorageHelper();
     public static final boolean isSodiumExtraEnable = FabricLoader.getInstance().isModLoaded("sodium-extra");
+    public static PlayerSkin playerSkin;
+    public static UUID SillyUUID = UUID.randomUUID();
     //
 
     @Override
     public void onInitializeClient() {
-//        com.replaymod.core.mixin.GuiScreenAccessor
         onInitialize();
+        ClientLifecycleEvents.CLIENT_FULL_STARTED.register((s) -> playerSkin = s.getSkinManager().getInsecureSkin(s.getGameProfile()));
         iconStorageHelper.init();
     }
 
@@ -97,7 +102,6 @@ public class KelUI implements ClientModInitializer {
     }
 
     public static boolean isAprilFool(){
-//        return true;
         return LocalDate.now().getMonthValue() == 4 && LocalDate.now().getDayOfMonth() == 1;
     }
 

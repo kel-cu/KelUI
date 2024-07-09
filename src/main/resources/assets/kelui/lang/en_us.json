@@ -12,6 +12,7 @@
   "kelui.config.main_menu.info": "Enable info text in main menu",
   "kelui.config.main_menu.version": "Enable version",
   "kelui.config.main_menu.credits": "Enable credits",
+  "kelui.config.main_menu.player": "Enable render player",
 
   "kelui.config.title.pause_menu": "Pause Menu",
   "kelui.config.pause_menu": "Restyle Pause Menu",
@@ -69,6 +70,7 @@
   "kelui.config.hud.map_slot": "Drawing a map in the inventory",
   "kelui.config.debug.dark_graph": "Dark graph",
   "kelui.config.ui.smooth_menu": "Smooth menu",
+  "kelui.config.ui.tooltip_type": "Tooltip Type",
   "kelui.config.ui.alinlib_style": "AlinLib Style (Flat design)",
   "kelui.config.title.other.chat": "Chat",
   "kelui.config.chat.edgeless_screen": "Edgeless Chat Screen",

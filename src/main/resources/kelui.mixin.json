@@ -20,6 +20,8 @@
     "client.utils.components.AbstractButtonMixin",
     "client.utils.components.AbstractSliderButtonMixin",
     "client.utils.components.TooltipRenderUtilMixin",
+    "client.utils.skins.PlayerInfoMixin",
+    "client.utils.skins.LivingEntityRendererMixin",
     "client.fix.ScreenMixin"
   ],
   "injectors": {

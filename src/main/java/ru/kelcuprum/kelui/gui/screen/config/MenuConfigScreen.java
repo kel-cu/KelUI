@@ -36,6 +36,7 @@ public class MenuConfigScreen {
                 .addWidget(new SelectorBuilder(Component.translatable("kelui.config.main_menu.type")).setValue(0).setList(types).setConfig(KelUI.config, "MAIN_MENU.TYPE").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.enable_realms"), false).setConfig(KelUI.config, "MAIN_MENU.ENABLE_REALMS").build())
                 .addWidget(new SelectorBuilder(Component.translatable("kelui.config.main_menu.realms_small_button")).setList(realmsTypes).setValue(0).setConfig(KelUI.config, "MAIN_MENU.REALMS_SMALL_BUTTON").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.player"), true).setConfig(KelUI.config, "MAIN_MENU.PLAYER").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.info"), true).setConfig(KelUI.config, "MAIN_MENU.INFO").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.version"), true).setConfig(KelUI.config, "MAIN_MENU.VERSION").build())
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.credits"), true).setConfig(KelUI.config, "MAIN_MENU.CREDITS").build())

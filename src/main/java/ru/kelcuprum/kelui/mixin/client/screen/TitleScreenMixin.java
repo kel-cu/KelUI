@@ -31,6 +31,7 @@ import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.OneShotButton;
+import ru.kelcuprum.kelui.gui.components.PlayerButton;
 import ru.kelcuprum.kelui.gui.components.PlayerHeadWidget;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.*;
@@ -117,6 +118,12 @@ public abstract class TitleScreenMixin extends Screen {
                 addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
             }
         }
+
+        if(KelUI.config.getBoolean("MAIN_MENU.PLAYER", true)){
+            int yt = height-((height/3)*2);
+            int xt = ((width-230) / 2)+230-45;
+            addRenderableWidget(new PlayerButton(xt, yt, height/3));
+        }
     }
     @Unique
     public void kelui$defaultStyleV2(){
@@ -167,6 +174,11 @@ public abstract class TitleScreenMixin extends Screen {
             if(KelUI.config.getBoolean("MAIN_MENU.VERSION", true)){
                 addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
             }
+        }
+        if(KelUI.config.getBoolean("MAIN_MENU.PLAYER", true)){
+            int yt = height-((height/3)*2);
+            int xt = ((width-230) / 2)+230-45;
+            addRenderableWidget(new PlayerButton(xt, yt, height/3));
         }
     }
 
