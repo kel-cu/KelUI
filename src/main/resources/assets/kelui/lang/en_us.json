@@ -33,14 +33,18 @@
   "kelui.config.pause_menu.oneshot.other": "\"Other\" Button",
   "kelui.config.pause_menu.oneshot.quit_question": "A question before we go out",
 
-  "kelui.config.title.hud": "HUD",
+  "kelui.config.title.hud": "In-game GUI",
   "kelui.config.hud.debug_overlay": "FPS Overlay",
   "kelui.config.hud.sodium_extra_debug": "Sodium Extra Overlay",
   "kelui.config.hud.paper_doll": "Paper Doll (Experiment!)",
 
   "kelui.config.hud.armor_info.title": "Armor info",
   "kelui.config.hud.armor_info": "Armor information",
+  "kelui.config.hud.armor_info.selected": "Add Damageable Selected Item",
+  "kelui.config.hud.armor_info.off_hand": "Add Damageable Item on Offhand",
   "kelui.config.hud.armor_info.damage": "Armor damage information",
+  "kelui.config.hud.armor_info.warning": "Notification of imminent item breakage",
+  "kelui.config.hud.armor_info.position": "Position",
   "kelui.config.hud.armor_info.damage.type": "Type damage info",
   "kelui.config.hud.armor_info.damage.type.cut": "Cut percent",
 

@@ -21,7 +21,12 @@ public class HUDConfigScreen {
         };
         String[] hudPosition = {
                 "Left",
-                "Center"
+                "Center",
+                "Right"
+        };
+        String[] aiPosition = {
+                "Left",
+                "Right"
         };
         String[] stateType = {
                 "Default",
@@ -36,14 +41,16 @@ public class HUDConfigScreen {
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent))).build())
 
                 .addWidget(new TextBox(KelUI.TEXTS.TITLE.HUD_CONFIG, true));
-        if (!KelUI.isSodiumExtraEnable)
-            builder.addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY").build());
-        else
+        if (KelUI.isSodiumExtraEnable)
             builder.addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.sodium_extra_debug"), false).setConfig(KelUI.config, "HUD.SODIUM_EXTRA_DEBUG").build());
         builder.addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.paper_doll"), false).setConfig(KelUI.config, "HUD.PAPER_DOLL").build())
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.hud.armor_info.title"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info"), true).setConfig(KelUI.config, "HUD.ARMOR_INFO").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info.selected"), false).setConfig(KelUI.config, "HUD.ARMOR_INFO.SELECTED").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info.off_hand"), false).setConfig(KelUI.config, "HUD.ARMOR_INFO.OFF_HAND").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info.damage"), true).setConfig(KelUI.config, "HUD.ARMOR_INFO.DAMAGE").build())
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info.warning"), true).setConfig(KelUI.config, "HUD.ARMOR_INFO.WARNING").build())
+                        .addValue(new SelectorBuilder(Component.translatable("kelui.config.hud.armor_info.position")).setValue(0).setList(aiPosition).setConfig(KelUI.config, "HUD.ARMOR_INFO.POSITION").build())
                         .addValue(new SelectorBuilder(Component.translatable("kelui.config.hud.armor_info.damage.type")).setValue(0).setList(type).setConfig(KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info.damage.type.cut"), true).setConfig(KelUI.config, "HUD.ARMOR_INFO.DAMAGE.TYPE.CUT").build()))
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.new_interface"))

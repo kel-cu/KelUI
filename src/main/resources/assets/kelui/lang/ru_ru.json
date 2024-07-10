@@ -33,14 +33,18 @@
   "kelui.config.pause_menu.oneshot.other": "Кнопка \"Другое\"",
   "kelui.config.pause_menu.oneshot.quit_question": "Вопрос перед выходом",
 
-  "kelui.config.title.hud": "HUD",
+  "kelui.config.title.hud": "Игровой интерфейс",
   "kelui.config.hud.debug_overlay": "Оверлей ФПС",
   "kelui.config.hud.sodium_extra_debug": "Оверлей Sodium Extra",
   "kelui.config.hud.paper_doll": "Paper Doll (Эксперимент!)",
 
   "kelui.config.hud.armor_info.title": "Информация брони",
   "kelui.config.hud.armor_info": "Информация брони",
+  "kelui.config.hud.armor_info.selected": "Добавить выбранный ломаемый предмет",
+  "kelui.config.hud.armor_info.off_hand": "Добавить ломаемый предмет во второй руке",
   "kelui.config.hud.armor_info.damage": "Информация про прочность брони",
+  "kelui.config.hud.armor_info.warning": "Оповещение о скорой поломки предмета",
+  "kelui.config.hud.armor_info.position": "Позиция",
   "kelui.config.hud.armor_info.damage.type": "Тип вывода прочности брони",
   "kelui.config.hud.armor_info.damage.type.cut": "Сокращать проценты прочности",
 

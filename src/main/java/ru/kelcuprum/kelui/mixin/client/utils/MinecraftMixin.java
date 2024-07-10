@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.kelui.KelUI;
 
-@Mixin({Minecraft.class})
+@Mixin(Minecraft.class)
 public abstract class MinecraftMixin {
 
     @Shadow @Nullable public Screen screen;
@@ -41,12 +41,14 @@ public abstract class MinecraftMixin {
     @Inject(method = "getVersionType", at = @At("HEAD"), cancellable = true)
     protected void getVersionType(CallbackInfoReturnable<String> cir) {
         if(!KelUI.config.getBoolean("GLOBAL.ENABLE_CUSTOM_VERSION_TYPE", false)) return;
-        cir.setReturnValue(AlinLib.localization.getParsedText(KelUI.config.getString("GLOBAL.CUSTOM_VERSION_TYPE", "KelUI")));
+        String string = KelUI.config.getString("GLOBAL.CUSTOM_VERSION_TYPE", "KelUI");
+        cir.setReturnValue(AlinLib.starScript != null ? AlinLib.localization.getParsedText(string) : string);
     }
     @Inject(method = "getLaunchedVersion", at = @At("HEAD"), cancellable = true)
     protected void getVersion(CallbackInfoReturnable<String> cir) {
         if(!KelUI.config.getBoolean("GLOBAL.ENABLE_CUSTOM_VERSION", false)) return;
-        cir.setReturnValue(AlinLib.localization.getParsedText(KelUI.config.getString("GLOBAL.CUSTOM_VERSION", KelUI.MINECRAFT_LAUNCHED_VERSION)));
+        String string = KelUI.config.getString("GLOBAL.CUSTOM_VERSION", KelUI.MINECRAFT_LAUNCHED_VERSION);
+        cir.setReturnValue(AlinLib.starScript != null ? AlinLib.localization.getParsedText(string) : string);
     }
     @ModifyArgs(
             method = "createTitle",
@@ -56,7 +58,8 @@ public abstract class MinecraftMixin {
             )
     )
     protected void createTitle(Args args) {
-        if(KelUI.config.getBoolean("GLOBAL.ENABLE_CUSTOM_NAME", false)) args.set(0, AlinLib.localization.getParsedText(KelUI.config.getString("GLOBAL.CUSTOM_NAME", "KelUI")));
+        String string = KelUI.config.getString("GLOBAL.CUSTOM_NAME", "KelUI");
+        if(KelUI.config.getBoolean("GLOBAL.ENABLE_CUSTOM_NAME", false)) args.set(0, AlinLib.starScript != null ? AlinLib.localization.getParsedText(string) : string);
     }
 
     @Inject(method = "pauseGame", at = @At("TAIL"))

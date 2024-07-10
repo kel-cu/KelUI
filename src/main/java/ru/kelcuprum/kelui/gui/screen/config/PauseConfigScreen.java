@@ -12,9 +12,12 @@ import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.screens.ConfigScreenBuilder;
 import ru.kelcuprum.kelui.KelUI;
 
-import static ru.kelcuprum.kelui.gui.screen.config.MenuConfigScreen.types;
-
 public class PauseConfigScreen {
+
+    public static String[] types = {
+            "KelUI",
+            "OneShot"
+    };
 
     public Screen build(Screen parent) {
         return new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME)

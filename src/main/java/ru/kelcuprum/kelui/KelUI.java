@@ -77,14 +77,16 @@ public class KelUI implements ClientModInitializer {
             case 1 ->
                     String.format("Minecraft %s (Mods: %s)", MINECRAFT.getLaunchedVersion(), FabricLoader.getInstance().getAllMods().size());
             case 2 -> String.format("Minecraft %s (%s)", MINECRAFT.getLaunchedVersion(), MINECRAFT.getVersionType());
-            case 3 -> AlinLib.localization.getParsedText(KelUI.config.getString("VERSION_TYPE.CUSTOM", "Modpack v1.0.0"));
+            case 3 ->
+                    AlinLib.starScript != null ? AlinLib.localization.getParsedText(KelUI.config.getString("VERSION_TYPE.CUSTOM", "Modpack v1.0.0")) : KelUI.config.getString("VERSION_TYPE.CUSTOM", "Modpack v1.0.0");
             default -> String.format("Minecraft %s", MINECRAFT.getLaunchedVersion());
         };
     }
 
     public static String getStringCredits() {
         return switch (KelUI.config.getNumber("CREDITS", 0).intValue()) {
-            case 1 -> AlinLib.localization.getParsedText(KelUI.config.getString("CREDITS.CUSTOM", "Made with ❤ by Kel"));
+            case 1 ->
+                    AlinLib.starScript != null ? AlinLib.localization.getParsedText(KelUI.config.getString("CREDITS.CUSTOM", "Made with ❤ by Kel")) : KelUI.config.getString("CREDITS.CUSTOM", "Made with ❤ by Kel");
             case 2 -> "";
             default -> Component.translatable("title.credits").getString();
         };
@@ -102,7 +104,7 @@ public class KelUI implements ClientModInitializer {
         };
     }
 
-    public static boolean isAprilFool(){
+    public static boolean isAprilFool() {
         return LocalDate.now().getMonthValue() == 4 && LocalDate.now().getDayOfMonth() == 1;
     }
 
