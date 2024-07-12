@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import ru.kelcuprum.kelui.KelUI;
+import ru.kelcuprum.kelui.mixin.KelUIMixinPlugin;
 
 @Mixin(PlayerTabOverlay.class)
 public abstract class PlayerListMixin {
@@ -31,11 +32,11 @@ public abstract class PlayerListMixin {
 
     @ModifyConstant(method = "render", constant = @Constant(intValue = 13))
     private int modifySlotWidthConstant(int original) {
-        return KelUI.config.getBoolean("TAB.PING_TO_TEXT", true) ? original + 45 : original;
+        return KelUI.config.getBoolean("TAB.PING_TO_TEXT", true) && !KelUIMixinPlugin.isBPDInstalled ? original + 45 : original;
     }
     @Inject(method = "renderPingIcon", at = @At(value = "HEAD"), cancellable = true)
     protected void renderPingIcon(GuiGraphics guiGraphics, int width, int x, int y, PlayerInfo playerInfo, CallbackInfo ci){
-        if(!KelUI.config.getBoolean("TAB.PING_TO_TEXT", true)) return;
+        if(!KelUI.config.getBoolean("TAB.PING_TO_TEXT", true) || KelUIMixinPlugin.isBPDInstalled) return;
         Component ping = Component.literal(String.format(KelUI.config.getString("TAB.PING_TO_TEXT.FORMAT", "%sms"), playerInfo.getLatency()));
         int xT = width + x - KelUI.MINECRAFT.font.width(ping) - 2;
         if(KelUI.config.getBoolean("TAB.PING_TO_TEXT.RENDER_ICON", false)) xT -= 11;

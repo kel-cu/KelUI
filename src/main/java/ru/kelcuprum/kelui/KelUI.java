@@ -5,6 +5,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.options.OptionsScreen;
+import net.minecraft.client.gui.screens.options.SkinCustomizationScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.network.chat.Component;
@@ -18,7 +19,10 @@ import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.api.events.client.ClientLifecycleEvents;
 import ru.kelcuprum.alinlib.config.Config;
 import ru.kelcuprum.alinlib.config.Localization;
+import ru.kelcuprum.alinlib.gui.GuiUtils;
 import ru.kelcuprum.alinlib.gui.styles.FlatStyle;
+import ru.kelcuprum.kelui.gui.screen.SkinCustomScreen;
+import ru.kelcuprum.kelui.gui.style.VanillaLikeStyle;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -47,11 +51,13 @@ public class KelUI implements ClientModInitializer {
     public static PlayerSkin playerSkin;
     public static UUID SillyUUID = UUID.randomUUID();
     //
+    public static VanillaLikeStyle vanillaLikeStyle = new VanillaLikeStyle();
 
     @Override
     public void onInitializeClient() {
         onInitialize();
         ClientLifecycleEvents.CLIENT_FULL_STARTED.register((s) -> playerSkin = s.getSkinManager().getInsecureSkin(s.getGameProfile()));
+        GuiUtils.registerStyle(vanillaLikeStyle);
         iconStorageHelper.init();
     }
 
@@ -121,6 +127,10 @@ public class KelUI implements ClientModInitializer {
         ).setStyle(Style.EMPTY.withColor(config.getNumber("CHAT.TIMESTAMP.COLOR", SEADRIVE).intValue()));
     }
 
+    public static Screen getSkinCustom(Screen parent){
+        return KelUI.config.getBoolean("CUSTOM_SKIN", true) ? new SkinCustomScreen(parent, AlinLib.MINECRAFT.options) : new SkinCustomizationScreen(parent, AlinLib.MINECRAFT.options);
+    }
+
     public interface ICONS {
         ResourceLocation LOADING_ICON = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/loading/icon.png");
         ResourceLocation LANGUAGE = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/language.png");
@@ -129,6 +139,7 @@ public class KelUI implements ClientModInitializer {
         ResourceLocation SINGLEPLAYER = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/singleplayer.png");
         ResourceLocation REALMS = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/realms.png");
         ResourceLocation ACCESSIBILITY = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/accessibility.png");
+        ResourceLocation CAPES = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/capes.png");
     }
 
     public interface TEXTS {
@@ -137,6 +148,7 @@ public class KelUI implements ClientModInitializer {
         interface TITLE {
             Component MENU_CONFIG = Component.translatable("kelui.config.title.main_menu");
             Component PAUSE_CONFIG = Component.translatable("kelui.config.title.pause_menu");
+            Component OPTIONS_CONFIG = Component.translatable("kelui.config.title.options_config");
             Component HUD_CONFIG = Component.translatable("kelui.config.title.hud");
             Component PLAYER_LIST_CONFIG = Component.translatable("kelui.config.title.player_list");
             Component LOADING_CONFIG = Component.translatable("kelui.config.title.loading");

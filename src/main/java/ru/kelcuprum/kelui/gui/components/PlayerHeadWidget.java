@@ -4,7 +4,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.PlayerFaceRenderer;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.screens.options.SkinCustomizationScreen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.kelui.KelUI;
@@ -24,7 +23,7 @@ public class PlayerHeadWidget extends AbstractWidget {
 
     @Override
     public void onClick(double d, double e) {
-        AlinLib.MINECRAFT.setScreen(new SkinCustomizationScreen(AlinLib.MINECRAFT.screen, AlinLib.MINECRAFT.options));
+        AlinLib.MINECRAFT.setScreen(KelUI.getSkinCustom(AlinLib.MINECRAFT.screen));
     }
 
     @Override

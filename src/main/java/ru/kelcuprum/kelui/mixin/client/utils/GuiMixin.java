@@ -14,9 +14,12 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -71,6 +74,8 @@ public abstract class GuiMixin {
     @Shadow
     @Final
     private LayeredDraw layers;
+
+    @Shadow @Nullable protected abstract LivingEntity getPlayerVehicleWithHealth();
 
     @Inject(method = "<init>", at = @At("RETURN"))
     void init(Minecraft minecraft, CallbackInfo ci) {
@@ -338,6 +343,47 @@ public abstract class GuiMixin {
         ci.cancel();
     }
 
+    @Inject(method = "renderVehicleHealth", at = @At("HEAD"), cancellable = true)
+    void renderVehicleHealth(GuiGraphics guiGraphics, CallbackInfo ci) {
+        if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        assert this.minecraft.gameMode != null;
+        assert this.minecraft.player != null;
+        if (this.minecraft.gameMode.getPlayerMode() == GameType.SPECTATOR) return;
+        if (KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 0) {
+            renderVerticalVehicleHealth(guiGraphics);
+            ci.cancel();
+            return;
+        }
+        int size = 85;
+        int lvl = this.minecraft.player.experienceLevel;
+        if (this.isExperienceBarVisible() && lvl > 0) size-= lvl>9999 ? 15 : lvl>99 ? 10 : 5;
+
+        int y = getHotBarY()-4;
+        assert this.minecraft.gameMode != null;
+        if (!this.minecraft.gameMode.canHurtPlayer()) y -=4;
+        if(this.minecraft.player.getArmorValue() / 20 > 0) y-=4;
+
+        LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
+        if (livingEntity != null) {
+            double health = livingEntity.getHealth() / livingEntity.getMaxHealth();
+            renderBar(guiGraphics, getHotBarX(), y, CLOWNFISH, size, health);
+        }
+        ci.cancel();
+    }
+
+    @Inject(method = "renderJumpMeter", at = @At("HEAD"), cancellable = true)
+    void renderJumpMeter(PlayerRideableJumping playerRideableJumping, GuiGraphics guiGraphics, int j, CallbackInfo ci) {
+        if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
+        int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 0 : (this.screenWidth - 180) / 2;
+        assert this.minecraft.player != null;
+        float f = this.minecraft.player.getJumpRidingScale();
+        guiGraphics.fill(pos, screenHeight - 26, (int) (pos + (180 * f)), screenHeight - 24, 0x7fffffff);
+        int k = 180 / 18;
+        guiGraphics.fill(pos, screenHeight - 26, pos + (k * 16), screenHeight - 24, 0x7F598392);
+        guiGraphics.fill(pos + (k * 16), screenHeight - 26, pos + 180, screenHeight - 24, CONVICT - 0x7F000000);
+        ci.cancel();
+    }
+
     // - KelUI Style
     @Unique
     int rs = 0;
@@ -387,6 +433,16 @@ public abstract class GuiMixin {
         guiGraphics.drawString(minecraft.font, string, x-1, y - minecraft.font.lineHeight, 0xFF000000, false);
         guiGraphics.drawString(minecraft.font, string, x+1, y - minecraft.font.lineHeight, 0xFF000000, false);
         guiGraphics.drawString(minecraft.font, string, x, y - minecraft.font.lineHeight, SEADRIVE, false);
+    }
+    @Unique
+    void renderVerticalVehicleHealth(GuiGraphics guiGraphics){
+        int pos = invert ? -4 : 4;
+        LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
+        if (livingEntity != null) {
+            double health = livingEntity.getHealth() / livingEntity.getMaxHealth();
+            renderBar(guiGraphics, rs, getHotBarY(), CLOWNFISH, 20, health);
+            rs+=pos;
+        }
     }
     
     @Unique

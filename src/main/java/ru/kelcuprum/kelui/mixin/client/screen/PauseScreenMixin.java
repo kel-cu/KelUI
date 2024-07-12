@@ -1,6 +1,6 @@
 package ru.kelcuprum.kelui.mixin.client.screen;
 
-import com.terraformersmc.modmenu.api.ModMenuApi;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -68,43 +68,51 @@ public abstract class PauseScreenMixin extends Screen {
     @Unique
     void kelui$defaultStyle() {
         int x = 10;
-
+        int y = height / 2 - 60;
         assert this.minecraft != null;
-        addRenderableWidget(new PlayerHeadWidget(x, height / 2 - 60, 20, 20));
+        addRenderableWidget(new PlayerHeadWidget(x, y, 20, 20));
         addRenderableWidget(new ButtonBuilder(Component.translatable("menu.returnToGame"), (OnPress) -> {
             this.minecraft.setScreen(null);
             this.minecraft.mouseHandler.grabMouse();
-        }).setPosition(x + 25, height / 2 - 60).setSize(185, 20).build());
+        }).setPosition(x + 25, y).setSize(185, 20).build());
+        y+=25;
         //
+
         addRenderableWidget(new ButtonBuilder(Component.translatable("gui.stats"), (OnPress) -> {
             assert this.minecraft.player != null;
             this.minecraft.setScreen(new StatsScreen(this, this.minecraft.player.getStats()));
-        }).setSprite(LIST).setPosition(x, height / 2 - 35).setSize(20, 20).build());
+        }).setSprite(LIST).setPosition(x, y).setSize(20, 20).build());
         addRenderableWidget(new ButtonBuilder(Component.translatable("gui.advancements"), (OnPress) -> this.minecraft.setScreen(new AdvancementsScreen(Objects.requireNonNull(this.minecraft.getConnection()).getAdvancements())))
-                .setPosition(x+25, height/2-35).setSize(185, 20).build());
-        //
-        addRenderableWidget(new ButtonBuilder(Component.translatable("menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this)))
-                .setSprite(OPTIONS).setPosition(x, height / 2 - 10).setSize(20, 20).build());
-        addRenderableWidget(new ButtonBuilder(ModMenuApi.createModsButtonText(), (OnPress) -> this.minecraft.setScreen(new com.terraformersmc.modmenu.gui.ModsScreen(this)))
-                .setPosition(x+25, height/2-10).setSize(185, 20).build());
+                .setPosition(x + 25, y).setSize(185, 20).build());
+        y += 25;
+        if(FabricLoader.getInstance().isModLoaded("modmenu")) {
+            addRenderableWidget(new ButtonBuilder(Component.translatable("menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this)))
+                    .setSprite(OPTIONS).setPosition(x, y).setSize(20, 20).build());
+            addRenderableWidget(ModMenuButtons.getModMenuButton().setPosition(x + 25, y).setSize(185, 20).build());
+        } else {
+            addRenderableWidget(new ButtonBuilder(Component.translatable("menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this)))
+                    .setIcon(OPTIONS).setPosition(x, y).setSize(210, 20).build());
+        }
+        y += 25;
         // Line
         boolean isShortCommand = KelUI.config.getBoolean("PAUSE_MENU.ENABLE_SHORT_COMMAND", false);
         boolean isSingle = this.minecraft.hasSingleplayerServer() && !Objects.requireNonNull(this.minecraft.getSingleplayerServer()).isPublished();
         addRenderableWidget(new ButtonBuilder(Component.translatable("options.language"), (OnPress) -> this.minecraft.setScreen(new LanguageSelectScreen(this, this.minecraft.options, this.minecraft.getLanguageManager())))
-                .setSprite(LANGUAGE).setPosition(x, height / 2 + 15).setSize(20, 20).build());
+                .setSprite(LANGUAGE).setPosition(x, y).setSize(20, 20).build());
         if (isSingle || !isShortCommand)
             addRenderableWidget(new ButtonBuilder(Component.translatable("menu.shareToLan"), (OnPress) -> this.minecraft.setScreen(new ShareToLanScreen(this))).setActive(isSingle)
-                    .setPosition(x+25, height/2+15).setSize(185, 20).build());
+                    .setPosition(x+25, y).setSize(185, 20).build());
         else
             addRenderableWidget(new ButtonBuilder(Localization.toText(KelUI.config.getString("PAUSE_MENU.SHORT_COMMAND.NAME", "Lobby")), (OnPress) -> KelUI.executeCommand(this.minecraft.player, KelUI.config.getString("PAUSE_MENU.SHORT_COMMAND.COMMAND", "/lobby")))
-                    .setPosition(x+25, height/2+15).setSize(185, 20).build());
+                    .setPosition(x+25, y).setSize(185, 20).build());
+        y+=25;
         //
         Component component = this.minecraft.isLocalServer() ? Component.translatable("menu.returnToMenu") : CommonComponents.GUI_DISCONNECT;
         this.disconnectButton = net.minecraft.client.gui.components.Button.builder(component, (s) -> {}).build();
         addRenderableWidget(new ButtonBuilder(component, (OnPress) -> {
             OnPress.setActive(false);
             this.minecraft.getReportingContext().draftReportHandled(this.minecraft, this, this::onDisconnect, true);
-        }).setPosition(x, height / 2 + 40).setSize(210, 20).build());
+        }).setPosition(x, y).setSize(210, 20).build());
         if (KelUI.config.getBoolean("PAUSE_MENU.INFO", true)) {
             int yT = height - 20;
             if (KelUI.config.getBoolean("PAUSE_MENU.CREDITS", false)) {
@@ -128,13 +136,13 @@ public abstract class PauseScreenMixin extends Screen {
             this.minecraft.setScreen(KelUI.getOptionScreen(this));
         }));
 
-        if(KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.OTHER", true)) addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, Component.translatable("kelui.config.title.other"), (s) -> {
+        if(KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.OTHER", true) || !FabricLoader.getInstance().isModLoaded("modmenu")) addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, Component.translatable("kelui.config.title.other"), (s) -> {
             assert this.minecraft != null;
             this.minecraft.setScreen(new OtherScreen(this));
         }));
-        else addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, ModMenuApi.createModsButtonText(), (s) -> {
+        else addRenderableWidget(ModMenuButtons.getModMenuOneShotButtonPause(width / 2 - size / 2, 12, size, 24, (s) -> {
             assert this.minecraft != null;
-            this.minecraft.setScreen(ModMenuApi.createModsScreen(this));
+            this.minecraft.setScreen(ModMenuButtons.getModScreen());
         }));
 
         assert this.minecraft != null;

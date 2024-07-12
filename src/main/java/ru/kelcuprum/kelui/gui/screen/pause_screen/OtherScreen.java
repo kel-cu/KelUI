@@ -1,6 +1,6 @@
 package ru.kelcuprum.kelui.gui.screen.pause_screen;
 
-import com.terraformersmc.modmenu.api.ModMenuApi;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.ShareToLanScreen;
@@ -10,6 +10,7 @@ import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.kelui.KelUI;
+import ru.kelcuprum.kelui.gui.components.ModMenuButtons;
 import ru.kelcuprum.kelui.gui.components.OneShotTitle;
 import ru.kelcuprum.kelui.gui.components.OneShotTitleButton;
 
@@ -30,7 +31,7 @@ public class OtherScreen extends Screen {
         int y = 43+ 24;
         int bWidth = font.width("...");
         Component[] texts = {
-                ModMenuApi.createModsButtonText(),
+                FabricLoader.getInstance().isModLoaded("modmenu") ? ModMenuButtons.getModText() : Component.empty(),
                 Component.translatable("gui.advancements"),
                 Component.translatable("gui.stats"),
                 Component.translatable("options.language"),
@@ -43,9 +44,10 @@ public class OtherScreen extends Screen {
         }
 
         addRenderableWidget(new OneShotTitle(20, y - 34, width - 30, font.lineHeight * 3, getTitle()));
-
-        addRenderableWidget(new OneShotTitleButton(30, y + 10, bWidth, bHeight, texts[0], (s) -> this.minecraft.setScreen(ModMenuApi.createModsScreen(this))));
-        y+=bHeight2;
+        if(FabricLoader.getInstance().isModLoaded("modmenu")) {
+            addRenderableWidget(ModMenuButtons.getModMenuOneShotButtonTitle(30, y + 10, bWidth, bHeight, (s) -> this.minecraft.setScreen(ModMenuButtons.getModScreen())));
+            y += bHeight2;
+        }
 
         addRenderableWidget(new OneShotTitleButton(30, y + 10, bWidth, bHeight, texts[1], (s) -> this.minecraft.setScreen(new AdvancementsScreen(Objects.requireNonNull(this.minecraft.getConnection()).getAdvancements()))));
         y+=bHeight2;
