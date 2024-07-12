@@ -127,7 +127,7 @@ public abstract class TitleScreenMixin extends Screen {
             PlayerButton pb = new PlayerButton(xt, yt, height/3);
             if(FabricLoader.getInstance().isModLoaded("skinshuffle")){
                 pb.setOnPress((s) -> AlinLib.MINECRAFT.setScreen(SSButtons.getScreen()));
-            };
+            }
             addRenderableWidget(pb);
         }
     }

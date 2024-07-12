@@ -42,8 +42,8 @@ public class KelUIMixinPlugin implements IMixinConfigPlugin {
         }
 
         if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium_extra.")){
-            if(isSodiumEnable) LOG.warn(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "Sodium Extra installed"));
-            return isSodiumEnable;
+            if(isSodiumExtraEnable) LOG.warn(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "Sodium Extra installed"));
+            return isSodiumExtraEnable;
         }
 
         if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium.")){
