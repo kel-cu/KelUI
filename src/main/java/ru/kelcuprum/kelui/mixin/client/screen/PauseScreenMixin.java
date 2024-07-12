@@ -48,7 +48,7 @@ public abstract class PauseScreenMixin extends Screen {
     @Unique boolean oneshot$otherMenuEnable = false;
     @Unique boolean oneshot$disconnectMenuEnable = false;
 
-    @Inject(method = "init", at = @At("HEAD"))
+    @Inject(method = "init", at = @At("RETURN"))
     void init(CallbackInfo cl) {
         if (!KelUI.config.getBoolean("PAUSE_MENU", true)) return;
         clearWidgets();
