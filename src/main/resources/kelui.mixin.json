@@ -12,6 +12,7 @@
     "client.screen.OptionsScreenMixin",
     "client.screen.sodium_extra.SodiumExtraHudMixin",
     "client.screen.sodium.SodiumOptionsMixin",
+    "client.screen.skinshuffle.SkinShuffleConfigMixin",
     "client.screen.VideoSettingsScreenMixin",
     "client.utils.ChatOverlayMixin",
     "client.utils.DebugScreenOverlayMixin",

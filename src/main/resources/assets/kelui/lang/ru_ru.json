@@ -23,6 +23,9 @@
   "kelui.config.pause_menu.credits": "Включить вывод авторов",
   "kelui.config.pause_menu.player": "Включить рендер игрока",
 
+  "kelui.config.title.options_config": "Экран настроек",
+  "kelui.config.custom_skin": "New Design Customization Skin",
+
   "kelui.config.pause_menu.short_command": "Кнопка команды",
   "kelui.config.pause_menu.enable_short_command": "Включить кнопку команды",
   "kelui.config.pause_menu.short_command.name": "Название кнопки",

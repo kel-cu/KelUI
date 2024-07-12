@@ -22,6 +22,7 @@ public class SettingsConfigScreen {
 
                 .addWidget(new TextBox(KelUI.TEXTS.TITLE.OPTIONS_CONFIG, true))
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.custom_skin"), true).setConfig(KelUI.config, "CUSTOM_SKIN").build())
+//                .addWidget(new ButtonBuilder(Component.empty()).setOnPress((s) -> AlinLib.MINECRAFT.setScreen(ScreenshotsScreen.build(this.build(parent)))))
                 .build();
     }
 }

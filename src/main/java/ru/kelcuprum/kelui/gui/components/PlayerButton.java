@@ -1,7 +1,9 @@
 package ru.kelcuprum.kelui.gui.components;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.AlinLib;
@@ -11,7 +13,7 @@ import ru.kelcuprum.kelui.gui.cicada.GuiEntityRenderer;
 
 import static com.mojang.blaze3d.Blaze3D.getTime;
 
-public class PlayerButton extends AbstractWidget {
+public class PlayerButton extends AbstractButton {
     int size;
     boolean showItem;
     boolean rotate;
@@ -39,6 +41,7 @@ public class PlayerButton extends AbstractWidget {
         this.currentTime = getTime();
         this.autoRotate = autoRotate;
         this.followMouse = followMouse;
+        active = false;
     }
     float rotation = 0;
     public float getRotation() {
@@ -72,6 +75,23 @@ public class PlayerButton extends AbstractWidget {
             );
             guiGraphics.pose().popPose();
         }
+    }
+
+    OnPress onPress;
+
+    public void setOnPress(OnPress onPress) {
+        this.onPress = onPress;
+        if(onPress != null) active = true;
+    }
+
+    @Override
+    public void onPress() {
+        if(onPress != null) onPress.onPress(this);
+    }
+
+    @Environment(EnvType.CLIENT)
+    public interface OnPress {
+        void onPress(PlayerButton button);
     }
 
     @Override

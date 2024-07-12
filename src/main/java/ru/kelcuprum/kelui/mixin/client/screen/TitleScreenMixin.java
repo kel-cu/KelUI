@@ -23,6 +23,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.Colors;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
@@ -51,9 +52,10 @@ public abstract class TitleScreenMixin extends Screen {
     @Unique boolean isGameStarted = false;
     @Unique boolean isPlayedSound = false;
 
-    @Inject(method = "init", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "init", at = @At("RETURN"))
     void init(CallbackInfo cl) {
         if(!KelUI.config.getBoolean("MAIN_MENU", true)) return;
+        clearWidgets();
         menuType = KelUI.config.getNumber("MAIN_MENU.TYPE", 0).intValue();
         switch (menuType){
             case 1 -> kelui$defaultStyleV2();
@@ -66,7 +68,6 @@ public abstract class TitleScreenMixin extends Screen {
             }
             default -> kelui$defaultStyle();
         }
-        cl.cancel();
     }
     @Unique
     public void kelui$defaultStyle(){
@@ -123,7 +124,11 @@ public abstract class TitleScreenMixin extends Screen {
         if(KelUI.config.getBoolean("MAIN_MENU.PLAYER", true)){
             int yt = height-((height/3)*2);
             int xt = ((width-230) / 2)+230-45;
-            addRenderableWidget(new PlayerButton(xt, yt, height/3));
+            PlayerButton pb = new PlayerButton(xt, yt, height/3);
+            if(FabricLoader.getInstance().isModLoaded("skinshuffle")){
+                pb.setOnPress((s) -> AlinLib.MINECRAFT.setScreen(SSButtons.getScreen()));
+            };
+            addRenderableWidget(pb);
         }
     }
     @Unique

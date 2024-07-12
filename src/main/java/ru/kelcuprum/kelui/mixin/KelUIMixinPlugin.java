@@ -14,6 +14,7 @@ public class KelUIMixinPlugin implements IMixinConfigPlugin {
     public static final Logger LOG = LogManager.getLogger("KelUI > Mixin");
     public static boolean isSodiumExtraEnable = FabricLoader.getInstance().isModLoaded("sodium-extra");
     public static boolean isSodiumEnable = FabricLoader.getInstance().isModLoaded("sodium");
+    public static boolean isSSEnable = FabricLoader.getInstance().isModLoaded("skinshuffle");
     public static boolean isModMenuEnable = FabricLoader.getInstance().isModLoaded("modmenu");
     public static boolean isBPDInstalled = false;
     @Override
@@ -35,18 +36,23 @@ public class KelUIMixinPlugin implements IMixinConfigPlugin {
             isBPDInstalled = true;
             LOG.warn(String.format("Mixin %s (Ping Display) for %s not loaded, Better Display Ping not compatibility", mixinClassName, targetClassName));
         }
-        if(isSodiumExtraEnable && mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium_extra.")){
-            LOG.warn(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "Sodium Extra installed"));
-            return true;
+        if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.skinshuffle.")){
+            if(isSSEnable) LOG.warn(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "SkinShuffle installed"));
+            return isSSEnable;
         }
 
-        if(isSodiumEnable && mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium.")){
-            if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium.SodiumOptionsMixin") && isModMenuEnable){
+        if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium_extra.")){
+            if(isSodiumEnable) LOG.warn(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "Sodium Extra installed"));
+            return isSodiumEnable;
+        }
+
+        if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium.")){
+            if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium.SodiumOptionsMixin") && isModMenuEnable && isSodiumEnable){
                 LOG.warn(String.format("Mixin %s for %s not loaded, %s", mixinClassName, targetClassName, "Sodium installed, but ModMenu installed"));
                 return false;
             }
-            LOG.warn(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "Sodium installed"));
-            return true;
+            if(isSodiumEnable) LOG.warn(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "Sodium installed"));
+            return isSodiumEnable;
         }
         return true;
     }

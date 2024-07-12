@@ -48,9 +48,10 @@ public abstract class PauseScreenMixin extends Screen {
     @Unique boolean oneshot$otherMenuEnable = false;
     @Unique boolean oneshot$disconnectMenuEnable = false;
 
-    @Inject(method = "init", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "init", at = @At("HEAD"))
     void init(CallbackInfo cl) {
         if (!KelUI.config.getBoolean("PAUSE_MENU", true)) return;
+        clearWidgets();
         if(!showPauseMenu) return;
         menuType = KelUI.config.getNumber("PAUSE_MENU.TYPE", 0).intValue();
         switch (menuType) {
@@ -58,7 +59,6 @@ public abstract class PauseScreenMixin extends Screen {
             case 2 -> KelUI.log("Чувак, ты думал тут что-то будет?");
             default -> kelui$defaultStyle();
         }
-        cl.cancel();
     }
     @Unique
     public void onClose(){

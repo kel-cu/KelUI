@@ -23,6 +23,9 @@
   "kelui.config.pause_menu.credits": "Enable credits",
   "kelui.config.pause_menu.player": "Enable render player",
 
+  "kelui.config.title.options_config": "Options Screen",
+  "kelui.config.custom_skin": "New Design Customization Skin",
+
   "kelui.config.pause_menu.short_command": "Command button",
   "kelui.config.pause_menu.enable_short_command": "Enable command button",
   "kelui.config.pause_menu.short_command.name": "Button name",

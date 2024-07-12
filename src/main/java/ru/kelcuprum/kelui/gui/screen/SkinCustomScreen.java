@@ -4,9 +4,12 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.options.SkinCustomizationScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.PlayerModelPart;
+import org.lwjgl.glfw.GLFW;
+import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBooleanBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.selector.SelectorBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
@@ -68,6 +71,15 @@ public class SkinCustomScreen extends Screen {
         if(FabricLoader.getInstance().isModLoaded("capes")) addRenderableWidget(CapesButtons.getCapesButton()
                 .setWidth(pos == 0 ? componentSize : (componentSize/2-2))
                 .setPosition(pos == 0 ? x : x+(componentSize/2+2), y).build());
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if(keyCode == GLFW.GLFW_KEY_P && (modifiers & GLFW.GLFW_MOD_SHIFT) != 0){
+            AlinLib.MINECRAFT.setScreen(new SkinCustomizationScreen(parent, options));
+            return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override
