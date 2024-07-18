@@ -1,16 +1,20 @@
-package ru.kelcuprum.kelui.gui.components;
+package ru.kelcuprum.kelui.gui.components.comp;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
+import ru.kelcuprum.kelui.gui.components.OneShotButton;
+import ru.kelcuprum.kelui.gui.components.OneShotPauseButton;
+import ru.kelcuprum.kelui.gui.components.OneShotTitleButton;
 
 public class ModMenuButtons {
     public static Screen getModScreen(){
         return com.terraformersmc.modmenu.api.ModMenuApi.createModsScreen(AlinLib.MINECRAFT.screen);
     }
     public static Component getModText(){
-        return com.terraformersmc.modmenu.api.ModMenuApi.createModsButtonText();
+        Component text = com.terraformersmc.modmenu.api.ModMenuApi.createModsButtonText();
+        return text == Component.EMPTY ? text : Component.translatable("catalogue.gui.mod_list");
     }
 
     public static ButtonBuilder getModMenuButton(){

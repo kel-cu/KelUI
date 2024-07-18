@@ -26,11 +26,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.Colors;
+import ru.kelcuprum.alinlib.gui.GuiUtils;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.*;
+import ru.kelcuprum.kelui.gui.components.comp.CatalogueButtons;
+import ru.kelcuprum.kelui.gui.components.comp.ModMenuButtons;
+import ru.kelcuprum.kelui.gui.components.comp.SSButtons;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.*;
 import static ru.kelcuprum.alinlib.gui.Icons.*;
@@ -96,8 +100,12 @@ public abstract class TitleScreenMixin extends Screen {
             y+=25;
         }
         //
-        if(FabricLoader.getInstance().isModLoaded("modmenu")) {
+        if(KelUI.isModMenuInstalled()) {
             addRenderableWidget(ModMenuButtons.getModMenuButton().setPosition(x + 25, y).setSize(185, 20).build());
+            addRenderableWidget(new ButtonBuilder(Component.translatable("options.language"), (OnPress) -> this.minecraft.setScreen(new LanguageSelectScreen(this, this.minecraft.options, this.minecraft.getLanguageManager())))
+                    .setSprite(LANGUAGE).setPosition(x, y).setSize(20, 20).build());
+        } else if(KelUI.isCatalogueInstalled()) {
+            addRenderableWidget(CatalogueButtons.getModMenuButton().setPosition(x + 25, y).setSize(185, 20).build());
             addRenderableWidget(new ButtonBuilder(Component.translatable("options.language"), (OnPress) -> this.minecraft.setScreen(new LanguageSelectScreen(this, this.minecraft.options, this.minecraft.getLanguageManager())))
                     .setSprite(LANGUAGE).setPosition(x, y).setSize(20, 20).build());
         } else {
@@ -138,7 +146,7 @@ public abstract class TitleScreenMixin extends Screen {
         assert this.minecraft != null;
         int y = height/2-60;
         if(KelUI.config.getBoolean("MAIN_MENU.ENABLE_REALMS", false)) y-=12;
-        if(!FabricLoader.getInstance().isModLoaded("modmenu")) y+=12;
+        if(!KelUI.isModMenuInstalled() && !KelUI.isCatalogueInstalled()) y+=12;
 
         addRenderableWidget(new ButtonBuilder(Component.translatable("menu.singleplayer"))
                 .setOnPress((s) -> this.minecraft.setScreen(new SelectWorldScreen(this)))
@@ -151,8 +159,13 @@ public abstract class TitleScreenMixin extends Screen {
                 .setWidth(210).setPosition(x, y).build());
         y+=25;
 
-        if(FabricLoader.getInstance().isModLoaded("modmenu")) {
+        if(KelUI.isModMenuInstalled()) {
             addRenderableWidget(ModMenuButtons.getModMenuButton()
+                    .setIcon(LIST)
+                    .setWidth(210).setPosition(x, y).build());
+            y += 25;
+        } else if(KelUI.isCatalogueInstalled()) {
+            addRenderableWidget(CatalogueButtons.getModMenuButton()
                     .setIcon(LIST)
                     .setWidth(210).setPosition(x, y).build());
             y += 25;
@@ -195,14 +208,14 @@ public abstract class TitleScreenMixin extends Screen {
     public void kelui$oneShotStyle(){
         int bHeight = font.lineHeight+4;
         int bHeight2 = (bHeight+3);
-        int size = FabricLoader.getInstance().isModLoaded("modmenu") ? 5 : 4;
+        int size = KelUI.isModMenuInstalled() || KelUI.isModMenuInstalled() ? 5 : 4;
         int y = height-(bHeight2*(KelUI.config.getBoolean("MAIN_MENU.ENABLE_REALMS", false) ? size+1 : size));
         int bWidth = font.width("...");
         Component[] texts = {
                 Component.translatable("menu.singleplayer"),
                 Component.translatable("menu.multiplayer"),
                 Component.translatable("menu.online"),
-                FabricLoader.getInstance().isModLoaded("modmenu") ? ModMenuButtons.getModText() : Component.empty(),
+                KelUI.isModMenuInstalled() ? ModMenuButtons.getModText() : KelUI.isCatalogueInstalled() ? Component.translatable("catalogue.gui.mod_list") : Component.empty(),
                 Component.translatable("menu.options"),
                 Component.translatable("menu.quit")
         };
@@ -233,9 +246,15 @@ public abstract class TitleScreenMixin extends Screen {
             y += bHeight2;
         }
 
-        if(FabricLoader.getInstance().isModLoaded("modmenu")) {
+        if(KelUI.isModMenuInstalled()) {
             addRenderableWidget(ModMenuButtons.getModMenuOneShotButton(x, y, bWidth, bHeight, (OnPress) -> {
                 this.minecraft.setScreen(ModMenuButtons.getModScreen());
+                isPlayedSound = false;
+            }));
+            y += bHeight2;
+        } else if(KelUI.isCatalogueInstalled()) {
+            addRenderableWidget(CatalogueButtons.getModMenuOneShotButton(x, y, bWidth, bHeight, (OnPress) -> {
+                this.minecraft.setScreen(CatalogueButtons.getModScreen());
                 isPlayedSound = false;
             }));
             y += bHeight2;

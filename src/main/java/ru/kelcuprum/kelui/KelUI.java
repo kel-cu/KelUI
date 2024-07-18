@@ -130,9 +130,15 @@ public class KelUI implements ClientModInitializer {
     public static Screen getSkinCustom(Screen parent){
         return KelUI.config.getBoolean("CUSTOM_SKIN", true) ? new SkinCustomScreen(parent, AlinLib.MINECRAFT.options) : new SkinCustomizationScreen(parent, AlinLib.MINECRAFT.options);
     }
+    public static boolean isModMenuInstalled(){
+        return FabricLoader.getInstance().isModLoaded("modmenu") || FabricLoader.getInstance().isModLoaded("menulogue");
+    }
+    public static boolean isCatalogueInstalled(){
+        return FabricLoader.getInstance().isModLoaded("catalogue");
+    }
 
     public interface ICONS {
-        ResourceLocation LOADING_ICON = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/loading/icon.png");
+        ResourceLocation LOADING_ICON = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/loading/banner.png");
         ResourceLocation LANGUAGE = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/language.png");
         ResourceLocation HAT_SMALL = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/hat_small.png");
         ResourceLocation MULTIPLAYER = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/multiplayer.png");

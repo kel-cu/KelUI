@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.gui.components;
+package ru.kelcuprum.kelui.gui.components.comp;
 
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.AlinLib;

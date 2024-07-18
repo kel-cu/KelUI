@@ -1,6 +1,5 @@
 package ru.kelcuprum.kelui.mixin.client.screen;
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -25,6 +24,8 @@ import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.*;
+import ru.kelcuprum.kelui.gui.components.comp.CatalogueButtons;
+import ru.kelcuprum.kelui.gui.components.comp.ModMenuButtons;
 import ru.kelcuprum.kelui.gui.screen.pause_screen.DisconnectScreen;
 import ru.kelcuprum.kelui.gui.screen.pause_screen.OtherScreen;
 
@@ -85,10 +86,14 @@ public abstract class PauseScreenMixin extends Screen {
         addRenderableWidget(new ButtonBuilder(Component.translatable("gui.advancements"), (OnPress) -> this.minecraft.setScreen(new AdvancementsScreen(Objects.requireNonNull(this.minecraft.getConnection()).getAdvancements())))
                 .setPosition(x + 25, y).setSize(185, 20).build());
         y += 25;
-        if(FabricLoader.getInstance().isModLoaded("modmenu")) {
+        if(KelUI.isModMenuInstalled()) {
             addRenderableWidget(new ButtonBuilder(Component.translatable("menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this)))
                     .setSprite(OPTIONS).setPosition(x, y).setSize(20, 20).build());
             addRenderableWidget(ModMenuButtons.getModMenuButton().setPosition(x + 25, y).setSize(185, 20).build());
+        } else if(KelUI.isCatalogueInstalled()) {
+            addRenderableWidget(new ButtonBuilder(Component.translatable("menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this)))
+                    .setSprite(OPTIONS).setPosition(x, y).setSize(20, 20).build());
+            addRenderableWidget(CatalogueButtons.getModMenuButton().setPosition(x + 25, y).setSize(185, 20).build());
         } else {
             addRenderableWidget(new ButtonBuilder(Component.translatable("menu.options"), (OnPress) -> this.minecraft.setScreen(KelUI.getOptionScreen(this)))
                     .setIcon(OPTIONS).setPosition(x, y).setSize(210, 20).build());
@@ -136,13 +141,17 @@ public abstract class PauseScreenMixin extends Screen {
             this.minecraft.setScreen(KelUI.getOptionScreen(this));
         }));
 
-        if(KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.OTHER", true) || !FabricLoader.getInstance().isModLoaded("modmenu")) addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, Component.translatable("kelui.config.title.other"), (s) -> {
+        if(KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.OTHER", true) || (!KelUI.isModMenuInstalled() && !KelUI.isCatalogueInstalled())) addRenderableWidget(new OneShotPauseButton(width / 2 - size / 2, 12, size, 24, Component.translatable("kelui.config.title.other"), (s) -> {
             assert this.minecraft != null;
             this.minecraft.setScreen(new OtherScreen(this));
         }));
-        else addRenderableWidget(ModMenuButtons.getModMenuOneShotButtonPause(width / 2 - size / 2, 12, size, 24, (s) -> {
+        else if(KelUI.isModMenuInstalled()) addRenderableWidget(ModMenuButtons.getModMenuOneShotButtonPause(width / 2 - size / 2, 12, size, 24, (s) -> {
             assert this.minecraft != null;
             this.minecraft.setScreen(ModMenuButtons.getModScreen());
+        }));
+        else if(KelUI.isCatalogueInstalled()) addRenderableWidget(CatalogueButtons.getModMenuOneShotButtonPause(width / 2 - size / 2, 12, size, 24, (s) -> {
+            assert this.minecraft != null;
+            this.minecraft.setScreen(CatalogueButtons.getModScreen());
         }));
 
         assert this.minecraft != null;

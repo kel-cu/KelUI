@@ -45,6 +45,11 @@
         "modmenu.donate": "https://kelcu.ru/don",
         "modmenu.discord": "https://kelcu.ru/ds"
       }
+    },
+    "catalogue": {
+      "configFactory": "ru.kelcuprum.kelui.gui.CatalogueConfigFactory",
+      "banner": "assets/kelui/catalogue/banner.png",
+      "background": "assets/kelui/catalogue/background.png"
     }
   }
 }

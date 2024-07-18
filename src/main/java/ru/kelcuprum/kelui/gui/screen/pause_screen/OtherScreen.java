@@ -10,7 +10,8 @@ import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.kelui.KelUI;
-import ru.kelcuprum.kelui.gui.components.ModMenuButtons;
+import ru.kelcuprum.kelui.gui.components.comp.CatalogueButtons;
+import ru.kelcuprum.kelui.gui.components.comp.ModMenuButtons;
 import ru.kelcuprum.kelui.gui.components.OneShotTitle;
 import ru.kelcuprum.kelui.gui.components.OneShotTitleButton;
 
@@ -44,8 +45,11 @@ public class OtherScreen extends Screen {
         }
 
         addRenderableWidget(new OneShotTitle(20, y - 34, width - 30, font.lineHeight * 3, getTitle()));
-        if(FabricLoader.getInstance().isModLoaded("modmenu")) {
+        if(KelUI.isModMenuInstalled()) {
             addRenderableWidget(ModMenuButtons.getModMenuOneShotButtonTitle(30, y + 10, bWidth, bHeight, (s) -> this.minecraft.setScreen(ModMenuButtons.getModScreen())));
+            y += bHeight2;
+        } else if(KelUI.isCatalogueInstalled()) {
+            addRenderableWidget(CatalogueButtons.getModMenuOneShotButtonTitle(30, y + 10, bWidth, bHeight, (s) -> this.minecraft.setScreen(CatalogueButtons.getModScreen())));
             y += bHeight2;
         }
 

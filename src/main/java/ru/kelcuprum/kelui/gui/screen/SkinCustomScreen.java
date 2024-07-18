@@ -13,7 +13,7 @@ import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBooleanBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.selector.SelectorBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
-import ru.kelcuprum.kelui.gui.components.CapesButtons;
+import ru.kelcuprum.kelui.gui.components.comp.CapesButtons;
 import ru.kelcuprum.kelui.gui.components.PlayerButton;
 
 import static ru.kelcuprum.alinlib.gui.Colors.BLACK_ALPHA;

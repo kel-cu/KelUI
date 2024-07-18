@@ -19,6 +19,5 @@ public class LivingEntityRendererMixin {
         if (livingEntity instanceof DummyClientPlayerEntity) {
             cir.setReturnValue(false);
         }
-
     }
 }

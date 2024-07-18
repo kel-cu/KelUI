@@ -12,11 +12,10 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.kelui.KelUI;
 
 @Mixin(Screen.class)
-public class SkinShuffleConfigMixin {
+public class SkinShuffle$ScreenMixin {
     @Inject(method = "addRenderableWidget", at = @At("HEAD"), cancellable = true)
     private <T extends GuiEventListener & Renderable & NarratableEntry>void addRenderableWidget(T guiEventListener, CallbackInfoReturnable<T> cir){
         if(((Screen) (Object) this instanceof TitleScreen && KelUI.config.getBoolean("MAIN_MENU", true)) || ((Screen) (Object) this instanceof PauseScreen  && KelUI.config.getBoolean("PAUSE_MENU", true))){
@@ -24,7 +23,6 @@ public class SkinShuffleConfigMixin {
                 cir.setReturnValue(guiEventListener);
                 cir.cancel();
             }
-            AlinLib.log(guiEventListener.getClass().getName());
         }
     }
 }

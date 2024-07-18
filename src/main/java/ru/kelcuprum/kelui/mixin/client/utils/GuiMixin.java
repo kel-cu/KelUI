@@ -27,6 +27,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.kelui.KelUI;
@@ -174,6 +175,13 @@ public abstract class GuiMixin {
         if (!KelUI.config.getBoolean("HUD.PAPER_DOLL", false)) return;
         assert this.minecraft.player != null;
         InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, screenWidth - 130, 0, screenWidth, 150, 45, 0.0625F, (float) screenWidth / 2, 75, this.minecraft.player);
+    }
+
+    // - TabList
+    @Redirect(method = "renderTabList", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;isLocalServer()Z"))
+    private boolean renderTabList(Minecraft instance) {
+        if(KelUI.config.getBoolean("TAB.SINGLEPLAYER", true)) return false;
+        else return instance.isLocalServer();
     }
 
     // Effects

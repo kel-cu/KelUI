@@ -15,7 +15,8 @@ public class KelUIMixinPlugin implements IMixinConfigPlugin {
     public static boolean isSodiumExtraEnable = FabricLoader.getInstance().isModLoaded("sodium-extra");
     public static boolean isSodiumEnable = FabricLoader.getInstance().isModLoaded("sodium");
     public static boolean isSSEnable = FabricLoader.getInstance().isModLoaded("skinshuffle");
-    public static boolean isModMenuEnable = FabricLoader.getInstance().isModLoaded("modmenu");
+    public static boolean isCatalogueEnable = FabricLoader.getInstance().isModLoaded("catalogue");
+    public static boolean isModMenuEnable = (FabricLoader.getInstance().isModLoaded("modmenu") || FabricLoader.getInstance().isModLoaded("menulogue"));
     public static boolean isBPDInstalled = false;
     @Override
     public void onLoad(String mixinPackage) {
@@ -39,6 +40,11 @@ public class KelUIMixinPlugin implements IMixinConfigPlugin {
         if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.skinshuffle.")){
             if(isSSEnable) LOG.warn(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "SkinShuffle installed"));
             return isSSEnable;
+        }
+
+        if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.catalogue.")){
+            if(isCatalogueEnable) LOG.warn(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "Catalogue installed"));
+            return isCatalogueEnable;
         }
 
         if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium_extra.")){
