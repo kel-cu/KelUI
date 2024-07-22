@@ -38,6 +38,9 @@
     "alinlib": "*",
     "minecraft": [">1.20.6"]
   },
+  "breaks": {
+    "essential-container": "*"
+  },
   "custom": {
     "modmenu": {
       "links": {

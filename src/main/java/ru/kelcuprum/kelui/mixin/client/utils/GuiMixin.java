@@ -177,7 +177,7 @@ public abstract class GuiMixin {
         InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, screenWidth - 130, 0, screenWidth, 150, 45, 0.0625F, (float) screenWidth / 2, 75, this.minecraft.player);
     }
 
-    // - TabList
+    // TabList
     @Redirect(method = "renderTabList", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;isLocalServer()Z"))
     private boolean renderTabList(Minecraft instance) {
         if(KelUI.config.getBoolean("TAB.SINGLEPLAYER", true)) return false;
