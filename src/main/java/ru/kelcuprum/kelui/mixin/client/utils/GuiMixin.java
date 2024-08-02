@@ -429,8 +429,10 @@ public abstract class GuiMixin {
         int y = getHotBarY()-4;
         assert this.minecraft.gameMode != null;
         if (this.isExperienceBarVisible()) y-=4;
-        if (this.minecraft.gameMode.canHurtPlayer()) y -=4;
-        if(this.minecraft.player.getArmorValue() / 20 != 0) y-=4;
+        if (this.minecraft.gameMode.canHurtPlayer()) {
+            y-=4;
+            if(this.minecraft.player.getArmorValue() != 0) y-=4;
+        }
 
         LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
         if (livingEntity != null) {
