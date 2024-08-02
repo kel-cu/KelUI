@@ -1,5 +1,6 @@
 package ru.kelcuprum.kelui.gui.components.comp;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.AlinLib;
@@ -14,7 +15,7 @@ public class ModMenuButtons {
     }
     public static Component getModText(){
         Component text = com.terraformersmc.modmenu.api.ModMenuApi.createModsButtonText();
-        return text == Component.EMPTY ? text : Component.translatable("catalogue.gui.mod_list");
+        return FabricLoader.getInstance().isModLoaded("catalogue") ? Component.translatable("catalogue.gui.mod_list") : text;
     }
 
     public static ButtonBuilder getModMenuButton(){

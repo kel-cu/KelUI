@@ -1,5 +1,6 @@
 package ru.kelcuprum.kelui.mixin.client.utils;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -35,6 +36,7 @@ import ru.kelcuprum.kelui.gui.Util;
 
 import java.util.*;
 
+import static net.minecraft.world.level.GameType.CREATIVE;
 import static ru.kelcuprum.alinlib.gui.Colors.*;
 
 @Mixin(Gui.class)
@@ -82,14 +84,78 @@ public abstract class GuiMixin {
     void init(Minecraft minecraft, CallbackInfo ci) {
         LayeredDraw kelUILayer = new LayeredDraw()
                 .add(this::renderArmorInfo)
+                .add(this::renderItemInfo)
                 .add(this::renderPaperDoll);
         layers.add(kelUILayer, () -> !minecraft.options.hideGui);
     }
 
-    // - Armor Info
+    // - Item info
+    @Unique boolean itemInfoEnable = false;
+    @Unique
+    public void renderItemInfo(GuiGraphics guiGraphics, DeltaTracker deltaTracker){
+        if (!KelUI.config.getBoolean("HUD.ITEM_INFO", true)){
+            itemInfoEnable = false;
+            return;
+        }
+        int x = 0;
+        if(KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)){
+            int conf = KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue();
+            if(conf == 0){
+                x=184;
+                if(!getCameraPlayer().getOffhandItem().isEmpty()) x+=22;
+            } else if(conf == 1) {
+                x = getCameraPlayer().getMainArm().getOpposite() == HumanoidArm.RIGHT ? getHotBarX()-22 : getHotBarX()+182;
+                if(isAxiomMomentos()) x -= getCameraPlayer().getMainArm().getOpposite() == HumanoidArm.RIGHT ? 32 : -32;
+            }
+            else {
+                x = getHotBarX()-22;
+                if (!getCameraPlayer().getOffhandItem().isEmpty() && getCameraPlayer().getMainArm().getOpposite() == HumanoidArm.LEFT && conf == 2) x -= 22;
+            }
+
+        } else {
+            x = getCameraPlayer().getMainArm().getOpposite() == HumanoidArm.RIGHT ? ((screenWidth-180)/2)-29 : ((screenWidth-180)/2)+189;
+            if(isAxiomMomentos()) x -= getCameraPlayer().getMainArm().getOpposite() == HumanoidArm.RIGHT ? 29 : -29;
+        }
+        if(getCameraPlayer().getMainHandItem().isEmpty()) {
+            itemInfoEnable = false;
+            return;
+        }
+        ItemStack is = getCameraPlayer().getMainHandItem();
+        int count = 0;
+        for(ItemStack itemStack : getCameraPlayer().getInventory().items){
+            if(itemStack.getItem() == is.getItem()) count += itemStack.getCount();
+        }
+        if(!is.isEmpty() && getCameraPlayer().getOffhandItem().getItem() == is.getItem()) count+=getCameraPlayer().getOffhandItem().getCount();
+        if(count == is.getCount() || (is.isDamageableItem() && is.getMaxStackSize() == 1)) {
+            itemInfoEnable = false;
+            return;
+        } else {
+            itemInfoEnable = true;
+        }
+        guiGraphics.fill(x, getHotBarY(), x+20, getHotBarY()+20, 0x75000000);
+        guiGraphics.renderFakeItem(is, x+2, getHotBarY()+2, 5);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0.0F, 0.0F, 200.0F);
+        String countString = String.valueOf(count);
+        int countStringWidth = AlinLib.MINECRAFT.font.width(countString);
+        float translate = 1;
+        if(countStringWidth > 16) {
+            float scale = (float) 16 / countStringWidth;
+            translate = (float) countStringWidth / 16;
+            guiGraphics.pose().scale(scale, scale, 1);
+        }
+        guiGraphics.drawString(AlinLib.MINECRAFT.font, countString,  ((int) ((x+18)*translate))-AlinLib.MINECRAFT.font.width(countString), ((int) ((getHotBarY()+20)*translate))-AlinLib.MINECRAFT.font.lineHeight, -1);
+        guiGraphics.pose().popPose();
+    }
 
     @Unique
-    int warnTime = 0;
+    public boolean isAxiomMomentos(){
+        if (!FabricLoader.getInstance().isModLoaded("axiom")) return false;
+        assert this.minecraft.gameMode != null;
+        return this.minecraft.gameMode.getPlayerMode() == CREATIVE;
+    }
+    // - Armor Info
+
     @Unique
     public void renderArmorInfo(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         if (this.debugOverlay.showDebugScreen()) return;
@@ -151,9 +217,10 @@ public abstract class GuiMixin {
         if (KelUI.config.getBoolean("HUD.ARMOR_INFO.WARNING", true)) {
             for (ItemStack item : items) {
                 if (item.isDamageableItem() && (((double) (item.getMaxDamage() - item.getDamageValue()) / item.getMaxDamage()) < 0.075)) {
-                    if (warnTime > 30) color = GROUPIE - 0x75000000;
-                    warnTime++;
-                    if (warnTime > 60) warnTime = 0;
+//                    if (warnTime > 30) color = GROUPIE - 0x75000000;
+//                    warnTime++;
+//                    if (warnTime > 60) warnTime = 0;
+                    if(System.currentTimeMillis() % 500 > 250) color = GROUPIE - 0x75000000;
                     break;
                 }
             }
@@ -175,13 +242,6 @@ public abstract class GuiMixin {
         if (!KelUI.config.getBoolean("HUD.PAPER_DOLL", false)) return;
         assert this.minecraft.player != null;
         InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, screenWidth - 130, 0, screenWidth, 150, 45, 0.0625F, (float) screenWidth / 2, 75, this.minecraft.player);
-    }
-
-    // TabList
-    @Redirect(method = "renderTabList", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;isLocalServer()Z"))
-    private boolean renderTabList(Minecraft instance) {
-        if(KelUI.config.getBoolean("TAB.SINGLEPLAYER", true)) return false;
-        else return instance.isLocalServer();
     }
 
     // Effects
@@ -368,13 +428,15 @@ public abstract class GuiMixin {
 
         int y = getHotBarY()-4;
         assert this.minecraft.gameMode != null;
-        if (!this.minecraft.gameMode.canHurtPlayer()) y -=4;
-        if(this.minecraft.player.getArmorValue() / 20 > 0) y-=4;
+        if (this.isExperienceBarVisible()) y-=4;
+        if (this.minecraft.gameMode.canHurtPlayer()) y -=4;
+        if(this.minecraft.player.getArmorValue() / 20 != 0) y-=4;
 
         LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
         if (livingEntity != null) {
+
             double health = livingEntity.getHealth() / livingEntity.getMaxHealth();
-            renderBar(guiGraphics, getHotBarX(), y, CLOWNFISH, size, health);
+            renderBar(guiGraphics, getHotBarX(), y, CLOWNFISH, size, Math.min(health, 1));
         }
         ci.cancel();
     }
@@ -400,6 +462,11 @@ public abstract class GuiMixin {
     @Unique
     void renderStats(GuiGraphics guiGraphics, int x, boolean invert){
         rs = x;
+        if(getCameraPlayer().getMainArm().getOpposite() == HumanoidArm.RIGHT && !getCameraPlayer().getOffhandItem().isEmpty()) rs+= invert ? -22 : 22;
+        if(itemInfoEnable) {
+            if(KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() != 1) rs -= invert ? 22 : -22;
+            else if(getCameraPlayer().getMainArm().getOpposite() == HumanoidArm.LEFT) rs+= 22;
+        }
         this.invert = invert;
         int pos = invert ? -4 : 4;
         if(this.minecraft.player == null) return;

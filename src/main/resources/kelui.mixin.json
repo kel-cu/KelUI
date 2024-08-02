@@ -19,6 +19,7 @@
     "client.utils.DebugScreenOverlayMixin",
     "client.utils.GuiGraphicsMixin",
     "client.utils.GuiMixin",
+    "client.utils.GuiMixin$TabList",
     "client.utils.IconsMixin",
     "client.utils.MinecraftMixin",
     "client.utils.PlayerListMixin",

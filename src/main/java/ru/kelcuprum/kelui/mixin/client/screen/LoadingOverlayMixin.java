@@ -148,7 +148,7 @@ public abstract class LoadingOverlayMixin {
 
     @Inject(method = "drawProgressBar", at = @At("HEAD"), cancellable = true)
     private void drawProgressBar(GuiGraphics guiGraphics, int i, int j, int k, int l, float f, CallbackInfo ci) {
-        if(KelUI.config.getBoolean("LOADING.NEW")){
+        if(KelUI.config.getBoolean("LOADING.NEW", false)){
             int kB = 255;
             if (f < 1.0F) {
                 l+=5;

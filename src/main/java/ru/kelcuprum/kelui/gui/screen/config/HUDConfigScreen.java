@@ -45,6 +45,7 @@ public class HUDConfigScreen {
         if (KelUI.isSodiumExtraEnable)
             builder.addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.sodium_extra_debug"), false).setConfig(KelUI.config, "HUD.SODIUM_EXTRA_DEBUG").build());
         builder.addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.paper_doll"), false).setConfig(KelUI.config, "HUD.PAPER_DOLL").build())
+                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.item_info"), true).setConfig(KelUI.config, "HUD.ITEM_INFO").build())
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.hud.armor_info.title"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info"), true).setConfig(KelUI.config, "HUD.ARMOR_INFO").build())
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.armor_info.selected"), false).setConfig(KelUI.config, "HUD.ARMOR_INFO.SELECTED").build())

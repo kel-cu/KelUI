@@ -40,6 +40,7 @@
   "kelui.config.hud.debug_overlay": "FPS Overlay",
   "kelui.config.hud.sodium_extra_debug": "Sodium Extra Overlay",
   "kelui.config.hud.paper_doll": "Paper Doll (Experiment!)",
+  "kelui.config.hud.item_info": "Total quantity of the selected item",
 
   "kelui.config.hud.armor_info.title": "Armor info",
   "kelui.config.hud.armor_info": "Armor information",
