@@ -12,9 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import ru.kelcuprum.kelui.KelUI;
 
 import java.util.Optional;
@@ -24,23 +22,6 @@ import static ru.kelcuprum.kelui.KelUI.ICONS.LOADING_ICON;
 
 @Mixin(LoadingOverlay.class)
 public abstract class LoadingOverlayMixin {
-
-    /**
-     * Changes the background color
-     */
-    @ModifyArgs(
-            method = "render",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screens/LoadingOverlay;replaceAlpha(II)I"
-            )
-    )
-    private void background(Args args) {
-        if (!KelUI.config.getBoolean("LOADING", true) || KelUI.config.getBoolean("LOADING.NEW", false)) return;
-        args.set(0, KelUI.config.getNumber("LOADING.BACKGROUND", 0xff1b1b1b).intValue());
-    }
-
-
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("LOADING.NEW", false)) return;
@@ -157,16 +138,6 @@ public abstract class LoadingOverlayMixin {
                 guiGraphics.fill(i + 3, j + 3, (int) (i +(((k - 3 - i) * this.currentProgress))), l - 3, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
             }
             ci.cancel();
-            return;
-        } else if (!KelUI.config.getBoolean("LOADING", true)) return;
-        int m = Mth.ceil((float) (k - i - 2) * this.currentProgress);
-        int o = KelUI.config.getNumber("LOADING.BAR_COLOR", 0xffff4f4f).intValue();
-        int a = KelUI.config.getNumber("LOADING.BAR_COLOR.BORDER", 0xffffffff).intValue();
-        guiGraphics.fill(i + 2, j + 2, i + m, l - 2, o);
-        guiGraphics.fill(i + 1, j, k - 1, j + 1, a);
-        guiGraphics.fill(i + 1, l, k - 1, l - 1, a);
-        guiGraphics.fill(i, j, i + 1, l, a);
-        guiGraphics.fill(k, j, k - 1, l, a);
-        ci.cancel();
+        }
     }
 }
