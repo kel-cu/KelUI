@@ -14,8 +14,11 @@ public class KelUIMixinPlugin implements IMixinConfigPlugin {
     public static final Logger LOG = LogManager.getLogger("KelUI > Mixin");
     public static boolean isSodiumExtraEnable = FabricLoader.getInstance().isModLoaded("sodium-extra");
     public static boolean isSodiumEnable = FabricLoader.getInstance().isModLoaded("sodium");
+    public static String sodiumVersion = isSodiumEnable ? FabricLoader.getInstance().getModContainer("sodium").get().getMetadata().getVersion().getFriendlyString() : "";
     public static boolean isSSEnable = FabricLoader.getInstance().isModLoaded("skinshuffle");
     public static boolean isCatalogueEnable = FabricLoader.getInstance().isModLoaded("catalogue");
+    public static boolean isDarkLoadingScreen = FabricLoader.getInstance().isModLoaded("dark-loading-screen");
+    public static boolean isCustomSplashScreen = FabricLoader.getInstance().isModLoaded("customsplashscreen");
     public static boolean isCarpetEnable = FabricLoader.getInstance().isModLoaded("carpet");
     public static boolean isModMenuEnable = (FabricLoader.getInstance().isModLoaded("modmenu") || FabricLoader.getInstance().isModLoaded("menulogue"));
     public static boolean isBPDInstalled = false;
@@ -57,13 +60,19 @@ public class KelUIMixinPlugin implements IMixinConfigPlugin {
             return !isCarpetEnable;
         }
 
-        if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium.")){
-            if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium.SodiumOptionsMixin") && isModMenuEnable && isSodiumEnable){
+        if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.LoadingOverlayMixin")){
+            if(isDarkLoadingScreen) LOG.warn(String.format("Mixin %s for %s not loaded, %s", mixinClassName, targetClassName, "Dark Loading Screen installed"));
+            else if(isCustomSplashScreen) LOG.warn(String.format("Mixin %s for %s not loaded, %s", mixinClassName, targetClassName, "CustomSplashScreen installed"));
+            return !(isDarkLoadingScreen || isCustomSplashScreen);
+        }
+        if(mixinClassName.startsWith("ru.kelcuprum.kelui.mixin.client.screen.sodium")){
+            if(isModMenuEnable && isSodiumEnable){
                 LOG.warn(String.format("Mixin %s for %s not loaded, %s", mixinClassName, targetClassName, "Sodium installed, but ModMenu installed"));
                 return false;
-            }
-            if(isSodiumEnable) LOG.warn(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "Sodium installed"));
-            return isSodiumEnable;
+            } else if(isSodiumEnable || sodiumVersion.startsWith("0.6")) {
+                LOG.warn(String.format("Mixin %s for %s loaded, %s", mixinClassName, targetClassName, "Sodium (0.6.x) installed"));
+                return true;
+            } else return false;
         }
         return true;
     }

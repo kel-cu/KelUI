@@ -22,6 +22,7 @@ import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.GuiUtils;
 import ru.kelcuprum.alinlib.gui.styles.FlatStyle;
 import ru.kelcuprum.kelui.gui.screen.SkinCustomScreen;
+import ru.kelcuprum.kelui.gui.style.SodiumLikeStyle;
 import ru.kelcuprum.kelui.gui.style.VanillaLikeStyle;
 
 import java.text.SimpleDateFormat;
@@ -58,6 +59,7 @@ public class KelUI implements ClientModInitializer {
         onInitialize();
         ClientLifecycleEvents.CLIENT_FULL_STARTED.register((s) -> playerSkin = s.getSkinManager().getInsecureSkin(s.getGameProfile()));
         GuiUtils.registerStyle(vanillaLikeStyle);
+        GuiUtils.registerStyle(new SodiumLikeStyle());
         iconStorageHelper.init();
     }
 
