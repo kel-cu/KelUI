@@ -140,7 +140,7 @@ public class KelUI implements ClientModInitializer {
     }
 
     public interface ICONS {
-        ResourceLocation LOADING_ICON = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/loading/banner.png");
+        ResourceLocation LOADING_ICON = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/loading/icon.png");
         ResourceLocation LANGUAGE = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/language.png");
         ResourceLocation HAT_SMALL = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/hat_small.png");
         ResourceLocation MULTIPLAYER = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/multiplayer.png");
