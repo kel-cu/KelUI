@@ -5,6 +5,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LoadingOverlay;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.SpriteContents;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Final;
@@ -13,8 +17,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.kelui.KelUI;
 
+import java.nio.file.Watchable;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -56,13 +62,17 @@ public abstract class LoadingOverlayMixin {
             h = 1.0F;
         }
         // Render
-        if(minecraft.level == null) guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BACKGROUND_C0LOR", 0xFFB4B4B4).intValue(), k));
+        if (minecraft.level == null)
+            guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BACKGROUND_C0LOR", 0xFFB4B4B4).intValue(), k));
         guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), 30, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
         guiGraphics.fill(RenderType.guiOverlay(), 0, guiGraphics.guiHeight(), guiGraphics.guiWidth(), guiGraphics.guiHeight() - 30, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
         // Shit
-        if(minecraft.level == null) {
+        if (minecraft.level == null) {
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, h);
-            guiGraphics.blit(LOADING_ICON, guiGraphics.guiWidth() / 2 - 50, guiGraphics.guiHeight() / 2 - 50, 0, 0, 100, 100, 100, 100);
+            // Т-Банк не спонсировал, честно
+            int twidth = 100;
+            int theight = 100;
+            guiGraphics.blit(LOADING_ICON, guiGraphics.guiWidth() / 2 - (twidth / 2), guiGraphics.guiHeight() / 2 - (theight / 2), 0, 0, 100, 100, 100, 100);
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         }
         // Progress bar
@@ -129,13 +139,13 @@ public abstract class LoadingOverlayMixin {
 
     @Inject(method = "drawProgressBar", at = @At("HEAD"), cancellable = true)
     private void drawProgressBar(GuiGraphics guiGraphics, int i, int j, int k, int l, float f, CallbackInfo ci) {
-        if(KelUI.config.getBoolean("LOADING.NEW", false)){
+        if (KelUI.config.getBoolean("LOADING.NEW", false)) {
             int kB = 255;
             if (f < 1.0F) {
-                l+=5;
+                l += 5;
                 guiGraphics.fill(i, j, k, l, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
                 guiGraphics.fill(i + 2, j + 2, (k - 2), l - 2, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_BACKGROUND_C0LOR", 0xFFD9D9D9).intValue(), kB));
-                guiGraphics.fill(i + 3, j + 3, (int) (i +(((k - 3 - i) * this.currentProgress))), l - 3, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
+                guiGraphics.fill(i + 3, j + 3, (int) (i + (((k - 3 - i) * this.currentProgress))), l - 3, replaceAlpha(KelUI.config.getNumber("LOADING.NEW.BORDER_C0LOR", 0xFF000000).intValue(), kB));
             }
             ci.cancel();
         }
