@@ -124,7 +124,7 @@
 
   "kelui.config.loading.preview": "Preview",
 
-  "kelui.config.screens_config": "Interface",
+  "kelui.config.title.screens_config": "Interface",
 
   "kelui.menu.singleplayer": "Singleplayer",
   "kelui.menu.multiplayer": "Multiplayer",
