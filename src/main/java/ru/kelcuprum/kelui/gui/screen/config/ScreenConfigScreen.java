@@ -29,7 +29,9 @@ public class ScreenConfigScreen {
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.border_background_color")).setColor(0xFFD9D9D9).setConfig(KelUI.config, "LOADING.NEW.BORDER_BACKGROUND_C0LOR"))
                         .addValue(new ButtonBuilder(Component.translatable("kelui.config.loading.preview"), (OnPress) -> Minecraft.getInstance().setOverlay(new PreviewLoadingOverlay(2000, () -> {}))))
                 )
-                .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.custom_skin"), true).setConfig(KelUI.config, "CUSTOM_SKIN"))
+                .addWidget(new CategoryBox(KelUI.TEXTS.TITLE.OPTIONS_CONFIG)
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.custom_skin"), true).setConfig(KelUI.config, "CUSTOM_SKIN"))
+                )
                 .build();
     }
 }

@@ -167,6 +167,7 @@ public class KelUI implements ClientModInitializer {
             Component SCREENS_CONFIG = Component.translatable("kelui.config.title.screens_config");
             Component HUD_CONFIG = Component.translatable("kelui.config.title.hud");
             Component PLAYER_LIST_CONFIG = Component.translatable("kelui.config.title.player_list");
+            Component OPTIONS_CONFIG = Component.translatable("kelui.config.title.options_config");
             Component LOADING_CONFIG = Component.translatable("kelui.config.title.loading");
             Component OTHER_CONFIG = Component.translatable("kelui.config.title.other");
         }
