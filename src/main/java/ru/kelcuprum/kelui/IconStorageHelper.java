@@ -18,9 +18,7 @@ public class IconStorageHelper {
 
 
     public synchronized void init() {
-        if (inited) {
-            return;
-        }
+        if (inited) return;
 
         loadResource("icon_16x16.png");
         loadResource("icon_32x32.png");
@@ -35,11 +33,8 @@ public class IconStorageHelper {
     private void loadResource(String path) {
         String fullPath = RESOURCES_ROOT + path;
         ClassLoader classLoader = this.getClass().getClassLoader();
-
         try (InputStream stream = classLoader.getResourceAsStream(fullPath)) {
-            if (stream == null) {
-                throw new IOException("getResourceAsStream failed");
-            }
+            if (stream == null) throw new IOException("getResourceAsStream failed");
             byte[] data = IOUtils.toByteArray(stream);
             STORAGE.put(path, data);
         } catch (IOException e) {
@@ -50,14 +45,11 @@ public class IconStorageHelper {
     public InputStream getResource(String path) {
         if(KelUI.config.getBoolean("GLOBAL.ENABLE_CUSTOM_ICON.MOD", true)) {
             byte[] data = STORAGE.get(path);
-            if (data == null) {
-                throw new RuntimeException("Unexpected resource path " + path);
-            }
+            if (data == null) throw new RuntimeException("Unexpected resource path " + path);
             return new ByteArrayInputStream(data);
         } else {
             String dir = KelUI.config.getString("GLOBAL.CUSTOM_ICON_PATH", "config/KelUI/icons/");
             if(!dir.endsWith("/")) dir+="/";
-
             File file = new File(dir+path);
             if(file.exists()){
                 try {

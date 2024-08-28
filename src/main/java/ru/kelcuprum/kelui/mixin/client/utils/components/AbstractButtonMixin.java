@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.kelcuprum.alinlib.gui.GuiUtils;
 import ru.kelcuprum.kelui.KelUI;
 
 @Mixin(AbstractButton.class)
@@ -41,7 +42,7 @@ public abstract class AbstractButtonMixin extends AbstractWidget {
     @Inject(method = "renderWidget", at = @At("HEAD"), cancellable = true)
     public void renderWidget(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci) {
         if(!KelUI.config.getBoolean("UI.ALINLIB_STYLE", false)) return;
-        KelUI.flatStyle.renderBackground$widget(guiGraphics, this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.active, this.isHoveredOrFocused());
+        GuiUtils.getSelected().renderBackground$widget(guiGraphics, this.getX(), this.getY(), this.getWidth(), this.getHeight(), this.active, this.isHoveredOrFocused());
         int k = this.active ? 16777215 : 10526880;
         renderString(guiGraphics, Minecraft.getInstance().font, k | Mth.ceil(this.alpha * 255.0F) << 24);
         ci.cancel();

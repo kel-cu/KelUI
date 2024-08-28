@@ -9,8 +9,10 @@ import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.config.Localization;
+import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.comp.CatalogueButtons;
+import ru.kelcuprum.kelui.gui.components.comp.FlashbackButtons;
 import ru.kelcuprum.kelui.gui.components.comp.ModMenuButtons;
 import ru.kelcuprum.kelui.gui.components.OneShotTitle;
 import ru.kelcuprum.kelui.gui.components.OneShotTitleButton;
@@ -32,7 +34,7 @@ public class OtherScreen extends Screen {
         int y = 43+ 24;
         int bWidth = font.width("...");
         Component[] texts = {
-                FabricLoader.getInstance().isModLoaded("modmenu") ? ModMenuButtons.getModText() : Component.empty(),
+                KelUI.isFlashbackInstalled() ? ModMenuButtons.getModText() : Component.empty(),
                 Component.translatable("gui.advancements"),
                 Component.translatable("gui.stats"),
                 Component.translatable("options.language"),
@@ -78,6 +80,19 @@ public class OtherScreen extends Screen {
 
         if(KelUI.config.getBoolean("PAUSE_MENU.ENABLE_SHORT_COMMAND", false)) {
             addRenderableWidget(new OneShotTitleButton(30, y + 10, bWidth, bHeight, texts[5], (s) -> KelUI.executeCommand(this.minecraft.player, KelUI.config.getString("PAUSE_MENU.SHORT_COMMAND.COMMAND", "/lobby"))));
+        }
+        if(KelUI.isFlashbackInstalled()){
+            if(FlashbackButtons.isShow()){
+                addRenderableWidget(new TextBox(20, y+10, bWidth, bHeight, Component.literal("Flashback"), false));
+                y+=bHeight2;
+                addRenderableWidget(FlashbackButtons.getStateButton$oneShot(30, y + 10, bWidth, bHeight));
+                y+=bHeight2;
+                if(FlashbackButtons.isRecord()){
+                    addRenderableWidget(FlashbackButtons.getPauseStateButton$oneShot(30, y + 10, bWidth, bHeight));
+                    y+=bHeight2;
+                    addRenderableWidget(FlashbackButtons.getCancelButton$oneShot(30, y + 10, bWidth, bHeight));
+                }
+            }
         }
     }
 

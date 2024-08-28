@@ -45,6 +45,7 @@ dependencies {
 
     modImplementation("maven.modrinth:sodium-extra:${project.sodium_extra_version}")
     modImplementation("maven.modrinth:sodium:${project.sodium_version}") // 0.6
+    modImplementation("maven.modrinth:flashback:${project.flashback}")
     modImplementation("maven.modrinth:capes:6SzVPVR4")
     modImplementation("maven.modrinth:skinshuffle:IKBsfEhV")
     modImplementation("curse.maven:Catalogue-459701:5441226")

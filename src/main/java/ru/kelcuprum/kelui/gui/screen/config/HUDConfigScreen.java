@@ -5,6 +5,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBooleanBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
+import ru.kelcuprum.alinlib.gui.components.builder.editbox.EditBoxBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.selector.SelectorBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.CategoryBox;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
@@ -35,10 +36,8 @@ public class HUDConfigScreen {
         ConfigScreenBuilder builder = new ConfigScreenBuilder(parent, KelUI.TEXTS.NAME)
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.MENU_CONFIG, (s) -> Minecraft.getInstance().setScreen(new MenuConfigScreen().build(parent))))
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.PAUSE_CONFIG, (s) -> Minecraft.getInstance().setScreen(new PauseConfigScreen().build(parent))))
-                .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OPTIONS_CONFIG, (s) -> Minecraft.getInstance().setScreen(new SettingsConfigScreen().build(parent))))
+                .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.SCREENS_CONFIG, (s) -> Minecraft.getInstance().setScreen(new ScreenConfigScreen().build(parent))))
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent))))
-                .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.PLAYER_LIST_CONFIG, (s) -> Minecraft.getInstance().setScreen(new PlayerListConfigScreen().build(parent))))
-                .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.LOADING_CONFIG, (s) -> Minecraft.getInstance().setScreen(new LoadingConfigScreen().build(parent))))
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent))))
 
                 .addWidget(new TextBox(KelUI.TEXTS.TITLE.HUD_CONFIG, true));
@@ -66,7 +65,15 @@ public class HUDConfigScreen {
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.debug.dark_graph"), true).setConfig(KelUI.config, "DEBUG.DARK_GRAPH"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.dark_debug_overlay"), false).setConfig(KelUI.config, "HUD.DARK_DEBUG_OVERLAY"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay.remove_game_info"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_GAME_INFO"))
-                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay.remove_system_info"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_SYSTEM_INFO")));
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.debug_overlay.remove_system_info"), false).setConfig(KelUI.config, "HUD.DEBUG_OVERLAY.REMOVE_SYSTEM_INFO")))
+                .addWidget(new CategoryBox(KelUI.TEXTS.TITLE.PLAYER_LIST_CONFIG, true)
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.forever_render_hat"), true).setConfig(KelUI.config, "TAB.FOREVER_RENDER_HAT"))
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.forever_render_heads"), true).setConfig(KelUI.config, "TAB.FOREVER_RENDER_HEADS"))
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.ping_to_text"), true).setConfig(KelUI.config, "TAB.PING_TO_TEXT"))
+                        .addValue(new EditBoxBuilder(Component.translatable("kelui.config.tab.ping_to_text.format")).setValue("%sms").setConfig(KelUI.config, "TAB.PING_TO_TEXT.FORMAT"))
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.ping_to_text.color_enable"), true).setConfig(KelUI.config, "TAB.PING_TO_TEXT.COLOR_ENABLE"))
+                        .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.tab.ping_to_text.render_icon"), false).setConfig(KelUI.config, "TAB.PING_TO_TEXT.RENDER_ICON"))
+                );
         return builder.build();
     }
 }

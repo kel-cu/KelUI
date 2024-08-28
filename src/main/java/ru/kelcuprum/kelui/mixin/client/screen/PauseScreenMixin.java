@@ -25,6 +25,7 @@ import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.*;
 import ru.kelcuprum.kelui.gui.components.comp.CatalogueButtons;
+import ru.kelcuprum.kelui.gui.components.comp.FlashbackButtons;
 import ru.kelcuprum.kelui.gui.components.comp.ModMenuButtons;
 import ru.kelcuprum.kelui.gui.screen.pause_screen.DisconnectScreen;
 import ru.kelcuprum.kelui.gui.screen.pause_screen.OtherScreen;
@@ -32,7 +33,7 @@ import ru.kelcuprum.kelui.gui.screen.pause_screen.OtherScreen;
 import java.util.Objects;
 
 import static ru.kelcuprum.alinlib.gui.Icons.*;
-import static ru.kelcuprum.kelui.KelUI.ICONS.LANGUAGE;
+import static ru.kelcuprum.kelui.KelUI.ICONS.*;
 
 @Mixin(value = PauseScreen.class, priority = -1)
 public abstract class PauseScreenMixin extends Screen {
@@ -70,6 +71,10 @@ public abstract class PauseScreenMixin extends Screen {
     void kelui$defaultStyle() {
         int x = 10;
         int y = height / 2 - 60;
+        if(KelUI.isFlashbackInstalled()){
+            if(FlashbackButtons.isShow()) y -= 25;
+        }
+
         assert this.minecraft != null;
         addRenderableWidget(new PlayerHeadWidget(x, y, 20, 20));
         addRenderableWidget(new ButtonBuilder(Component.translatable("menu.returnToGame"), (OnPress) -> {
@@ -118,6 +123,22 @@ public abstract class PauseScreenMixin extends Screen {
             OnPress.setActive(false);
             this.minecraft.getReportingContext().draftReportHandled(this.minecraft, this, this::onDisconnect, true);
         }).setPosition(x, y).setSize(210, 20).build());
+        y+=25;
+        if(KelUI.isFlashbackInstalled()){
+            if(FlashbackButtons.isShow()){
+                y+=1;
+                addRenderableWidget(new TextBox(x, y, 210, 9, Component.literal("Flashback"), true));
+                y+=14;
+                if(FlashbackButtons.isRecord()){
+                    addRenderableWidget(FlashbackButtons.getStateButton().setSprite(RECORD).setWidth(20).setPosition(x, y).build());
+                    addRenderableWidget(FlashbackButtons.getPauseStateButton().setSprite(FlashbackButtons.isPaused() ? PLAY : PAUSE).setWidth(20).setPosition(x+25, y).build());
+                    addRenderableWidget(FlashbackButtons.getCancelButton().setWidth(160).setPosition(x+50, y).build());
+                } else {
+                    addRenderableWidget(FlashbackButtons.getStateButton().setWidth(210).setPosition(x, y).build());
+                }
+            }
+        }
+
         if (KelUI.config.getBoolean("PAUSE_MENU.INFO", true)) {
             int yT = height - 20;
             if (KelUI.config.getBoolean("PAUSE_MENU.CREDITS", false)) {

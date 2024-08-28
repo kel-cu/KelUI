@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.kelcuprum.alinlib.AlinLib;
+import ru.kelcuprum.alinlib.gui.GuiUtils;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.screen.config.MenuConfigScreen;
@@ -28,7 +29,7 @@ public abstract class VideoSettingsScreenMixin extends OptionsSubScreen {
         this.list.addSmall(List.of(new ButtonBuilder(Component.translatable("kelui.name"))
                 .setOnPress((s) -> AlinLib.MINECRAFT.setScreen(new MenuConfigScreen().build((Screen) (Object) this)))
                 .setWidth(150)
-                .setStyle(KelUI.vanillaLikeStyle)
+                .setStyle(KelUI.config.getBoolean("UI.ALINLIB_STYLE", false) ? KelUI.vanillaLikeStyle : GuiUtils.getSelected())
                 .build()));
     }
 }

@@ -79,7 +79,7 @@
   "kelui.config.debug.dark_graph": "Темный график",
   "kelui.config.ui.smooth_menu": "Плавное меню",
   "kelui.config.ui.tooltip_type": "Тип тултипа",
-  "kelui.config.ui.alinlib_style": "Стиль AlinLib (Плоский дизайн)",
+  "kelui.config.ui.alinlib_style": "Стиль AlinLib",
   "kelui.config.title.other.chat": "Чат",
   "kelui.config.chat.edgeless_screen": "Безграничный экран чата",
   "kelui.config.chat.timestamp": "Включить временную метку",
@@ -125,6 +125,8 @@
 
   "kelui.config.loading.preview": "Предпросмотр",
 
+  "kelui.config.screens_config": "Интерфейс",
+
   "kelui.menu.singleplayer": "Одиночная игра",
   "kelui.menu.multiplayer": "Мультиплеер",
   "kelui.menu.options": "Настройки",
@@ -135,7 +137,12 @@
   "kelui.menu.video": "Видео настройки",
   "kelui.menu.language": "Язык",
   "kelui.menu.quit": "Выйти из игры",
-  
+
+  "kelui.flashback.start": "Начать запись",
+  "kelui.flashback.finish": "Завершить",
+  "kelui.flashback.cancel": "Отменить запись",
+  "kelui.flashback.pause": "Приостановить запись",
+  "kelui.flashback.unpause": "Снять запись с паузы",
   
   "modmenu.descriptionTranslation.kelui": "Кастомное меню на мой вкус, т.е. как мне удобно использовать компоненты"
 }

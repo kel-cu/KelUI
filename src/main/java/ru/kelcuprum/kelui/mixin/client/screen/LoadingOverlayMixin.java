@@ -5,10 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LoadingOverlay;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.SpriteContents;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Final;
@@ -17,10 +13,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.kelui.KelUI;
 
-import java.nio.file.Watchable;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -69,10 +63,7 @@ public abstract class LoadingOverlayMixin {
         // Shit
         if (minecraft.level == null) {
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, h);
-            // Т-Банк не спонсировал, честно
-            int twidth = 100;
-            int theight = 100;
-            guiGraphics.blit(LOADING_ICON, guiGraphics.guiWidth() / 2 - (twidth / 2), guiGraphics.guiHeight() / 2 - (theight / 2), 0, 0, 100, 100, 100, 100);
+            guiGraphics.blit(LOADING_ICON, guiGraphics.guiWidth() / 2 - 50, guiGraphics.guiHeight() / 2 - 50, 0, 0, 100, 100, 100, 100);
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         }
         // Progress bar

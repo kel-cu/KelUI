@@ -79,7 +79,7 @@
   "kelui.config.debug.dark_graph": "Dark graph",
   "kelui.config.ui.smooth_menu": "Smooth menu",
   "kelui.config.ui.tooltip_type": "Tooltip Type",
-  "kelui.config.ui.alinlib_style": "AlinLib Style (Flat design)",
+  "kelui.config.ui.alinlib_style": "AlinLib Style",
   "kelui.config.title.other.chat": "Chat",
   "kelui.config.chat.edgeless_screen": "Edgeless Chat Screen",
   "kelui.config.chat.timestamp": "Enable timestamp",
@@ -124,6 +124,8 @@
 
   "kelui.config.loading.preview": "Preview",
 
+  "kelui.config.screens_config": "Interface",
+
   "kelui.menu.singleplayer": "Singleplayer",
   "kelui.menu.multiplayer": "Multiplayer",
   "kelui.menu.options": "Options",
@@ -134,7 +136,12 @@
   "kelui.menu.video": "Video settings",
   "kelui.menu.language": "Language",
   "kelui.menu.quit": "Quit Game",
-  
+
+  "kelui.flashback.start": "Start Recording",
+  "kelui.flashback.finish": "Finish Recording",
+  "kelui.flashback.cancel": "Cancel Recording",
+  "kelui.flashback.pause": "Pause Recording",
+  "kelui.flashback.unpause": "Unpause Recording",
   
   "modmenu.descriptionTranslation.kelui": "Custom menu for my taste, i.e. how I feel comfortable using components"
 }

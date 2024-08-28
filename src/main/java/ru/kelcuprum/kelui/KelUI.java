@@ -135,6 +135,9 @@ public class KelUI implements ClientModInitializer {
     public static boolean isModMenuInstalled(){
         return FabricLoader.getInstance().isModLoaded("modmenu") || FabricLoader.getInstance().isModLoaded("menulogue");
     }
+    public static boolean isFlashbackInstalled(){
+        return FabricLoader.getInstance().isModLoaded("flashback");
+    }
     public static boolean isCatalogueInstalled(){
         return FabricLoader.getInstance().isModLoaded("catalogue");
     }
@@ -148,6 +151,11 @@ public class KelUI implements ClientModInitializer {
         ResourceLocation REALMS = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/realms.png");
         ResourceLocation ACCESSIBILITY = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/accessibility.png");
         ResourceLocation CAPES = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/icon/capes.png");
+
+
+        ResourceLocation RECORD = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/flashback/record.png");
+        ResourceLocation PAUSE = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/flashback/pause.png");
+        ResourceLocation PLAY = ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/sprites/flashback/play.png");
     }
 
     public interface TEXTS {
@@ -156,7 +164,7 @@ public class KelUI implements ClientModInitializer {
         interface TITLE {
             Component MENU_CONFIG = Component.translatable("kelui.config.title.main_menu");
             Component PAUSE_CONFIG = Component.translatable("kelui.config.title.pause_menu");
-            Component OPTIONS_CONFIG = Component.translatable("kelui.config.title.options_config");
+            Component SCREENS_CONFIG = Component.translatable("kelui.config.title.screens_config");
             Component HUD_CONFIG = Component.translatable("kelui.config.title.hud");
             Component PLAYER_LIST_CONFIG = Component.translatable("kelui.config.title.player_list");
             Component LOADING_CONFIG = Component.translatable("kelui.config.title.loading");
