@@ -75,7 +75,7 @@ public class SkinCustomScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if(keyCode == GLFW.GLFW_KEY_P && (modifiers & GLFW.GLFW_MOD_SHIFT) != 0){
+            if(keyCode == GLFW.GLFW_KEY_P && (modifiers & GLFW.GLFW_MOD_SHIFT) != 0){
             AlinLib.MINECRAFT.setScreen(new SkinCustomizationScreen(parent, options));
             return true;
         }

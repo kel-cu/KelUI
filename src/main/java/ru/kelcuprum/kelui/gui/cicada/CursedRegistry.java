@@ -2,18 +2,7 @@ package ru.kelcuprum.kelui.gui.cicada;
 
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Lifecycle;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderOwner;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistrationInfo;
-import net.minecraft.core.Registry;
+import net.minecraft.core.*;
 import net.minecraft.core.Holder.Reference;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -21,6 +10,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.*;
+import java.util.stream.Stream;
 
 public record CursedRegistry<T>(ResourceKey<? extends Registry<T>> registryKey, ResourceLocation defaultId, T defaultValue) implements Registry<T>, HolderOwner<T> {
     public CursedRegistry(ResourceKey<? extends Registry<T>> registryKey, ResourceLocation defaultId, T defaultValue) {
@@ -65,7 +57,7 @@ public record CursedRegistry<T>(ResourceKey<? extends Registry<T>> registryKey, 
         return Optional.empty();
     }
 
-    public @NotNull Optional<Holder.Reference<T>> getHolder(ResourceLocation id) {
+    public @NotNull Optional<Reference<T>> getHolder(ResourceLocation id) {
         return Optional.empty();
     }
 
@@ -73,7 +65,7 @@ public record CursedRegistry<T>(ResourceKey<? extends Registry<T>> registryKey, 
         return Lifecycle.experimental();
     }
 
-    public @NotNull Optional<Holder.Reference<T>> getAny() {
+    public @NotNull Optional<Reference<T>> getAny() {
         return Optional.empty();
     }
 
@@ -89,7 +81,7 @@ public record CursedRegistry<T>(ResourceKey<? extends Registry<T>> registryKey, 
         return Set.of();
     }
 
-    public @NotNull Optional<Holder.Reference<T>> getRandom(RandomSource random) {
+    public @NotNull Optional<Reference<T>> getRandom(RandomSource random) {
         return Optional.empty();
     }
 
@@ -105,15 +97,15 @@ public record CursedRegistry<T>(ResourceKey<? extends Registry<T>> registryKey, 
         return this;
     }
 
-    public Holder.@NotNull Reference<T> createIntrusiveHolder(T value) {
+    public @NotNull Reference<T> createIntrusiveHolder(T value) {
         return Reference.createIntrusive(this, value);
     }
 
-    public @NotNull Optional<Holder.Reference<T>> getHolder(int rawId) {
+    public @NotNull Optional<Reference<T>> getHolder(int rawId) {
         return Optional.empty();
     }
 
-    public @NotNull Optional<Holder.Reference<T>> getHolder(ResourceKey<T> key) {
+    public @NotNull Optional<Reference<T>> getHolder(ResourceKey<T> key) {
         return Optional.of(Reference.createStandAlone(this, key));
     }
 
@@ -121,7 +113,7 @@ public record CursedRegistry<T>(ResourceKey<? extends Registry<T>> registryKey, 
         return Holder.direct(value);
     }
 
-    public Stream<Holder.Reference<T>> holders() {
+    public Stream<Reference<T>> holders() {
         return null;
     }
 
@@ -161,7 +153,7 @@ public record CursedRegistry<T>(ResourceKey<? extends Registry<T>> registryKey, 
                 return Lifecycle.experimental();
             }
 
-            public @NotNull Stream<Holder.Reference<T>> listElements() {
+            public @NotNull Stream<Reference<T>> listElements() {
                 return Stream.empty();
             }
 
@@ -169,7 +161,7 @@ public record CursedRegistry<T>(ResourceKey<? extends Registry<T>> registryKey, 
                 return Stream.empty();
             }
 
-            public @NotNull Optional<Holder.Reference<T>> get(ResourceKey<T> key) {
+            public @NotNull Optional<Reference<T>> get(ResourceKey<T> key) {
                 return Optional.empty();
             }
 

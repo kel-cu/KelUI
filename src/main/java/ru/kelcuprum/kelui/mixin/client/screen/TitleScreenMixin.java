@@ -174,7 +174,7 @@ public abstract class TitleScreenMixin extends Screen {
                 .setWidth(210).setPosition(x, y).build());
         y+=25;
         addRenderableWidget(new ButtonBuilder(Component.translatable("menu.quit"))
-                .setIcon(CLOWNFISH)
+                .setIcon(EXIT)
                 .setOnPress((s) -> this.minecraft.stop())
                 .setWidth(210).setPosition(x, y).build());
 

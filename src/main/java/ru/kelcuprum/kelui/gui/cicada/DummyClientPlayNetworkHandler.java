@@ -1,12 +1,6 @@
 package ru.kelcuprum.kelui.gui.cicada;
 
 import com.mojang.serialization.Lifecycle;
-import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.OptionalLong;
-import java.util.stream.Stream;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.client.gui.screens.Screen;
@@ -14,11 +8,7 @@ import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.CommonListenerCookie;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerData.Type;
-import net.minecraft.core.DefaultedMappedRegistry;
-import net.minecraft.core.Holder;
-import net.minecraft.core.MappedRegistry;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.Connection;
@@ -36,6 +26,13 @@ import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import org.jetbrains.annotations.NotNull;
 import ru.kelcuprum.alinlib.gui.GuiUtils;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalLong;
+import java.util.stream.Stream;
 
 public class DummyClientPlayNetworkHandler extends ClientPacketListener {
     public static final Registry<DimensionType> CURSED_DIMENSION_TYPE_REGISTRY;
@@ -91,7 +88,7 @@ public class DummyClientPlayNetworkHandler extends ClientPacketListener {
                 }
             }
 
-            public @NotNull Stream<RegistryAccess.RegistryEntry<?>> registries() {
+            public @NotNull Stream<RegistryEntry<?>> registries() {
                 return Stream.empty();
             }
         };

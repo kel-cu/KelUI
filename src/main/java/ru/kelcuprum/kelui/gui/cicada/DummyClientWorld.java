@@ -21,7 +21,7 @@ public class DummyClientWorld extends ClientLevel {
     }
 
     private DummyClientWorld() {
-        super(DummyClientPlayNetworkHandler.getInstance(), new ClientLevel.ClientLevelData(Difficulty.EASY, false, true), ResourceKey.create(Registries.DIMENSION, GuiUtils.getResourceLocation("kelui", "dummy")), DummyClientPlayNetworkHandler.CURSED_DIMENSION_TYPE_REGISTRY.getHolderOrThrow(ResourceKey.create(Registries.DIMENSION_TYPE, GuiUtils.getResourceLocation("kelui", "dummy"))), 0, 0, () -> Minecraft.getInstance().getProfiler(), Minecraft.getInstance().levelRenderer, false, 0L);
+        super(DummyClientPlayNetworkHandler.getInstance(), new ClientLevelData(Difficulty.EASY, false, true), ResourceKey.create(Registries.DIMENSION, GuiUtils.getResourceLocation("kelui", "dummy")), DummyClientPlayNetworkHandler.CURSED_DIMENSION_TYPE_REGISTRY.getHolderOrThrow(ResourceKey.create(Registries.DIMENSION_TYPE, GuiUtils.getResourceLocation("kelui", "dummy"))), 0, 0, () -> Minecraft.getInstance().getProfiler(), Minecraft.getInstance().levelRenderer, false, 0L);
     }
 
     public @NotNull RegistryAccess registryAccess() {

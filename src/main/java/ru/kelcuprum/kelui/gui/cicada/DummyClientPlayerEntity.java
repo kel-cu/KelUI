@@ -1,7 +1,5 @@
 package ru.kelcuprum.kelui.gui.cicada;
 
-import java.util.UUID;
-import java.util.function.Function;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -19,6 +17,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
+import java.util.function.Function;
 
 public class DummyClientPlayerEntity extends LocalPlayer {
     private static DummyClientPlayerEntity instance;
