@@ -28,10 +28,6 @@ repositories {
     maven { url = "https://jitpack.io/" }
 }
 
-loom{
-    accessWidenerPath = file("/src/main/resources/kelui.accesswidener")
-}
-
 configurations { shade }
 dependencies {
     // Minecraft/Fabric libs
