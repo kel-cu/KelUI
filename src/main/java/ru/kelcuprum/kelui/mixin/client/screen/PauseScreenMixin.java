@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -202,9 +203,9 @@ public abstract class PauseScreenMixin extends Screen {
             guiGraphics.fill(0, 0, 230, this.height, Colors.BLACK_ALPHA);
         } else {
             if(!oneshot$disconnectMenuEnable && !oneshot$otherMenuEnable) {
-                guiGraphics.blitSprite(ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/oneshot_pause_panel"), 5, 5,  width-10, 38);
+                guiGraphics.blitSprite(RenderType::guiTextured, ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/oneshot_pause_panel"), 5, 5,  width-10, 38);
                 int nikoSize = height/3;
-                if(KelUI.isAprilFool() || KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.NIKO_ROOMBA", false)) guiGraphics.blitSprite(ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/niko_roomba"), width/2-nikoSize/2, height/2-nikoSize/2, nikoSize, nikoSize);
+                if(KelUI.isAprilFool() || KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.NIKO_ROOMBA", false)) guiGraphics.blitSprite(RenderType::guiTextured, ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/niko_roomba"), width/2-nikoSize/2, height/2-nikoSize/2, nikoSize, nikoSize);
             }
             else guiGraphics.fill(0, 0, width, height, 0x7f000000);
         }

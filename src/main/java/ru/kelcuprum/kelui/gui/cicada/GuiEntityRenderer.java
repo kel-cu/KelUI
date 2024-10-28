@@ -33,7 +33,7 @@ public class GuiEntityRenderer {
             Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
             modelViewStack.pushMatrix();
             modelViewStack.translate(0.0F, 0.0F, 1000.0F);
-            RenderSystem.applyModelViewMatrix();
+            RenderSystem.backupProjectionMatrix();
             matrices.pushPose();
             matrices.translate(x, y, -950.0);
             matrices.mulPose((new Matrix4f()).scaling((float)size, (float)size, (float)(-size)));
@@ -53,13 +53,14 @@ public class GuiEntityRenderer {
             }
 
             MultiBufferSource.BufferSource vertexConsumers = Minecraft.getInstance().renderBuffers().bufferSource();
-            dispatcher.render(entity, 0.0, 0.0, 0.0, 0.0F, 1.0F, matrices, vertexConsumers, 15728880);
+//            dispatcher.render(entity, 0.0, 0.0, 0.0, 0.0F, 1.0F, matrices, vertexConsumers, 15728880);
+            dispatcher.render(entity, 0.0, 0.0, 0.0, 1.0F, matrices, vertexConsumers, 15728880);
             vertexConsumers.endBatch();
             dispatcher.setRenderShadow(true);
             matrices.popPose();
             Lighting.setupFor3DItems();
             modelViewStack.popMatrix();
-            RenderSystem.applyModelViewMatrix();
+            RenderSystem.getModelViewMatrix();
             entity.yBodyRot = oldBodyYaw;
             entity.setYRot(oldYaw);
             entity.setXRot(oldPitch);

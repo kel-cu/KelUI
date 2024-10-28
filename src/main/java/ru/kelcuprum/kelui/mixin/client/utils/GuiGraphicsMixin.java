@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -12,6 +13,7 @@ import net.minecraft.world.item.MapItem;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
@@ -30,10 +32,11 @@ public abstract class GuiGraphicsMixin {
     public abstract PoseStack pose();
 
     @Shadow
-    public abstract MultiBufferSource.BufferSource bufferSource();
-
-    @Shadow
     public abstract void flush();
+
+    @Shadow @Final private MultiBufferSource.BufferSource bufferSource;
+
+    @Unique MapRenderState mapRenderState = new MapRenderState();
 
     // Map slot
     @Inject(
@@ -47,15 +50,14 @@ public abstract class GuiGraphicsMixin {
         var savedData = MapItem.getSavedData(stack, this.minecraft.level);
         var mapId = stack.get(DataComponents.MAP_ID);
 
+
         if (savedData == null) return;
 
         this.pose().pushPose();
         this.pose().translate(i, j, 200F);
         this.pose().scale(0.125F, 0.125F, 1F);
-        this.minecraft
-                .gameRenderer
-                .getMapRenderer()
-                .render(this.pose(), this.bufferSource(), mapId, savedData, true, 15728880);
+        this.minecraft.getMapRenderer().extractRenderState(mapId, savedData, mapRenderState);
+        this.minecraft.getMapRenderer().render(mapRenderState, this.pose(), this.bufferSource, true, 15728880);
         this.flush();
         this.pose().popPose();
     }

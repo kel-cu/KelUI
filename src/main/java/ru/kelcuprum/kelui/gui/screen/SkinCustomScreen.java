@@ -41,7 +41,7 @@ public class SkinCustomScreen extends Screen {
         int pos = 0;
         for(PlayerModelPart value : values){
             ButtonBooleanBuilder builder = new ButtonBooleanBuilder(value.getName(), this.options.isModelPartEnabled(value))
-                    .setOnPress((s) -> this.options.toggleModelPart(value, s))
+                    .setOnPress((s) -> this.options.setModelPart(value, s))
                     .setWidth(componentSize/2-2)
                     .setPosition(pos == 0 ? x : x+(componentSize/2+2), y);
             addRenderableWidget(builder.build());

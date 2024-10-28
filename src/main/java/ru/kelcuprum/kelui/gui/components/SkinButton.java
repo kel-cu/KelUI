@@ -1,12 +1,12 @@
 package ru.kelcuprum.kelui.gui.components;
 
+import com.mineblock11.skinshuffle.client.gui.cursed.GuiEntityRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
 import ru.kelcuprum.alinlib.gui.components.buttons.Button;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.cicada.DummyClientPlayerEntity;
-import ru.kelcuprum.kelui.gui.cicada.GuiEntityRenderer;
 
 public class SkinButton extends Button {
     int size;

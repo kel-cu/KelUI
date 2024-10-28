@@ -11,11 +11,11 @@ import ru.kelcuprum.kelui.gui.cicada.DummyClientPlayerEntity;
 @Mixin(LivingEntityRenderer.class)
 public class LivingEntityRendererMixin {
     @Inject(
-            method = "shouldShowName(Lnet/minecraft/world/entity/LivingEntity;)Z",
+            method = "shouldShowName(Lnet/minecraft/world/entity/LivingEntity;D)Z",
             cancellable = true,
             at = {@At("HEAD")}
     )
-    private <T extends LivingEntity> void fakeHasLabel(T livingEntity, CallbackInfoReturnable<Boolean> cir) {
+    private <T extends LivingEntity> void fakeHasLabel(T livingEntity, double d, CallbackInfoReturnable<Boolean> cir) {
         if (livingEntity instanceof DummyClientPlayerEntity) {
             cir.setReturnValue(false);
         }

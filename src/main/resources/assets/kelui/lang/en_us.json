@@ -65,6 +65,13 @@
   "kelui.config.hud.debug_overlay.remove_game_info": "Remove Game Info",
   "kelui.config.hud.debug_overlay.remove_system_info": "Remove System Info",
 
+  "kelui.config.title.death": "Death Screen",
+  "kelui.config.death": "Redesign of the death screen",
+  "kelui.config.title.death.niko": "OneShot (2014)",
+  "kelui.config.death.niko": "You killed %s?",
+  "kelui.config.death.niko.only_hardcore": "Only on hardcore",
+  "kelui.config.death.niko.function": "Function performed",
+
   "kelui.config.title.player_list": "Player list",
   "kelui.config.tab.forever_render_heads": "Always render players' heads in the tab",
   "kelui.config.tab.forever_render_hat": "Always render players' hats in the tab",

@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.kelcuprum.alinlib.AlinLib;
+import ru.kelcuprum.alinlib.api.events.alinlib.LocalizationEvents;
 import ru.kelcuprum.alinlib.api.events.client.ClientLifecycleEvents;
 import ru.kelcuprum.alinlib.config.Config;
 import ru.kelcuprum.alinlib.config.Localization;
@@ -33,8 +34,8 @@ import java.util.UUID;
 import static ru.kelcuprum.alinlib.gui.Colors.*;
 
 public class KelUI implements ClientModInitializer {
-    public static final Logger LOG = LogManager.getLogger("KelUI");
     public static final FlatStyle flatStyle = new FlatStyle();
+    public static final Logger LOG = LogManager.getLogger("KelUI");
 
     public static void log(String message) {
         log(message, Level.INFO);
@@ -51,6 +52,7 @@ public class KelUI implements ClientModInitializer {
     public static final boolean isSodiumExtraEnable = FabricLoader.getInstance().isModLoaded("sodium-extra");
     public static PlayerSkin playerSkin;
     public static UUID SillyUUID = UUID.randomUUID();
+    public static boolean localizationInited = false;
     //
     public static VanillaLikeStyle vanillaLikeStyle = new VanillaLikeStyle();
 
@@ -58,6 +60,9 @@ public class KelUI implements ClientModInitializer {
     public void onInitializeClient() {
         onInitialize();
         ClientLifecycleEvents.CLIENT_FULL_STARTED.register((s) -> playerSkin = s.getSkinManager().getInsecureSkin(s.getGameProfile()));
+        LocalizationEvents.DEFAULT_PARSER_INIT.register((s) ->
+            localizationInited = true
+        );
         GuiUtils.registerStyle(vanillaLikeStyle);
         GuiUtils.registerStyle(new SodiumLikeStyle());
         iconStorageHelper.init();

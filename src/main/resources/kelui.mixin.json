@@ -5,16 +5,18 @@
   "plugin": "ru.kelcuprum.kelui.mixin.KelUIMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "client.fix.ScreenMixin",
     "client.screen.ChatScreenMixin",
+    "client.screen.DeathScreenMixin",
     "client.screen.LoadingOverlayMixin",
+    "client.screen.OptionsScreenMixin",
     "client.screen.PauseScreenMixin",
     "client.screen.TitleScreenMixin",
-    "client.screen.OptionsScreenMixin",
-    "client.screen.sodium_extra.SodiumExtraHudMixin",
-    "client.screen.sodium.SodiumOptionsMixin",
-    "client.screen.skinshuffle.SkinShuffle$ScreenMixin",
-    "client.screen.catalogue.Catalogue$Config",
     "client.screen.VideoSettingsScreenMixin",
+    "client.screen.catalogue.Catalogue$Config",
+    "client.screen.skinshuffle.SkinShuffle$ScreenMixin",
+    "client.screen.sodium.SodiumOptionsMixin",
+    "client.screen.sodium_extra.SodiumExtraHudMixin",
     "client.utils.ChatOverlayMixin",
     "client.utils.DebugScreenOverlayMixin",
     "client.utils.GuiGraphicsMixin",
@@ -26,9 +28,9 @@
     "client.utils.components.AbstractButtonMixin",
     "client.utils.components.AbstractSliderButtonMixin",
     "client.utils.components.TooltipRenderUtilMixin",
-    "client.utils.skins.PlayerInfoMixin",
     "client.utils.skins.LivingEntityRendererMixin",
-    "client.fix.ScreenMixin"
+    "client.utils.skins.PlayerInfoMixin",
+    "client.utils.FramerateLimitTrackerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

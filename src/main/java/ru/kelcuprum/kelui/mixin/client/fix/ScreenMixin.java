@@ -24,8 +24,8 @@ public abstract class ScreenMixin {
     @Shadow
     protected abstract void renderMenuBackground(GuiGraphics partialTick);
 
-    @Shadow
-    protected abstract void renderBlurredBackground(float partialTick);
+
+    @Shadow protected abstract void renderBlurredBackground();
 
     @Inject(method = "renderBackground", at = @At("HEAD"), cancellable = true)
     private void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
@@ -34,7 +34,7 @@ public abstract class ScreenMixin {
             renderPanorama(guiGraphics, partialTick);
         }
         if (this.minecraft.options.getMenuBackgroundBlurriness() != 0) {
-            this.renderBlurredBackground(partialTick);
+            this.renderBlurredBackground();
             this.renderMenuBackground(guiGraphics);
         } else this.renderTransparentBackground(guiGraphics);
         ci.cancel();

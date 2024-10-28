@@ -52,6 +52,13 @@
   "kelui.config.hud.armor_info.damage.type": "Тип вывода прочности брони",
   "kelui.config.hud.armor_info.damage.type.cut": "Сокращать проценты прочности",
 
+  "kelui.config.title.death": "Экран смерти",
+  "kelui.config.death": "Редизайн экрана смерти",
+  "kelui.config.title.death.niko": "OneShot (2014)",
+  "kelui.config.death.niko": "Ты убил %s?",
+  "kelui.config.death.niko.only_hardcore": "Только на хардкоре",
+  "kelui.config.death.niko.function": "Выполняемая функция",
+
   "kelui.config.new_interface": "Редизайн интерфейса",
   "kelui.config.hud.new_hotbar": "Новый дизайн хот-бара",
   "kelui.config.hud.new_hotbar.colored_bar": "Цветной фон баров",

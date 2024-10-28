@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'fabric-loom' version '1.8-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'maven-publish'
 }
@@ -28,6 +28,10 @@ repositories {
     maven { url = "https://jitpack.io/" }
 }
 
+loom{
+    accessWidenerPath = file("/src/main/resources/kelui.accesswidener")
+}
+
 configurations { shade }
 dependencies {
     // Minecraft/Fabric libs
@@ -42,6 +46,7 @@ dependencies {
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     //
     modImplementation("ru.kelcuprum.alinlib:AlinLib-fabric:${project.alinlib}")
+    include modImplementation("maven.modrinth:cicada:${project.cicada_version}")
 
     modImplementation("maven.modrinth:sodium-extra:${project.sodium_extra_version}")
     modImplementation("maven.modrinth:sodium:${project.sodium_version}") // 0.6

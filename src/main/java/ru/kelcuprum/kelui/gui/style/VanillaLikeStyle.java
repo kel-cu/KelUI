@@ -2,6 +2,7 @@ package ru.kelcuprum.kelui.gui.style;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import ru.kelcuprum.alinlib.gui.GuiUtils;
@@ -19,13 +20,13 @@ public class VanillaLikeStyle extends AbstractStyle {
 
     @Override
     public void renderBackground$widget(GuiGraphics guiGraphics, int x, int y, int width, int height, boolean active, boolean isHoveredOrFocused) {
-        guiGraphics.blitSprite(SPRITES.get(active, isHoveredOrFocused), x, y, width, height);
+        guiGraphics.blitSprite(RenderType::guiTextured, SPRITES.get(active, isHoveredOrFocused), x, y, width, height);
     }
 
     @Override
     public void renderBackground$slider(GuiGraphics guiGraphics, int x, int y, int width, int height, boolean active, boolean isHoveredOrFocused, double v) {
-        guiGraphics.blitSprite(this.getSprite(isHoveredOrFocused), x, y, width, height);
-        guiGraphics.blitSprite(this.getHandleSprite(isHoveredOrFocused), x + (int)(v * (double)(width - 8)), y, 8, height);
+        guiGraphics.blitSprite(RenderType::guiTextured, this.getSprite(isHoveredOrFocused), x, y, width, height);
+        guiGraphics.blitSprite(RenderType::guiTextured, this.getHandleSprite(isHoveredOrFocused), x + (int)(v * (double)(width - 8)), y, 8, height);
     }
     private ResourceLocation getSprite(boolean isFocused) {
         return isFocused ? HIGHLIGHTED_SPRITE : SLIDER_SPRITE;

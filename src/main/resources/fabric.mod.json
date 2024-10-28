@@ -7,6 +7,7 @@
   "authors": [
     "Kel Cuprum"
   ],
+  "accessWidener": "kelui.accesswidener",
   "contact": {
     "repo": "https://github.com/kel-cu/kelui",
     "homepage": "https://github.com/kel-cu/kelui",
@@ -24,6 +25,9 @@
     ],
     "modmenu": [
       "ru.kelcuprum.kelui.gui.ModMenuIntegration"
+    ],
+    "preLaunch": [
+      "ru.kelcuprum.kelui.SoundLoader::init"
     ]
   },
   "mixins": [
@@ -36,7 +40,7 @@
     "fabricloader": "*",
     "fabric": "*",
     "alinlib": "*",
-    "minecraft": [">1.20.6"]
+    "minecraft": [">=1.21.2"]
   },
   "breaks": {
     "essential-container": "*"

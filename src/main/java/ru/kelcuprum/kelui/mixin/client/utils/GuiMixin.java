@@ -9,6 +9,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.gui.components.DebugScreenOverlay;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.MobEffectTextureManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -217,9 +218,6 @@ public abstract class GuiMixin {
         if (KelUI.config.getBoolean("HUD.ARMOR_INFO.WARNING", true)) {
             for (ItemStack item : items) {
                 if (item.isDamageableItem() && (((double) (item.getMaxDamage() - item.getDamageValue()) / item.getMaxDamage()) < 0.075)) {
-//                    if (warnTime > 30) color = GROUPIE - 0x75000000;
-//                    warnTime++;
-//                    if (warnTime > 60) warnTime = 0;
                     if(System.currentTimeMillis() % 500 > 250) color = GROUPIE - 0x75000000;
                     break;
                 }
@@ -263,7 +261,7 @@ public abstract class GuiMixin {
                 }
                 guiGraphics.fill(this.screenWidth - (24 * i), 24 * j, this.screenWidth - (24 + (24 * i)), 24 + (24 * j), 0x7f000000);
                 guiGraphics.fill(this.screenWidth - (24 * i), 22 + (24 * j), this.screenWidth - (24 + (24 * i)), 24 + (24 * j), effect.isAmbient() ? 0xff598392 : SEADRIVE);
-                guiGraphics.blit(this.screenWidth - (4 + (24 * i)) - 16, 4 + (24 * j), 0, 16, 16, mobEffectTextureManager.get(effect.getEffect()));
+                guiGraphics.blitSprite(RenderType::guiTexturedOverlay, mobEffectTextureManager.get(effect.getEffect()), this.screenWidth - (4 + (24 * i)) - 16, 4 + (24 * j), 0, 16, 16);
                 if (!effect.isInfiniteDuration() && KelUI.config.getBoolean("HUD.NEW_EFFECTS.TIME", true)) {
                     Component time = Component.literal(Util.getDurationAsString(effect.getDuration()));
                     guiGraphics.drawString(this.getFont(), time, this.screenWidth - (4 + (24 * i)) - 16, 20 - getFont().lineHeight + (24 * j), -1);
@@ -354,15 +352,20 @@ public abstract class GuiMixin {
 
         int healthColor = this.minecraft.player.hasEffect(MobEffects.POISON) ? 0xFFa3b18a :
                 this.minecraft.player.hasEffect(MobEffects.WITHER) ? 0xff4a4e69 :
-                        this.minecraft.player.isFullyFrozen() ? 0xFF90e0ef : GROUPIE;
+                        this.minecraft.player.isFullyFrozen() ? 0xFF90e0ef :
+                                this.minecraft.player.level().getLevelData().isHardcore() ? ALINA : GROUPIE;
 
         //
         int size = 85;
         int pos = 95;
         int lvl = this.minecraft.player.experienceLevel;
         if (this.isExperienceBarVisible() && lvl > 0) {
-            size-= lvl>9999 ? 15 : lvl>99 ? 10 : 5;
-            pos+= lvl>9999 ? 15 : lvl>99 ? 10 : 5;
+            int fontSize = AlinLib.MINECRAFT.font.width(String.valueOf(lvl));
+            if(fontSize > 10){
+                int cut = (fontSize - 6) / 2;
+                size-= cut;
+                pos+= cut;
+            }
         }
         //
 
@@ -486,7 +489,6 @@ public abstract class GuiMixin {
             renderVerticalBar(guiGraphics, rs, getHotBarY(), 0xff598392, 20, armor);
             rs+=pos;
         }
-
         //
 
         renderVerticalBar(guiGraphics, rs, getHotBarY(), 0xFFff9b54, 20, hunger);

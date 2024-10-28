@@ -5,6 +5,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
@@ -27,7 +28,7 @@ public class OneShotPauseButton extends AbstractButton {
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int i, int j, float f) {
-        if(isHoveredOrFocused() && active) guiGraphics.blitSprite(ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/oneshot_pause_button"), getX(), getY(), getWidth(), getHeight());
+        if(isHoveredOrFocused() && active) guiGraphics.blitSprite(RenderType::guiTextured, ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/oneshot_pause_button"), getX(), getY(), getWidth(), getHeight());
         int k = this.active ? 16777215 : 10526880;
         renderString(guiGraphics, Minecraft.getInstance().font, k | Mth.ceil(this.alpha * 255.0F) << 24);
         if(!isInit) isInit = true;
