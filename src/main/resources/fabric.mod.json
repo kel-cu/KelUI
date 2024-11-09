@@ -15,6 +15,7 @@
   },
   "license": "GPL-3.0",
   "environment": "*",
+  "accessWidener": "kelui.accesswidener",
   "entrypoints": {
     "client": [
       "ru.kelcuprum.kelui.KelUI"

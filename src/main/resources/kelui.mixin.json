@@ -30,7 +30,10 @@
     "client.utils.components.TooltipRenderUtilMixin",
     "client.utils.skins.LivingEntityRendererMixin",
     "client.utils.skins.PlayerInfoMixin",
-    "client.utils.FramerateLimitTrackerMixin"
+    "client.utils.FramerateLimitTrackerMixin",
+    "client.utils.toasts.SystemToastMixin",
+    "client.utils.toasts.RecipeToastMixin",
+    "client.utils.toasts.AdvancementToastMixin"
   ],
   "injectors": {
     "defaultRequire": 1

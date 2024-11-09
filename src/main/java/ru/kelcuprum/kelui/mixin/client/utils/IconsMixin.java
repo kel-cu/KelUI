@@ -19,7 +19,6 @@ public class IconsMixin {
         if(!KelUI.config.getBoolean("GLOBAL.ENABLE_CUSTOM_ICON", false)) return;
         InputStream stream = KelUI.iconStorageHelper.getResource(fileName);
         if(stream == null) return;
-
         cir.setReturnValue(() -> stream);
     }
 }
