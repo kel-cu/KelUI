@@ -4,6 +4,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.kelui.gui.components.OneShotPauseButton;
 
@@ -18,7 +19,7 @@ public class DisconnectScreen extends Screen {
 
     @Override
     protected void init() {
-        addRenderableWidget(new TextBox(width / 2 - 100, 50, 200, 20, Component.translatable("kelui.oneshot.disconnect"), true));
+        addRenderableWidget(new TextBuilder(Component.translatable("kelui.oneshot.disconnect")).setPosition(width / 2 - 100, 50).setSize(200, 20).build());
 
         addRenderableWidget(new OneShotPauseButton(width / 2 - 80, height / 2 - 26, 75, 24, CommonComponents.GUI_YES, (s) -> onDisconnect.run()));
 

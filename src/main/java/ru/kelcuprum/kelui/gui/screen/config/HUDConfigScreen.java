@@ -7,6 +7,7 @@ import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBooleanBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.editbox.EditBoxBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.selector.SelectorBuilder;
+import ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.CategoryBox;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.screens.ConfigScreenBuilder;
@@ -40,7 +41,7 @@ public class HUDConfigScreen {
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent))))
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent))))
 
-                .addWidget(new TextBox(KelUI.TEXTS.TITLE.HUD_CONFIG, true));
+                .addWidget(new TextBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG));
         if (KelUI.isSodiumExtraEnable)
             builder.addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.sodium_extra_debug"), false).setConfig(KelUI.config, "HUD.SODIUM_EXTRA_DEBUG"));
         builder.addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.hud.paper_doll"), false).setConfig(KelUI.config, "HUD.PAPER_DOLL"))

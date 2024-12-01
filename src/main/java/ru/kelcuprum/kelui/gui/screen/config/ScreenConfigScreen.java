@@ -7,6 +7,7 @@ import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBooleanBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.editbox.EditBoxBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.selector.SelectorBuilder;
+import ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.CategoryBox;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.screens.ConfigScreenBuilder;
@@ -25,7 +26,7 @@ public class ScreenConfigScreen {
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent))))
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent))))
 
-                .addWidget(new TextBox(KelUI.TEXTS.TITLE.SCREENS_CONFIG, true))
+                .addWidget(new TextBuilder(KelUI.TEXTS.TITLE.SCREENS_CONFIG))
                 .addWidget(new CategoryBox(KelUI.TEXTS.TITLE.LOADING_CONFIG)
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading.new"), false).setConfig(KelUI.config, "LOADING.NEW"))
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.loading.new.background_color")).setColor(0xFFB4B4B4).setConfig(KelUI.config, "LOADING.NEW.BACKGROUND_C0LOR"))
@@ -36,7 +37,7 @@ public class ScreenConfigScreen {
                 .addWidget(new CategoryBox(KelUI.TEXTS.TITLE.OPTIONS_CONFIG)
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.custom_skin"), true).setConfig(KelUI.config, "CUSTOM_SKIN"))
                 )
-                .addWidget(new TextBox(Component.translatable("kelui.config.title.death")))
+                .addWidget(new TextBuilder(Component.translatable("kelui.config.title.death")))
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.death"), true).setConfig(KelUI.config, "DEATH"))
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.death.niko"))
                         .addValue(new ButtonBooleanBuilder(Component.translatable("kelui.config.death.niko", Player.getName()), false).setConfig(KelUI.config, "DEATH.NIKO"))

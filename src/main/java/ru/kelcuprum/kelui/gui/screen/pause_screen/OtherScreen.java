@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.config.Localization;
+import ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.comp.CatalogueButtons;
@@ -18,6 +19,8 @@ import ru.kelcuprum.kelui.gui.components.OneShotTitle;
 import ru.kelcuprum.kelui.gui.components.OneShotTitleButton;
 
 import java.util.Objects;
+
+import static ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder.ALIGN.LEFT;
 
 public class OtherScreen extends Screen {
     protected final Screen parent;
@@ -83,7 +86,7 @@ public class OtherScreen extends Screen {
         }
         if(KelUI.isFlashbackInstalled()){
             if(FlashbackButtons.isShow()){
-                addRenderableWidget(new TextBox(20, y+10, bWidth, bHeight, Component.literal("Flashback"), false));
+                addRenderableWidget(new TextBuilder(Component.literal("Flashback")).setAlign(LEFT).setPosition(20, y+10).setSize(bWidth, bHeight).build());
                 y+=bHeight2;
                 addRenderableWidget(FlashbackButtons.getStateButton$oneShot(30, y + 10, bWidth, bHeight));
                 y+=bHeight2;

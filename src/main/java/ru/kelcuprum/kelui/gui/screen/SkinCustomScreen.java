@@ -12,6 +12,7 @@ import org.lwjgl.glfw.GLFW;
 import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBooleanBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.selector.SelectorBuilder;
+import ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.kelui.gui.components.comp.CapesButtons;
 import ru.kelcuprum.kelui.gui.components.PlayerButton;
@@ -36,7 +37,7 @@ public class SkinCustomScreen extends Screen {
         int x = ((pageSize - componentSize) / 2)+200;
         int y = height/2-46;
         if(FabricLoader.getInstance().isModLoaded("capes")) y-=12;
-        addRenderableWidget(new TextBox(x, y-24, componentSize, 20, this.title, true));
+        addRenderableWidget(new TextBuilder(this.title).setPosition(x, y-24).setSize(componentSize, 20).build());
         PlayerModelPart[] values = PlayerModelPart.values();
         int pos = 0;
         for(PlayerModelPart value : values){
@@ -85,7 +86,7 @@ public class SkinCustomScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics guiGraphics, int i, int j, float f) {
         super.renderBackground(guiGraphics, i, j, f);
-        guiGraphics.fill(0, 0, 200, height, BLACK_ALPHA);
+        guiGraphics.fill(0, 0, 0, 0, BLACK_ALPHA);
     }
 
     @Override

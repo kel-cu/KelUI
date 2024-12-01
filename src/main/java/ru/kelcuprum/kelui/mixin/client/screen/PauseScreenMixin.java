@@ -25,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.Colors;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
+import ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.*;
@@ -92,6 +93,8 @@ public abstract class PauseScreenMixin extends Screen {
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("kelui", "oneshot_menu_cancel")), 1.0F));
         super.onClose();
     }
+    @Unique int startY = 0;
+    @Unique int endY = 0;
 
     @Unique
     void kelui$defaultStyle() {
@@ -100,6 +103,8 @@ public abstract class PauseScreenMixin extends Screen {
         if (KelUI.isFlashbackInstalled()) {
             if (FlashbackButtons.isShow()) y -= 25;
         }
+
+        startY = y;
 
         assert this.minecraft != null;
         addRenderableWidget(new PlayerHeadWidget(x, y, 20, 20));
@@ -151,11 +156,10 @@ public abstract class PauseScreenMixin extends Screen {
             OnPress.setActive(false);
             this.minecraft.getReportingContext().draftReportHandled(this.minecraft, this, this::onDisconnect, true);
         }).setPosition(x, y).setSize(210, 20).build());
-        y += 25;
         if (KelUI.isFlashbackInstalled()) {
             if (FlashbackButtons.isShow()) {
-                y += 1;
-                addRenderableWidget(new TextBox(x, y, 210, 9, Component.literal("Flashback"), true));
+                y += 26;
+                addRenderableWidget(new TextBuilder(Component.literal("Flashback")).setPosition(x, y).setSize(210, 9).build());
                 y += 14;
                 if (FlashbackButtons.isRecord()) {
                     addRenderableWidget(FlashbackButtons.getStateButton().setSprite(RECORD).setWidth(20).setPosition(x, y).build());
@@ -166,15 +170,17 @@ public abstract class PauseScreenMixin extends Screen {
                 }
             }
         }
+        y+= 25;
+        endY = y;
 
         if (KelUI.config.getBoolean("PAUSE_MENU.INFO", true)) {
             int yT = height - 20;
             if (KelUI.config.getBoolean("PAUSE_MENU.CREDITS", false)) {
-                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringCredits()), false));
+                addRenderableWidget(new TextBuilder(Component.literal(KelUI.getStringCredits())).setAlign(TextBuilder.ALIGN.LEFT).setPosition(x, yT).setSize(210, font.lineHeight).build());
                 yT -= 10;
             }
             if (KelUI.config.getBoolean("PAUSE_MENU.VERSION", true)) {
-                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
+                addRenderableWidget(new TextBuilder(Component.literal(KelUI.getStringVersion())).setAlign(TextBuilder.ALIGN.LEFT).setPosition(x, yT).setSize(210, font.lineHeight).build());
             }
         }
     }
@@ -234,7 +240,7 @@ public abstract class PauseScreenMixin extends Screen {
         super.renderBackground(guiGraphics, i, j, f);
 
         if (menuType == 0) {
-            guiGraphics.fill(0, 0, 230, this.height, Colors.BLACK_ALPHA);
+            guiGraphics.fill(5, startY-5, 225, endY, Colors.BLACK_ALPHA);
         } else {
             if (!oneshot$disconnectMenuEnable && !oneshot$otherMenuEnable) {
                 guiGraphics.blitSprite(RenderType::guiTextured, ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/oneshot_pause_panel"), 5, 5, width - 10, 38);

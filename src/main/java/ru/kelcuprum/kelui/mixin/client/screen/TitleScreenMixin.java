@@ -21,6 +21,7 @@ import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.Colors;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
+import ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder;
 import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
@@ -64,12 +65,17 @@ public abstract class TitleScreenMixin extends Screen {
             default -> kelui$defaultStyle();
         }
     }
+    @Unique int startY = 0;
+    @Unique int endY = 0;
     @Unique
     public void kelui$defaultStyle(){
         int x = 10;
         //
         assert this.minecraft != null;
         int y = height/2-35;
+
+        startY = y;
+
         addRenderableWidget(new ButtonBuilder(Component.translatable("menu.singleplayer"), (OnPress) -> this.minecraft.setScreen(new SelectWorldScreen(this)))
                 .setPosition(x+25, y).setSize(185, 20).build());
         addRenderableWidget(new PlayerHeadWidget(x, y, 20, 20));
@@ -109,14 +115,17 @@ public abstract class TitleScreenMixin extends Screen {
                 .setPosition(x+25, y).setSize(185, 20).build());
         addRenderableWidget(new ButtonBuilder(Component.translatable("options.accessibility"), (OnPress) -> this.minecraft.setScreen(new AccessibilityOptionsScreen(this, this.minecraft.options)))
                 .setSprite(ACCESSIBILITY).setPosition(x, y).setSize(20,20).build());
+        y+=25;
+        endY = y;
+
         if(KelUI.config.getBoolean("MAIN_MENU.INFO", true)) {
             int yT = height-20;
             if(KelUI.config.getBoolean("MAIN_MENU.CREDITS", true)) {
-                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringCredits()), false));
+                addRenderableWidget(new TextBuilder(Component.literal(KelUI.getStringCredits())).setAlign(TextBuilder.ALIGN.LEFT).setPosition(x, yT).setSize(210, font.lineHeight).build());
                 yT-=10;
             }
             if(KelUI.config.getBoolean("MAIN_MENU.VERSION", true)){
-                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
+                addRenderableWidget(new TextBuilder(Component.literal(KelUI.getStringVersion())).setAlign(TextBuilder.ALIGN.LEFT).setPosition(x, yT).setSize(210, font.lineHeight).build());
             }
         }
 
@@ -138,6 +147,8 @@ public abstract class TitleScreenMixin extends Screen {
         int y = height/2-60;
         if(KelUI.config.getBoolean("MAIN_MENU.ENABLE_REALMS", false)) y-=12;
         if(!KelUI.isModMenuInstalled() && !KelUI.isCatalogueInstalled()) y+=12;
+
+        startY = y;
 
         addRenderableWidget(new ButtonBuilder(Component.translatable("menu.singleplayer"))
                 .setOnPress((s) -> this.minecraft.setScreen(new SelectWorldScreen(this)))
@@ -177,15 +188,17 @@ public abstract class TitleScreenMixin extends Screen {
                 .setIcon(EXIT)
                 .setOnPress((s) -> this.minecraft.stop())
                 .setWidth(210).setPosition(x, y).build());
+        y+=25;
+        endY = y;
 
         if(KelUI.config.getBoolean("MAIN_MENU.INFO", true)) {
             int yT = height-20;
             if(KelUI.config.getBoolean("MAIN_MENU.CREDITS", true)) {
-                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringCredits()), false));
+                addRenderableWidget(new TextBuilder(Component.literal(KelUI.getStringCredits())).setAlign(TextBuilder.ALIGN.LEFT).setPosition(x, yT).setSize(210, font.lineHeight).build());
                 yT-=10;
             }
             if(KelUI.config.getBoolean("MAIN_MENU.VERSION", true)){
-                addRenderableWidget(new TextBox(x, yT, 210, font.lineHeight, Component.literal(KelUI.getStringVersion()), false));
+                addRenderableWidget(new TextBuilder(Component.literal(KelUI.getStringVersion())).setAlign(TextBuilder.ALIGN.LEFT).setPosition(x, yT).setSize(210, font.lineHeight).build());
             }
         }
         if(KelUI.config.getBoolean("MAIN_MENU.PLAYER", true)){
@@ -269,7 +282,7 @@ public abstract class TitleScreenMixin extends Screen {
             this.fadeInStart = Util.getMillis();
         }
         this.renderPanorama(guiGraphics, f);
-        if(menuType == 0 || menuType == 1) guiGraphics.fill(0, 0, 230, this.height, Colors.BLACK_ALPHA);
+        if(menuType == 0 || menuType == 1) guiGraphics.fill(5, startY-5, 225, endY, Colors.BLACK_ALPHA);
         if (KelUI.config.getBoolean("FIRST_START", true)) {
             KelUI.config.setBoolean("FIRST_START", false);
             KelUI.config.save();
