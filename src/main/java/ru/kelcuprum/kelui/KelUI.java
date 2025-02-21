@@ -22,6 +22,7 @@ import ru.kelcuprum.alinlib.config.Config;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.GuiUtils;
 import ru.kelcuprum.alinlib.gui.styles.FlatStyle;
+import ru.kelcuprum.kelui.gui.Util;
 import ru.kelcuprum.kelui.gui.screen.SkinCustomScreen;
 import ru.kelcuprum.kelui.gui.style.SodiumLikeStyle;
 import ru.kelcuprum.kelui.gui.style.VanillaLikeStyle;
@@ -58,7 +59,7 @@ public class KelUI implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        onInitialize();
+        Util.registerDefaultOverlays();
         ClientLifecycleEvents.CLIENT_FULL_STARTED.register((s) -> playerSkin = s.getSkinManager().getInsecureSkin(s.getGameProfile()));
         LocalizationEvents.DEFAULT_PARSER_INIT.register((s) ->
             localizationInited = true
@@ -66,10 +67,6 @@ public class KelUI implements ClientModInitializer {
         GuiUtils.registerStyle(vanillaLikeStyle);
         GuiUtils.registerStyle(new SodiumLikeStyle());
         iconStorageHelper.init();
-    }
-
-    public static void onInitialize() {
-        log("Hello, world!");
     }
 
     public static void executeCommand(LocalPlayer player, String command) {

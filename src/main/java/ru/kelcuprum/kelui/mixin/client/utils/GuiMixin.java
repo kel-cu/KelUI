@@ -99,7 +99,7 @@ public abstract class GuiMixin {
         }
         int x = 0;
         if(KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)){
-            int conf = KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue();
+            int conf = KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 1).intValue();
             if(conf == 0){
                 x=184;
                 if(!getCameraPlayer().getOffhandItem().isEmpty()) x+=22;
@@ -260,7 +260,7 @@ public abstract class GuiMixin {
                 }
                 guiGraphics.fill(this.screenWidth - (24 * i), 24 * j, this.screenWidth - (24 + (24 * i)), 24 + (24 * j), 0x7f000000);
                 guiGraphics.fill(this.screenWidth - (24 * i), 22 + (24 * j), this.screenWidth - (24 + (24 * i)), 24 + (24 * j), effect.isAmbient() ? 0xff598392 : SEADRIVE);
-                guiGraphics.blitSprite(RenderType::guiTexturedOverlay, mobEffectTextureManager.get(effect.getEffect()), this.screenWidth - (4 + (24 * i)) - 16, 4 + (24 * j), 0, 16, 16);
+                guiGraphics.blitSprite(RenderType::guiTexturedOverlay, mobEffectTextureManager.get(effect.getEffect()), this.screenWidth - (4 + (24 * i)) - 16, 4 + (24 * j), 16, 16);
                 if (!effect.isInfiniteDuration() && KelUI.config.getBoolean("HUD.NEW_EFFECTS.TIME", true)) {
                     Component time = Component.literal(Util.getDurationAsString(effect.getDuration()));
                     guiGraphics.drawString(this.getFont(), time, this.screenWidth - (4 + (24 * i)) - 16, 20 - getFont().lineHeight + (24 * j), -1);
@@ -325,10 +325,10 @@ public abstract class GuiMixin {
             int y = getHotBarY() - 18 - minecraft.font.lineHeight;
             assert this.minecraft.gameMode != null;
             if (!this.minecraft.gameMode.canHurtPlayer()) y += 12;
-            if (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 1)
+            if (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 1).intValue() == 1)
                 guiGraphics.drawCenteredString(getFont(), mutableComponent, this.screenWidth / 2, y, 16777215 + (l << 24));
             else
-                guiGraphics.drawString(getFont(), mutableComponent, KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0 ? 6 : this.screenWidth - 6 - getFont().width(mutableComponent), y, 16777215 + (l << 24));
+                guiGraphics.drawString(getFont(), mutableComponent, KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 1).intValue() == 0 ? 6 : this.screenWidth - 6 - getFont().width(mutableComponent), y, 16777215 + (l << 24));
         }
         ci.cancel();
     }
@@ -338,8 +338,8 @@ public abstract class GuiMixin {
     @Inject(method = "renderPlayerHealth", at = @At("HEAD"), cancellable = true)
     void renderPlayrerHealth(GuiGraphics guiGraphics, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
-        if (KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 0) {
-            renderStats(guiGraphics, getHotBarX()+getStatsX(), KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 2);
+        if (KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 1).intValue() == 0) {
+            renderStats(guiGraphics, getHotBarX()+getStatsX(), KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 1).intValue() == 2);
             ci.cancel();
             return;
         }
@@ -384,7 +384,7 @@ public abstract class GuiMixin {
     void renderExperienceBar(GuiGraphics guiGraphics, int j, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
         assert this.minecraft.player != null;
-        if (KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 0) {
+        if (KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 1).intValue() == 0) {
             renderVerticalExperienceBar(guiGraphics);
             ci.cancel();
             return;
@@ -398,7 +398,7 @@ public abstract class GuiMixin {
     void renderExperienceLevel(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
         assert this.minecraft.player != null;
-        if (KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 0) {
+        if (KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 1).intValue() == 0) {
             ci.cancel();
             return;
         }
@@ -419,7 +419,7 @@ public abstract class GuiMixin {
         assert this.minecraft.gameMode != null;
         assert this.minecraft.player != null;
         if (this.minecraft.gameMode.getPlayerMode() == GameType.SPECTATOR) return;
-        if (KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 0).intValue() == 0) {
+        if (KelUI.config.getNumber("HUD.NEW_HOTBAR.STATE_TYPE", 1).intValue() == 0) {
             renderVerticalVehicleHealth(guiGraphics);
             ci.cancel();
             return;
@@ -448,7 +448,7 @@ public abstract class GuiMixin {
     @Inject(method = "renderJumpMeter", at = @At("HEAD"), cancellable = true)
     void renderJumpMeter(PlayerRideableJumping playerRideableJumping, GuiGraphics guiGraphics, int j, CallbackInfo ci) {
         if (!KelUI.config.getBoolean("HUD.NEW_HOTBAR", false)) return;
-        int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 0) ? 0 : (this.screenWidth - 180) / 2;
+        int pos = (KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 1).intValue() == 0) ? 0 : (this.screenWidth - 180) / 2;
         assert this.minecraft.player != null;
         float f = this.minecraft.player.getJumpRidingScale();
         guiGraphics.fill(pos, screenHeight - 26, (int) (pos + (180 * f)), screenHeight - 24, 0x7fffffff);
@@ -468,7 +468,7 @@ public abstract class GuiMixin {
         rs = x;
         if(getCameraPlayer().getMainArm().getOpposite() == HumanoidArm.RIGHT && !getCameraPlayer().getOffhandItem().isEmpty()) rs+= invert ? -22 : 22;
         if(itemInfoEnable) {
-            if(KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() != 1) rs -= invert ? 22 : -22;
+            if(KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 1).intValue() != 1) rs -= invert ? 22 : -22;
             else if(getCameraPlayer().getMainArm().getOpposite() == HumanoidArm.LEFT) rs+= 22;
         }
         this.invert = invert;
@@ -526,7 +526,7 @@ public abstract class GuiMixin {
     @Unique
     int getStatsX(){
         int right = getCameraPlayer() != null && !getCameraPlayer().getOffhandItem().isEmpty() && getCameraPlayer().getMainArm().getOpposite() == HumanoidArm.LEFT ? -26 : -4;
-        return KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue() == 2 ? right : 182;
+        return KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 1).intValue() == 2 ? right : 182;
     }
 
     //
@@ -550,7 +550,7 @@ public abstract class GuiMixin {
 
     @Unique
     int getHotBarX() {
-        int conf = KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 0).intValue();
+        int conf = KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 1).intValue();
         int x = conf == 0 ? 2 : conf == 1 ? (this.screenWidth - 180) / 2 : this.screenWidth-182;
         if(getCameraPlayer() == null) return x;
         ItemStack off_item = getCameraPlayer().getOffhandItem();

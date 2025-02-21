@@ -53,6 +53,7 @@
   "kelui.config.hud.armor_info.damage.type.cut": "Cut percent",
 
   "kelui.config.new_interface": "Redesign interface",
+  "kelui.config.toasts": "New Design Toasts",
   "kelui.config.hud.new_hotbar": "New Design Hotbar",
   "kelui.config.hud.new_hotbar.colored_bar": "Colored background bar",
   "kelui.config.hud.new_hotbar.position": "Re-design Hotbar position",
@@ -130,6 +131,16 @@
   "kelui.config.loading.new.border_background_color": "Background border color",
 
   "kelui.config.loading.preview": "Preview",
+  "kelui.config.loading.type": "Style",
+  "kelui.loading.default": "NON-USE (Default)",
+  "kelui.config.loading.type.default.border": "Border",
+  "kelui.loading.lite": "Lite",
+  "kelui.config.loading.type.lite.background_color": "Background color",
+  "kelui.config.loading.type.lite.icon": "Icon",
+  "kelui.config.loading.type.lite.icon.creeper": "Creeper",
+  "kelui.config.loading.type.lite.icon.tree": "Tree",
+  "kelui.config.loading.type.lite.icon.lamp": "Lamp",
+  "kelui.config.loading.type.lite.icon.pepe": "Pepe",
 
   "kelui.config.title.screens_config": "Interface",
 

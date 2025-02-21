@@ -38,23 +38,23 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings loom.layered() {
         officialMojangMappings()
-//        parchment "org.parchmentmc.data:parchment-${project.minecraft_version}:${project.parchment_version}@zip"
+        parchment "org.parchmentmc.data:parchment-${project.minecraft_version}:${project.parchment_version}@zip"
     }
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     // Mods libs
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     //
-    modImplementation("ru.kelcuprum.alinlib:AlinLib-fabric:${project.alinlib}")
+    modImplementation("ru.kelcuprum:AlinLib-fabric:${project.alinlib}")
     include modImplementation("maven.modrinth:cicada:${project.cicada_version}")
 
-    modImplementation("maven.modrinth:sodium-extra:${project.sodium_extra_version}")
-    modImplementation("maven.modrinth:sodium:${project.sodium_version}") // 0.6
-    modImplementation("maven.modrinth:flashback:${project.flashback}")
-    modImplementation("maven.modrinth:capes:6SzVPVR4")
-    modImplementation("maven.modrinth:skinshuffle:IKBsfEhV")
-    modImplementation("curse.maven:Catalogue-459701:5441226")
-    modApi("maven.modrinth:entitytexturefeatures:O3jDICoH")
+    modCompileOnly("maven.modrinth:sodium-extra:${project.sodium_extra_version}")
+    modCompileOnly("maven.modrinth:sodium:${project.sodium_version}") // 0.6
+    modCompileOnly("maven.modrinth:flashback:${project.flashback}")
+    modCompileOnly("maven.modrinth:capes:6SzVPVR4")
+    modCompileOnly("maven.modrinth:skinshuffle:IKBsfEhV")
+    modCompileOnly("curse.maven:Catalogue-459701:5896177")
+    modCompileOnly("maven.modrinth:entitytexturefeatures:uORav9Nu")
 
     include(implementation ("meteordevelopment:starscript:0.2.2"))
 

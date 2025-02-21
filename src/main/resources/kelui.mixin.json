@@ -19,6 +19,7 @@
     "client.screen.sodium_extra.SodiumExtraHudMixin",
     "client.utils.ChatOverlayMixin",
     "client.utils.DebugScreenOverlayMixin",
+    "client.utils.FramerateLimitTrackerMixin",
     "client.utils.GuiGraphicsMixin",
     "client.utils.GuiMixin",
     "client.utils.GuiMixin$TabList",
@@ -30,10 +31,9 @@
     "client.utils.components.TooltipRenderUtilMixin",
     "client.utils.skins.LivingEntityRendererMixin",
     "client.utils.skins.PlayerInfoMixin",
-    "client.utils.FramerateLimitTrackerMixin",
-    "client.utils.toasts.SystemToastMixin",
+    "client.utils.toasts.AdvancementToastMixin",
     "client.utils.toasts.RecipeToastMixin",
-    "client.utils.toasts.AdvancementToastMixin"
+    "client.utils.toasts.SystemToastMixin"
   ],
   "injectors": {
     "defaultRequire": 1

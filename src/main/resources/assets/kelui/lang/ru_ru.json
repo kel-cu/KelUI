@@ -60,6 +60,7 @@
   "kelui.config.death.niko.function": "Выполняемая функция",
 
   "kelui.config.new_interface": "Редизайн интерфейса",
+  "kelui.config.toasts": "Новый дизайн уведомлений",
   "kelui.config.hud.new_hotbar": "Новый дизайн хот-бара",
   "kelui.config.hud.new_hotbar.colored_bar": "Цветной фон баров",
   "kelui.config.hud.new_hotbar.position": "Позиция нового хот-бара",
@@ -131,6 +132,18 @@
   "kelui.config.loading.new.border_background_color": "Цвет фона обводки",
 
   "kelui.config.loading.preview": "Предпросмотр",
+
+  "kelui.config.loading.type": "Стиль",
+  "kelui.loading.default": "NON-USE (Default)",
+  "kelui.config.loading.type.default.border": "Обводка",
+  "kelui.loading.lite": "Облегченный",
+  "kelui.config.loading.type.lite.background_color": "Цвет фона",
+  "kelui.config.loading.type.lite.icon": "Иконка",
+  "kelui.config.loading.type.lite.icon.creeper": "Крипер",
+  "kelui.config.loading.type.lite.icon.tree": "Дерево",
+  "kelui.config.loading.type.lite.icon.lamp": "Лампочка",
+  "kelui.config.loading.type.lite.icon.pepe": "Пепе",
+
 
   "kelui.config.title.screens_config": "Интерфейс",
 
