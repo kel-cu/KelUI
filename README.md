@@ -1,3 +1,6 @@
+> [!warning]
+> Исходники мода были перенесены на SourceCraft > [тык](https://sourcecraft.dev/pavvvlovvva13/kelui)
+
 ## KeUI
 Кастомное меню на мой вкус, т.е. как мне удобно использовать компоненты
 
