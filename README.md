@@ -1,19 +1,16 @@
 ## KeUI
 Кастомное меню на мой вкус, т.е. как мне удобно использовать компоненты
 
-
-[![alinlib](https://wf.kelcu.ru/budge/alinlib/requires/cozy_vector.svg)](https://modrinth.com/mod/alinlib)
-![fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg)
-![quilt](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/quilt_vector.svg)
+[![alinlib](https://wf.kelcu.ru/kel-budges/alinlib/Requires.svg)](/mod/alinlib) [![fabric](https://wf.kelcu.ru/kel-budges/loaders/Fabric.svg)](https://fabricmc.net/)
 
 Какие меню тут меняется:
 - Главное меню
 - Меню паузы
 - Чат
+- и многое другое
 
 
-Скриншоты
--
+## Скриншоты
 ### Главное меню
 <img src="https://wf.kelcu.ru/mods/kelui/menu.png">
 
