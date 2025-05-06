@@ -1,5 +1,6 @@
 package ru.kelcuprum.kelui.mixin.client.utils;
 
+import net.fabricmc.fabric.api.transfer.v1.item.PlayerInventoryStorage;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -15,10 +16,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
@@ -35,6 +38,7 @@ import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.Util;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 import static net.minecraft.world.level.GameType.CREATIVE;
 import static ru.kelcuprum.alinlib.gui.Colors.*;
@@ -93,6 +97,7 @@ public abstract class GuiMixin {
     @Unique boolean itemInfoEnable = false;
     @Unique
     public void renderItemInfo(GuiGraphics guiGraphics, DeltaTracker deltaTracker){
+        if(getCameraPlayer() == null) return;
         if (!KelUI.config.getBoolean("HUD.ITEM_INFO", true)){
             itemInfoEnable = false;
             return;
@@ -155,17 +160,23 @@ public abstract class GuiMixin {
         return this.minecraft.gameMode.getPlayerMode() == CREATIVE;
     }
     // - Armor Info
+    @Unique
+    final List<Integer> ARMOR_SLOTS = Stream.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET)
+            .map(s -> s.getIndex(Inventory.INVENTORY_SIZE))
+            .toList();
 
     @Unique
     public void renderArmorInfo(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         if (this.debugOverlay.showDebugScreen()) return;
         if (!KelUI.config.getBoolean("HUD.ARMOR_INFO", true)) return;
+        if(getCameraPlayer() == null) return;
         List<ItemStack> items = new ArrayList<>();
         Map<ItemStack, Component> texts = new HashMap<>();
         int maxText = 0;
+        List<ItemStack> armorItems = ARMOR_SLOTS.stream().map(i -> getCameraPlayer().getInventory().getItem(i)).toList();
         if (getCameraPlayer() instanceof Player) {
             for (int i = 0; i < 4; i++) {
-                ItemStack item = getCameraPlayer().getInventory().getArmor(3 - i);
+                ItemStack item = armorItems.get(i);
                 if (!item.isEmpty()) {
                     items.add(item);
                     if (KelUI.config.getBoolean("HUD.ARMOR_INFO.DAMAGE", true)) {
@@ -179,7 +190,7 @@ public abstract class GuiMixin {
                 }
             }
             if (KelUI.config.getBoolean("HUD.ARMOR_INFO.SELECTED", false)) {
-                ItemStack selected = getCameraPlayer().getInventory().getSelected();
+                ItemStack selected = getCameraPlayer().getInventory().getSelectedItem();
                 if (!selected.isEmpty() && selected.isDamageableItem()) {
                     items.add(selected);
                     if (KelUI.config.getBoolean("HUD.ARMOR_INFO.DAMAGE", true)) {
@@ -279,7 +290,7 @@ public abstract class GuiMixin {
         int pos = getHotBarX();
         if(getCameraPlayer() == null) return;
         for (int slot = 0; slot < 9; slot++) {
-            boolean selected = getCameraPlayer().getInventory().selected == slot;
+            boolean selected = getCameraPlayer().getInventory().getSelectedSlot() == slot;
             kelUI$renderSlot(guiGraphics, pos + (slot * 20), getHotBarY(), deltaTracker, getCameraPlayer(), getCameraPlayer().getInventory().getItem(slot), selected, false);
         }
         ItemStack off_item = getCameraPlayer().getOffhandItem();
@@ -466,6 +477,7 @@ public abstract class GuiMixin {
     @Unique
     void renderStats(GuiGraphics guiGraphics, int x, boolean invert){
         rs = x;
+        if(getCameraPlayer() == null) return;
         if(getCameraPlayer().getMainArm().getOpposite() == HumanoidArm.RIGHT && !getCameraPlayer().getOffhandItem().isEmpty()) rs+= invert ? -22 : 22;
         if(itemInfoEnable) {
             if(KelUI.config.getNumber("HUD.NEW_HOTBAR.POSITION", 1).intValue() != 1) rs -= invert ? 22 : -22;
