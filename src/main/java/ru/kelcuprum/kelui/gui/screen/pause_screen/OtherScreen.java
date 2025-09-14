@@ -1,6 +1,5 @@
 package ru.kelcuprum.kelui.gui.screen.pause_screen;
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.ShareToLanScreen;
@@ -10,13 +9,12 @@ import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder;
-import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.comp.CatalogueButtons;
 import ru.kelcuprum.kelui.gui.components.comp.FlashbackButtons;
 import ru.kelcuprum.kelui.gui.components.comp.ModMenuButtons;
-import ru.kelcuprum.kelui.gui.components.OneShotTitle;
-import ru.kelcuprum.kelui.gui.components.OneShotTitleButton;
+import ru.kelcuprum.kelui.gui.components.oneshot.OneShotTitle;
+import ru.kelcuprum.kelui.gui.components.oneshot.OneShotTitleButton;
 
 import java.util.Objects;
 

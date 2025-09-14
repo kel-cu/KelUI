@@ -12,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ru.kelcuprum.alinlib.AlinLib;
+import ru.kelcuprum.alinlib.gui.GuiUtils;
+import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
 
 import java.util.List;
@@ -44,16 +46,15 @@ public abstract class RecipeToastMixin implements Toast {
         if(!KelUI.config.getBoolean("TOASTS", true)) return;
         double d = DISPLAY_TIME;
         long m = l - this.lastChanged;
-        guiGraphics.fill(0, 0, width(), height() - 1, 0xB3000000);
-        guiGraphics.fill(0, height() - 1, (int) (width()*(m/d)), height(), 0xFFcba6f7);
+        GuiUtils.getSelected().renderToastBackground(new ToastBuilder(), guiGraphics, 0, 0, width()+1, height(), m/d);
 
         guiGraphics.drawString(font, TITLE_TEXT, 30, 7, 0xFFcba6f7, false);
-        guiGraphics.drawString(font, DESCRIPTION_TEXT, 30, 18, -1, false);
+        guiGraphics.drawString(font, DESCRIPTION_TEXT, 30, 18, GuiUtils.getSelected().getToastTextColor(), false);
         RecipeToast.Entry entry = (RecipeToast.Entry)this.recipeItems.get(this.displayedRecipeIndex);
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().scale(0.6F, 0.6F, 1.0F);
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().scale(0.6F, 0.6F);
         guiGraphics.renderFakeItem(entry.categoryItem(), 3, 3);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         guiGraphics.renderFakeItem(entry.unlockedItem(), 8, 8);
         ci.cancel();
     }

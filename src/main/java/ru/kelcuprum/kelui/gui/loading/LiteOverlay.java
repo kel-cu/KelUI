@@ -1,6 +1,7 @@
 package ru.kelcuprum.kelui.gui.loading;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.gui.GuiUtils;
@@ -22,11 +23,11 @@ public class LiteOverlay extends AbstractLoadingOverlay{
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, float f, float currentProgress, int k, int kB) {
-        guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(KelUI.config.getNumber("LOADING_OVERLAY.TYPE.LITE.BACKGROUND_C0LOR", 0xFF000000).intValue(), k));
+        guiGraphics.fill( 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(KelUI.config.getNumber("LOADING_OVERLAY.TYPE.LITE.BACKGROUND_C0LOR", 0xFF000000).intValue(), k));
         int i = KelUI.config.getNumber("LOADING.WHITE.ICON", 0).intValue();
         int x = (guiGraphics.guiWidth()/2) - 48;
         int y = (guiGraphics.guiHeight()/2) - 48;
-        guiGraphics.blit(RenderType::guiTexturedOverlay, GuiUtils.getResourceLocation("kelui", String.format("textures/gui/loading/%s.png",
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GuiUtils.getResourceLocation("kelui", String.format("textures/gui/loading/%s.png",
                 i == 3 ? "pepe" : i == 2 ? "lamp" : i == 1 ? "tree" : "creeper")), x, y, 0,0 , 96, 96, 96, 96);
         // Progress bar
         if (f < 1.0F) {

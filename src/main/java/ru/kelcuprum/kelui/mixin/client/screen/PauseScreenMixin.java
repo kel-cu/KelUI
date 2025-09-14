@@ -1,43 +1,51 @@
 package ru.kelcuprum.kelui.mixin.client.screen;
 
+import com.terraformersmc.modmenu.api.ModMenuApi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.Colors;
+import ru.kelcuprum.alinlib.gui.GuiUtils;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder;
-import ru.kelcuprum.alinlib.gui.components.text.TextBox;
+import ru.kelcuprum.alinlib.info.Player;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.*;
 import ru.kelcuprum.kelui.gui.components.comp.CatalogueButtons;
 import ru.kelcuprum.kelui.gui.components.comp.FlashbackButtons;
 import ru.kelcuprum.kelui.gui.components.comp.ModMenuButtons;
-import ru.kelcuprum.kelui.gui.screen.pause_screen.DisconnectScreen;
+import ru.kelcuprum.kelui.gui.components.omori.OMORIButton;
+import ru.kelcuprum.kelui.gui.components.oneshot.OneShotPauseButton;
 import ru.kelcuprum.kelui.gui.screen.pause_screen.OtherScreen;
 
-import java.util.List;
 import java.util.Objects;
 
+import static net.minecraft.client.gui.screens.PauseScreen.disconnectFromWorld;
+import static ru.kelcuprum.alinlib.gui.Colors.CPM_BLUE;
+import static ru.kelcuprum.alinlib.gui.Colors.GROUPIE;
 import static ru.kelcuprum.alinlib.gui.Icons.*;
 import static ru.kelcuprum.kelui.KelUI.ICONS.*;
 
@@ -70,7 +78,8 @@ public abstract class PauseScreenMixin extends Screen {
         menuType = KelUI.config.getNumber("PAUSE_MENU.TYPE", 0).intValue();
         switch (menuType) {
             case 1 -> kelui$oneShotStyle();
-            case 2 -> KelUI.log("Чувак, ты думал тут что-то будет?");
+            case 2 -> kelui$omoriStyle();
+            case 3 -> KelUI.log("Чувак, ты думал тут что-то будет?");
             default -> kelui$defaultStyle();
         }
     }
@@ -154,7 +163,7 @@ public abstract class PauseScreenMixin extends Screen {
         }).build();
         addRenderableWidget(new ButtonBuilder(component, (OnPress) -> {
             OnPress.setActive(false);
-            this.minecraft.getReportingContext().draftReportHandled(this.minecraft, this, this::onDisconnect, true);
+            this.minecraft.getReportingContext().draftReportHandled(this.minecraft, this, () -> disconnectFromWorld(this.minecraft, ClientLevel.DEFAULT_QUIT_MESSAGE), true);
         }).setPosition(x, y).setSize(210, 20).build());
         if (KelUI.isFlashbackInstalled()) {
             if (FlashbackButtons.isShow()) {
@@ -220,14 +229,39 @@ public abstract class PauseScreenMixin extends Screen {
 
         addRenderableWidget(new OneShotPauseButton(width - 12 - size, 12, size, 24, component, (s) -> {
             if (KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.QUIT_QUESTION", true)) {
-                this.minecraft.setScreen(new DisconnectScreen(this, this::onDisconnect));
-            } else onDisconnect();
+                disconnectFromWorld(minecraft, ClientLevel.DEFAULT_QUIT_MESSAGE);
+            } else disconnectFromWorld(minecraft, ClientLevel.DEFAULT_QUIT_MESSAGE);
         }));
     }
 
-    @Shadow
-    @Final
-    protected abstract void onDisconnect();
+    @Unique
+    void kelui$omoriStyle(){
+        int widgetsMaxWidth = width - 18;
+        int widgetWidth = widgetsMaxWidth/5;
+        int y = 19 - (font.lineHeight / 2);
+        int x = 9;
+        boolean isShortCommand = KelUI.config.getBoolean("PAUSE_MENU.ENABLE_SHORT_COMMAND", false);
+        boolean isSingle = this.minecraft.hasSingleplayerServer() && !Objects.requireNonNull(this.minecraft.getSingleplayerServer()).isPublished();
+        OMORIButton b1 = addRenderableWidget(new OMORIButton(x, y, widgetWidth, font.lineHeight+2, Component.literal(!isSingle && isShortCommand ? KelUI.config.getString("PAUSE_MENU.SHORT_COMMAND.NAME", "Lobby") : "???"), false, (s) -> {
+            KelUI.executeCommand(this.minecraft.player, KelUI.config.getString("PAUSE_MENU.SHORT_COMMAND.COMMAND", "/lobby"));
+        }));
+        b1.isActive = !isSingle && isShortCommand;
+        addRenderableWidget(new OMORIButton(x+widgetWidth, y, widgetWidth, font.lineHeight+2, Component.translatable("kelui.config.title.other"), false, (s) -> {
+            this.minecraft.setScreen(new OtherScreen(this));
+        }));
+        addRenderableWidget(new OMORIButton(x+(widgetWidth*2), y, widgetWidth, font.lineHeight+2, Component.translatable("gui.advancements"), false, (s) -> {
+            this.minecraft.setScreen(new AdvancementsScreen(Objects.requireNonNull(this.minecraft.getConnection()).getAdvancements()));
+        }));
+        addRenderableWidget(new OMORIButton(x+(widgetWidth*3), y, widgetWidth, font.lineHeight+2, Component.translatable("menu.options"), false, (s) -> {
+            this.minecraft.setScreen(new OptionsScreen(this, this.minecraft.options));
+        }));
+        this.disconnectButton = net.minecraft.client.gui.components.Button.builder(this.minecraft.isLocalServer() ? Component.translatable("menu.returnToMenu") : CommonComponents.GUI_DISCONNECT, (s) -> {
+        }).build();
+        addRenderableWidget(new OMORIButton(x+(widgetWidth*4), y, widgetWidth, font.lineHeight+2, this.minecraft.isLocalServer() ? Component.translatable("menu.returnToMenu") : CommonComponents.GUI_DISCONNECT, false, (s) -> {
+            this.minecraft.getReportingContext().draftReportHandled(this.minecraft, this, () -> disconnectFromWorld(this.minecraft, ClientLevel.DEFAULT_QUIT_MESSAGE), true);
+        }));
+    }
+
 
     @Shadow
     @Final
@@ -237,21 +271,69 @@ public abstract class PauseScreenMixin extends Screen {
     void renderBackground(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo cl) {
         if (!KelUI.config.getBoolean("PAUSE_MENU", true)) return;
         if (!showPauseMenu) return;
-        super.renderBackground(guiGraphics, i, j, f);
+        if(menuType != 2) super.renderBackground(guiGraphics, i, j, f);
+        else renderBlurredBackground(guiGraphics);
 
         if (menuType == 0) {
-            guiGraphics.fill(5, startY-5, 225, endY, Colors.BLACK_ALPHA);
-        } else {
+            boolean isWindows = GuiUtils.getSelected().id.equals("windows");
+            GuiUtils.getSelected().renderBackground(guiGraphics, 5, startY-5-(isWindows ? 19 : 0), 225, endY);
+            if(isWindows){
+                GuiUtils.getSelected().renderTitleBackground(guiGraphics, 8, startY-21, 221, startY-3);
+                guiGraphics.drawString(font, getTitle(), 13, startY-16, -1, false);
+            }
+        } else if(menuType == 1){
             if (!oneshot$disconnectMenuEnable && !oneshot$otherMenuEnable) {
-                guiGraphics.blitSprite(RenderType::guiTextured, ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/oneshot_pause_panel"), 5, 5, width - 10, 38);
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/oneshot_pause_panel"), 5, 5, width - 10, 38);
                 int nikoSize = height / 3;
                 if (KelUI.isAprilFool() || KelUI.config.getBoolean("PAUSE_MENU.ONESHOT.NIKO_ROOMBA", false))
-                    guiGraphics.blitSprite(RenderType::guiTextured, ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/niko_roomba"), width / 2 - nikoSize / 2, height / 2 - nikoSize / 2, nikoSize, nikoSize);
+                    guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ResourceLocation.fromNamespaceAndPath("kelui", "pause_menu/niko_roomba"), width / 2 - nikoSize / 2, height / 2 - nikoSize / 2, nikoSize, nikoSize);
             } else guiGraphics.fill(0, 0, width, height, 0x7f000000);
+        } else {
+            int x = 5;
+            int y = 5;
+            int x1 = guiGraphics.guiWidth()-5;
+            int y1 = 35;
+            renderPanel(guiGraphics, x, y, x1, y1);
+            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, x, height-225, 150, height, 100, 0.0625F, 112.5F, height-100, this.minecraft.player);
+            int x2 = 5;
+            int y2 = height-111;
+            int x3 = 200;
+            int y3 = height;
+            guiGraphics.fill(x2, y2, x3, y3, 0xFF000000);
+            guiGraphics.fill(x2+2, y2+2, x3-2, y3-2, 0xFFd3d3d3);
+            guiGraphics.renderOutline(x2+4, y2+3, x3-13, 20, 0xFFf3f3f3);
+            guiGraphics.renderOutline(x2+4, y2+4, x3-13, 20, 0xFF3d3d3d);
+            guiGraphics.drawString(font, Player.getName(), x2+10, y2+10, 0xFF000000, false);
+            guiGraphics.fill(x2+2, y2+26, x3-2, y2+27, 0xFFf3f3f3);
+            guiGraphics.fill(x2, y2+27, x3, y2+47, 0xFF000000);
+            guiGraphics.drawString(font, String.format("LVL. %s", minecraft.player.experienceLevel), x2+10, y2+33, 0xFFffffff, false);
+            // y2+47 -- конец черной рамки
+            // y2+77 -- конец секции здоровья
+            // x2+32 -- начало индикатора
+            int indicatorHealth = (int) (((x3-7)-(x2+32)) * (AlinLib.MINECRAFT.player.getHealth()/AlinLib.MINECRAFT.player.getAttributeValue(Attributes.MAX_HEALTH)));
+            guiGraphics.fill(x2+32, y2+52, x2+32+indicatorHealth, y2+72, GROUPIE);
+            guiGraphics.renderOutline(x2+32, y2+52, ((x3-7)-(x2+32)), 20, 0xFF000000);
+            String health = String.format("%s/%s", Localization.getRounding(AlinLib.MINECRAFT.player.getHealth(), true), Localization.getRounding(AlinLib.MINECRAFT.player.getAttributeValue(Attributes.MAX_HEALTH), true));
+            guiGraphics.drawString(font, health, (x3-7)-5-font.width(health), y2+58, 0xFFffffff);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GuiUtils.getResourceLocation("kelui", "textures/gui/omori/health.png"), x2+7, y2+52, 0, 0, 20, 20, 20, 20);
+            guiGraphics.fill(x2+2, y2+76, x3-2, y2+77, 0xFFf3f3f3);
+            guiGraphics.fill(x2+2, y2+77, x3-2, y2+78, 0xFF000000);
+            // y2+79 -- начало секции здоровья
+            int indicatorHunger = (int) (((x3-7)-(x2+32)) * ((double) Player.getHunger()/20));
+            guiGraphics.fill(x2+32, y2+84, x2+32+indicatorHunger, y2+104, CPM_BLUE);
+            guiGraphics.renderOutline(x2+32, y2+84, ((x3-7)-(x2+32)), 20, 0xFF000000);
+            String hunger = String.format("%s/%s", Localization.getRounding(Player.getHunger(), true), 20);
+            guiGraphics.drawString(font, hunger, (x3-7)-5-font.width(hunger), y2+90, 0xFFffffff);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GuiUtils.getResourceLocation("kelui", "textures/gui/omori/hunger.png"), x2+7, y2+84, 0, 0, 20, 20, 20, 20);
         }
         cl.cancel();
     }
-
+    @Unique
+    private static void renderPanel(GuiGraphics guiGraphics, int x, int y, int x1, int y1){
+        guiGraphics.fill(x, y, x1, y1, 0xFFFFFFFF);
+        guiGraphics.renderOutline(x, y, x1-x, y1-y, 0xFF000000);
+        guiGraphics.fill(x+4, y+4, x1-4, y1-4, 0xFF000000);
+    };
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo cl) {
         if (!KelUI.config.getBoolean("PAUSE_MENU", true)) return;

@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -71,7 +72,7 @@ public abstract class DeathScreenMixin extends Screen {
             ci.cancel();
         }
         else if(KelUI.config.getBoolean("DEATH", true)){
-            renderBlurredBackground();
+            renderBlurredBackground(guiGraphics);
             int back = (int) (255.0F * (Math.clamp((double) (System.currentTimeMillis()-startTime) / timeShow,  0.0, 1.0)*0.5));
             int bottom = ARGB.color(back, 161, 67, 67);
             int top = (int) (255.0F * (Math.clamp((double) (System.currentTimeMillis()-startTime) / timeShow,  0.0, 1.0)*0.5)) << 24;
@@ -108,19 +109,19 @@ public abstract class DeathScreenMixin extends Screen {
         } else if(KelUI.config.getBoolean("DEATH", true)){
             int y = 60;
 
-            guiGraphics.blit(RenderType::guiTextured, ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/death_screen/icon.png"), (width/2)-25, y, 0,0, 50,50, 50, 50);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, ResourceLocation.fromNamespaceAndPath("kelui", "textures/gui/death_screen/icon.png"), (width/2)-25, y, 0,0, 50,50, 50, 50);
             y+=50;
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().scale(2.0F, 2.0F, 2.0F);
-            guiGraphics.drawCenteredString(this.font, this.title, this.width / 2 / 2, y/2, 16777215);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().scale(2.0F, 2.0F);
+            guiGraphics.drawCenteredString(this.font, this.title, this.width / 2 / 2, y/2, 0xFFFFFFFF);
+            guiGraphics.pose().popMatrix();
             y+=25;
             if (this.causeOfDeath != null) {
-                guiGraphics.drawCenteredString(this.font, this.causeOfDeath, this.width / 2, y, 16777215);
+                guiGraphics.drawCenteredString(this.font, this.causeOfDeath, this.width / 2, y, 0xFFFFFFFF);
             }
             y+=15;
 
-            guiGraphics.drawCenteredString(this.font, this.deathScore, this.width / 2, y, 16777215);
+            guiGraphics.drawCenteredString(this.font, this.deathScore, this.width / 2, y, 0xFFFFFFFF);
             if (this.causeOfDeath != null && j > (y-15)) {
                 Objects.requireNonNull(this.font);
                 if (j < (y-15) + 9) {

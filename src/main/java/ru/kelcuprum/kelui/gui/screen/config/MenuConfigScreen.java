@@ -31,7 +31,7 @@ public class MenuConfigScreen {
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent))))
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent))))
 
-                .addWidget(new TextBuilder(KelUI.TEXTS.TITLE.MENU_CONFIG))
+                .setCategoryTitle(KelUI.TEXTS.TITLE.MENU_CONFIG)
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu"), true).setConfig(KelUI.config, "MAIN_MENU"))
                 .addWidget(new SelectorBuilder(Component.translatable("kelui.config.main_menu.type")).setValue(0).setList(types).setConfig(KelUI.config, "MAIN_MENU.TYPE"))
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.main_menu.enable_realms"), false).setConfig(KelUI.config, "MAIN_MENU.ENABLE_REALMS"))

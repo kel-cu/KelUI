@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.kelcuprum.alinlib.gui.GuiUtils;
+import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
 
 import java.util.List;
@@ -36,18 +38,18 @@ public abstract class SystemToastMixin implements Toast {
         if(!KelUI.config.getBoolean("TOASTS", true)) return;
         double d = (double)this.id.displayTime;
         long m = l - this.lastChanged;
-        guiGraphics.fill(0, 0, width(), height() - 1, 0xB3000000);
-        guiGraphics.fill(0, height() - 1, (int) (width()*(m/d)), height(), 0xFF89b4fa);
-        guiGraphics.fill(7, 6, 11, height()-13, -256);
-        guiGraphics.fill(7, height()-11, 11, height()-7, -256);
+        GuiUtils.getSelected().renderToastBackground(new ToastBuilder(), guiGraphics, 0, 0, width()+1, height(), m/d);
+        int color = GuiUtils.getSelected().id.equals("windows") ? 0xFF000000 : -256;
+        guiGraphics.fill(7, 6, 11, height()-13, color);
+        guiGraphics.fill(7, height()-11, 11, height()-7, color);
 
         // ------
         if (this.messageLines.isEmpty())
-            guiGraphics.drawString(font, this.title, 18, 12, -256, false);
+            guiGraphics.drawString(font, this.title, 18, 12, color, false);
         else {
-            guiGraphics.drawString(font, this.title, 18, 7, -256, false);
+            guiGraphics.drawString(font, this.title, 18, 7, color, false);
             for(int j = 0; j < this.messageLines.size(); ++j)
-                guiGraphics.drawString(font, this.messageLines.get(j), 18, 18 + j * 12, -1, false);
+                guiGraphics.drawString(font, this.messageLines.get(j), 18, 18 + j * 12, GuiUtils.getSelected().getToastTextColor(), false);
         }
         ci.cancel();
     }

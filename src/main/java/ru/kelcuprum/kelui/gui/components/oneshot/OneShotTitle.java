@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.gui.components;
+package ru.kelcuprum.kelui.gui.components.oneshot;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -16,10 +16,10 @@ public class OneShotTitle extends AbstractWidget {
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().scale(2.5F, 2.5F, 2.5F);
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().scale(2.5F, 2.5F);
         guiGraphics.drawString(AlinLib.MINECRAFT.font, getMessage(), (int) (getX()/2.5F), (int) (getY()/2.5F), 16777215 | Mth.ceil(this.getValuePos() * 255.0F) << 24);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 
     private final long timeFocused = System.currentTimeMillis();

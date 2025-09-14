@@ -17,7 +17,7 @@ public class PlayerHeadWidget extends AbstractWidget {
     protected void renderWidget(GuiGraphics guiGraphics, int i, int j, float f) {
         PlayerFaceRenderer.draw(guiGraphics, KelUI.MINECRAFT.getSkinManager().getInsecureSkin(KelUI.MINECRAFT.getGameProfile()), getX(), getY(), getHeight());
         if(isHovered()){
-            guiGraphics.renderTooltip(KelUI.MINECRAFT.font, Component.literal(KelUI.MINECRAFT.getUser().getName()), i, j);
+            guiGraphics.setTooltipForNextFrame(KelUI.MINECRAFT.font, Component.literal(KelUI.MINECRAFT.getUser().getName()), i, j);
         }
     }
 

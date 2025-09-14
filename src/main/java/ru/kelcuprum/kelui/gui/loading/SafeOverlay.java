@@ -2,6 +2,7 @@ package ru.kelcuprum.kelui.gui.loading;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.AlinLib;
@@ -22,15 +23,15 @@ public class SafeOverlay extends AbstractLoadingOverlay{
         int kB = 255;
         if (f < 1.0F) {
             y2 += 5;
-            guiGraphics.fill(x, y, x1, y2, replaceAlpha(0xFFFFFF, kB));
+            guiGraphics.fill(x, y, x1, y2, replaceAlpha(0xFFFFFFFF, kB));
             guiGraphics.fill(x + 2, y + 2, (x1 - 2), y2 - 2, replaceAlpha(GROUPIE, kB));
-            guiGraphics.fill(x + 3, y + 3, (int) (x + (((x1 - 3 - x) * currentProgress))), y2 - 3, replaceAlpha(0xFFFFFF, kB));
+            guiGraphics.fill(x + 3, y + 3, (int) (x + (((x1 - 3 - x) * currentProgress))), y2 - 3, replaceAlpha(0xFFFFFFFF, kB));
         }
     }
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, float f, float currentProgress, int k, int kB) {
-        guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(GROUPIE, k));
+        guiGraphics.fill( 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(GROUPIE, k));
         // Progress bar
         if (f < 1.0F) {
             int px = (guiGraphics.guiWidth() / 2) - 100;

@@ -1,7 +1,6 @@
 package ru.kelcuprum.kelui.mixin.client.screen;
 
 import com.mojang.realmsclient.RealmsMainScreen;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -17,16 +16,16 @@ import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.Colors;
+import ru.kelcuprum.alinlib.gui.GuiUtils;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
 import ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder;
-import ru.kelcuprum.alinlib.gui.components.text.TextBox;
 import ru.kelcuprum.alinlib.gui.toast.ToastBuilder;
 import ru.kelcuprum.kelui.KelUI;
 import ru.kelcuprum.kelui.gui.components.*;
 import ru.kelcuprum.kelui.gui.components.comp.*;
+import ru.kelcuprum.kelui.gui.components.oneshot.OneShotButton;
 
 import static ru.kelcuprum.kelui.KelUI.ICONS.*;
 import static ru.kelcuprum.alinlib.gui.Icons.*;
@@ -37,8 +36,6 @@ public abstract class TitleScreenMixin extends Screen {
     private long fadeInStart;
     @Shadow
     private boolean fading;
-
-    @Shadow protected abstract void renderPanorama(GuiGraphics guiGraphics, float f);
 
 
     protected TitleScreenMixin() {
@@ -128,16 +125,6 @@ public abstract class TitleScreenMixin extends Screen {
                 addRenderableWidget(new TextBuilder(Component.literal(KelUI.getStringVersion())).setAlign(TextBuilder.ALIGN.LEFT).setPosition(x, yT).setSize(210, font.lineHeight).build());
             }
         }
-
-        if(KelUI.config.getBoolean("MAIN_MENU.PLAYER", true)){
-            int yt = height-((height/3)*2);
-            int xt = ((width-230) / 2)+230-45;
-            PlayerButton pb = new PlayerButton(xt, yt, height/3);
-            if(FabricLoader.getInstance().isModLoaded("skinshuffle")){
-                pb.setOnPress((s) -> AlinLib.MINECRAFT.setScreen(SSButtons.getScreen()));
-            }
-            addRenderableWidget(pb);
-        }
     }
     @Unique
     public void kelui$defaultStyleV2(){
@@ -200,11 +187,6 @@ public abstract class TitleScreenMixin extends Screen {
             if(KelUI.config.getBoolean("MAIN_MENU.VERSION", true)){
                 addRenderableWidget(new TextBuilder(Component.literal(KelUI.getStringVersion())).setAlign(TextBuilder.ALIGN.LEFT).setPosition(x, yT).setSize(210, font.lineHeight).build());
             }
-        }
-        if(KelUI.config.getBoolean("MAIN_MENU.PLAYER", true)){
-            int yt = height-((height/3)*2);
-            int xt = ((width-230) / 2)+230-45;
-            addRenderableWidget(new PlayerButton(xt, yt, height/3));
         }
     }
 
@@ -282,7 +264,14 @@ public abstract class TitleScreenMixin extends Screen {
             this.fadeInStart = Util.getMillis();
         }
         this.renderPanorama(guiGraphics, f);
-        if(menuType == 0 || menuType == 1) guiGraphics.fill(5, startY-5, 225, endY, Colors.BLACK_ALPHA);
+        if(menuType == 0 || menuType == 1) {
+            boolean isWindows = GuiUtils.getSelected().id.equals("windows");
+            GuiUtils.getSelected().renderBackground(guiGraphics, 5, startY-5-(isWindows ? 19 : 0), 225, endY);
+            if(isWindows){
+                GuiUtils.getSelected().renderTitleBackground(guiGraphics, 8, startY-21, 221, startY-3);
+                guiGraphics.drawString(font, Component.translatable("narrator.screen.title"), 13, startY-16, -1, false);
+            }
+        }
         if (KelUI.config.getBoolean("FIRST_START", true)) {
             KelUI.config.setBoolean("FIRST_START", false);
             KelUI.config.save();

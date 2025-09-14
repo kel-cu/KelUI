@@ -23,7 +23,6 @@ import ru.kelcuprum.alinlib.config.Localization;
 import ru.kelcuprum.alinlib.gui.GuiUtils;
 import ru.kelcuprum.alinlib.gui.styles.FlatStyle;
 import ru.kelcuprum.kelui.gui.Util;
-import ru.kelcuprum.kelui.gui.screen.SkinCustomScreen;
 import ru.kelcuprum.kelui.gui.style.SodiumLikeStyle;
 import ru.kelcuprum.kelui.gui.style.VanillaLikeStyle;
 
@@ -132,7 +131,7 @@ public class KelUI implements ClientModInitializer {
     }
 
     public static Screen getSkinCustom(Screen parent){
-        return KelUI.config.getBoolean("CUSTOM_SKIN", true) ? new SkinCustomScreen(parent, AlinLib.MINECRAFT.options) : new SkinCustomizationScreen(parent, AlinLib.MINECRAFT.options);
+        return new SkinCustomizationScreen(parent, AlinLib.MINECRAFT.options);
     }
     public static boolean isModMenuInstalled(){
         return FabricLoader.getInstance().isModLoaded("modmenu") || FabricLoader.getInstance().isModLoaded("menulogue");

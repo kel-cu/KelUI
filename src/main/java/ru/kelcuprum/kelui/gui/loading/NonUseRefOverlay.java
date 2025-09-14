@@ -2,6 +2,7 @@ package ru.kelcuprum.kelui.gui.loading;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.AlinLib;
@@ -33,14 +34,14 @@ public class NonUseRefOverlay extends AbstractLoadingOverlay{
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, float f, float currentProgress, int k, int kB) {
-        if (minecraft.level == null) guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(KelUI.config.getNumber("LOADING_OVERLAY.TYPE.DEFAULT.BACKGROUND_C0LOR", 0xFFB4B4B4).intValue(), k));
+        if (minecraft.level == null) guiGraphics.fill( 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), replaceAlpha(KelUI.config.getNumber("LOADING_OVERLAY.TYPE.DEFAULT.BACKGROUND_C0LOR", 0xFFB4B4B4).intValue(), k));
         if(KelUI.config.getBoolean("LOADING_OVERLAY.TYPE.DEFAULT.BORDER", true)) {
-            guiGraphics.fill(RenderType.guiOverlay(), 0, 0, guiGraphics.guiWidth(), 30, replaceAlpha(KelUI.config.getNumber("LOADING_OVERLAY.TYPE.DEFAULT.BORDER_C0LOR", 0xFF000000).intValue(), kB));
-            guiGraphics.fill(RenderType.guiOverlay(), 0, guiGraphics.guiHeight(), guiGraphics.guiWidth(), guiGraphics.guiHeight() - 30, replaceAlpha(KelUI.config.getNumber("LOADING_OVERLAY.TYPE.DEFAULT.BORDER_C0LOR", 0xFF000000).intValue(), kB));
+            guiGraphics.fill(0, 0, guiGraphics.guiWidth(), 30, replaceAlpha(KelUI.config.getNumber("LOADING_OVERLAY.TYPE.DEFAULT.BORDER_C0LOR", 0xFF000000).intValue(), kB));
+            guiGraphics.fill( 0, guiGraphics.guiHeight(), guiGraphics.guiWidth(), guiGraphics.guiHeight() - 30, replaceAlpha(KelUI.config.getNumber("LOADING_OVERLAY.TYPE.DEFAULT.BORDER_C0LOR", 0xFF000000).intValue(), kB));
         }
         // Icon
         if (minecraft.level == null) {
-            guiGraphics.blit(RenderType::guiTextured, LOADING_ICON, guiGraphics.guiWidth() / 2 - 50, guiGraphics.guiHeight() / 2 - 50, 0, 0, 100, 100, 100, 100);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, LOADING_ICON, guiGraphics.guiWidth() / 2 - 50, guiGraphics.guiHeight() / 2 - 50, 0, 0, 100, 100, 100, 100);
         }
         // Progress bar
         if (f < 1.0F) {

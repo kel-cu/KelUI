@@ -41,7 +41,7 @@ public class OtherConfigScreen {
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent))))
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent))))
 
-                .addWidget(new TextBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG))
+                .setCategoryTitle(KelUI.TEXTS.TITLE.OTHER_CONFIG)
                 .addWidget(new CategoryBox(Component.translatable("kelui.config.title.other.info"))
                         .addValue(new SelectorBuilder(Component.translatable("kelui.config.version")).setValue(0).setConfig(KelUI.config, "VERSION_TYPE").setList(versionTypes))
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.version.custom")).setValue("Modpack v1.0.0").setConfig(KelUI.config, "VERSION_TYPE.CUSTOM"))
@@ -60,7 +60,7 @@ public class OtherConfigScreen {
                         .addValue(new EditBoxBuilder(Component.translatable("kelui.config.global.custom_icon.path")).setValue("config/KelUI/icons/").setConfig(KelUI.config, "GLOBAL.CUSTOM_ICON_PATH"))
                         .addValue(new ButtonBuilder(Component.translatable("kelui.config.global.custom_icon.update"), (s) -> {
                             try {
-                                KelUI.MINECRAFT.getWindow().setIcon(KelUI.MINECRAFT.getVanillaPackResources(), SharedConstants.getCurrentVersion().isStable() ? IconSet.RELEASE : IconSet.SNAPSHOT);
+                                KelUI.MINECRAFT.getWindow().setIcon(KelUI.MINECRAFT.getVanillaPackResources(), SharedConstants.getCurrentVersion().stable() ? IconSet.RELEASE : IconSet.SNAPSHOT);
                             } catch (IOException e) {
                                 KelUI.log(e.getLocalizedMessage(), Level.ERROR);
                             }

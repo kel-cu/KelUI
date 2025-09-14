@@ -5,8 +5,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.gui.components.builder.text.TextBuilder;
-import ru.kelcuprum.alinlib.gui.components.text.TextBox;
-import ru.kelcuprum.kelui.gui.components.OneShotPauseButton;
+import ru.kelcuprum.kelui.gui.components.oneshot.OneShotPauseButton;
 
 public class DisconnectScreen extends Screen {
     protected final Screen parent;

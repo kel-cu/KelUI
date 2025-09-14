@@ -1,4 +1,4 @@
-package ru.kelcuprum.kelui.gui.components;
+package ru.kelcuprum.kelui.gui.components.oneshot;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -33,10 +33,10 @@ public class OneShotTitleButton extends AbstractButton {
     }
     @Override
     public void renderString(GuiGraphics guiGraphics, Font font, int i){
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(getX()+((isFocused() ? 5 : -5)*getValuePos()), getY(), 1);
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().translate((float) (getX()+((isFocused() ? 5 : -5)*getValuePos())), getY());
         guiGraphics.drawString(font, this.getMessage(), ((this.getHeight() - 8) / 2), (this.getHeight() - 8) / 2, i);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 
     @Override

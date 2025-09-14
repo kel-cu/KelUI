@@ -6,7 +6,7 @@ import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.network.chat.Component;
 import ru.kelcuprum.alinlib.AlinLib;
 import ru.kelcuprum.alinlib.gui.components.builder.button.ButtonBuilder;
-import ru.kelcuprum.kelui.gui.components.OneShotTitleButton;
+import ru.kelcuprum.kelui.gui.components.oneshot.OneShotTitleButton;
 
 public class FlashbackButtons {
     public static boolean isRecord(){

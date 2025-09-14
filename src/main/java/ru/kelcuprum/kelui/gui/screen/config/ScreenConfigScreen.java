@@ -27,7 +27,7 @@ public class ScreenConfigScreen {
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent))))
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent))))
 
-                .addWidget(new TextBuilder(KelUI.TEXTS.TITLE.SCREENS_CONFIG))
+                .setCategoryTitle(KelUI.TEXTS.TITLE.SCREENS_CONFIG)
                 .addWidget(new HorizontalRuleBuilder(KelUI.TEXTS.TITLE.LOADING_CONFIG))
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.loading.new"), false).setConfig(KelUI.config, "LOADING_OVERLAY.NEW"))
                 .addWidget(new SelectorBuilder(Component.translatable("kelui.config.loading.type"), selectorButton -> KelUI.config.setString("LOADING_OVERLAY.TYPE", Util.getOverlayByName(selectorButton.getList()[selectorButton.getPosition()]).id))

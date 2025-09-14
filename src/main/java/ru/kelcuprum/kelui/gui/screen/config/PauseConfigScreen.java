@@ -17,7 +17,8 @@ public class PauseConfigScreen {
 
     public static String[] types = {
             "KelUI",
-            "OneShot"
+            "OneShot",
+            "OMORI"
     };
 
     public Screen build(Screen parent) {
@@ -28,7 +29,7 @@ public class PauseConfigScreen {
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.HUD_CONFIG, (s) -> Minecraft.getInstance().setScreen(new HUDConfigScreen().build(parent))))
                 .addPanelWidget(new ButtonBuilder(KelUI.TEXTS.TITLE.OTHER_CONFIG, (s) -> Minecraft.getInstance().setScreen(new OtherConfigScreen().build(parent))))
 
-                .addWidget(new TextBuilder(KelUI.TEXTS.TITLE.PAUSE_CONFIG))
+                .setCategoryTitle(KelUI.TEXTS.TITLE.PAUSE_CONFIG)
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu"), true).setConfig(KelUI.config, "PAUSE_MENU"))
                 .addWidget(new SelectorBuilder(Component.translatable("kelui.config.pause_menu.type")).setValue(0).setList(types).setConfig(KelUI.config, "PAUSE_MENU.TYPE"))
                 .addWidget(new ButtonBooleanBuilder(Component.translatable("kelui.config.pause_menu.info"), true).setConfig(KelUI.config, "PAUSE_MENU.INFO"))
